@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-05-04
+
 ### Added
 - `read_hierarchy` tool for reading waveform scope trees from the MCP server and CLI
 
@@ -110,7 +112,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `get_signal_info` - Get signal metadata
 - `find_signal_events` - Find signal changes in time range
 
-[unreleased]: https://github.com/jiegec/waveform-mcp/compare/v0.4.0...HEAD
+[unreleased]: https://github.com/jiegec/waveform-mcp/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/jiegec/waveform-mcp/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/jiegec/waveform-mcp/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/jiegec/waveform-mcp/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/jiegec/waveform-mcp/compare/v0.1.0...v0.2.0
