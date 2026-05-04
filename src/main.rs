@@ -40,6 +40,7 @@ type WaveformStore = Arc<RwLock<HashMap<String, wellen::simple::Waveform>>>;
 #[derive(Debug, Clone)]
 pub struct WaveformHandler {
     waveforms: WaveformStore,
+    #[allow(unused)]
     tool_router: ToolRouter<WaveformHandler>,
 }
 
