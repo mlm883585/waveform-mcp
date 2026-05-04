@@ -3,11 +3,8 @@ use rmcp::transport::streamable_http_server::{
     StreamableHttpServerConfig, StreamableHttpService, session::local::LocalSessionManager,
 };
 use rmcp::{
-    ErrorData as McpError, ServerHandler, ServiceExt,
-    handler::server::{router::tool::ToolRouter, wrapper::Parameters},
-    model::*,
-    schemars, tool, tool_handler, tool_router,
-    transport::stdio,
+    ErrorData as McpError, ServerHandler, ServiceExt, handler::server::wrapper::Parameters,
+    model::*, schemars, tool, tool_handler, tool_router, transport::stdio,
 };
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -40,8 +37,6 @@ type WaveformStore = Arc<RwLock<HashMap<String, wellen::simple::Waveform>>>;
 #[derive(Debug, Clone)]
 pub struct WaveformHandler {
     waveforms: WaveformStore,
-    #[allow(unused)]
-    tool_router: ToolRouter<WaveformHandler>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
@@ -150,10 +145,7 @@ impl WaveformHandler {
     }
 
     pub fn with_store(waveforms: WaveformStore) -> Self {
-        Self {
-            waveforms,
-            tool_router: Self::tool_router(),
-        }
+        Self { waveforms }
     }
 
     #[tool(description = "Open a VCD or FST waveform file")]
