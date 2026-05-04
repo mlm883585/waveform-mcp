@@ -7,8 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- `read_hierarchy` tool for reading waveform scope trees from the MCP server and CLI
+
 ### Changed
 - Bumped to Rust 2024 edition
+- `read_hierarchy` now returns only module scopes
 
 ### Documentation
 - Added cargo install instructions and reorganized README usage section

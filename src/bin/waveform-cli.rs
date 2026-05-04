@@ -6,6 +6,7 @@
 //!   open_waveform <file_path> [--alias <alias>]
 //!   close_waveform <waveform_id>
 //!   list_signals <waveform_id> [--pattern <pattern>] [--hierarchy <prefix>] [--recursive <true|false>] [--limit <n>]
+//!   read_hierarchy <waveform_id> [--scope <scope>] [--recursive <true|false>] [--limit <n>]
 //!   read_signal <waveform_id> <signal_path> [--time-index <idx> | --time-indices <idx1,idx2,...>]
 //!   get_signal_info <waveform_id> <signal_path>
 //!   find_signal_events <waveform_id> <signal_path> [--start <idx>] [--end <idx>] [--limit <n>]
@@ -15,7 +16,7 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 use waveform_mcp::{
     Command, find_conditional_events, find_signal_by_path, find_signal_events, get_signal_metadata,
-    list_signals, parse_args, read_signal_values,
+    list_signals, parse_args, read_hierarchy, read_signal_values,
 };
 
 fn print_usage() {
@@ -36,6 +37,11 @@ fn print_usage() {
         "  list_signals <waveform_id> [--pattern <pattern>] [--hierarchy <prefix>] [--recursive <true|false>] [--limit <n>]"
     );
     println!("    List signals matching optional pattern");
+    println!();
+    println!(
+        "  read_hierarchy <waveform_id> [--scope <scope>] [--recursive <true|false>] [--limit <n>]"
+    );
+    println!("    Read the waveform module hierarchy as an indented tree");
     println!();
     println!(
         "  read_signal <waveform_id> <signal_path> [--time-index <idx> | --time-indices <idx1,idx2,...>]"
@@ -151,6 +157,32 @@ fn execute_command(store: &mut WaveformStore, cmd: &Command) -> Result<String, S
                 signals.len(),
                 signals.join("\n")
             ))
+        }
+        Command::ReadHierarchy {
+            waveform_id,
+            scope_path,
+            recursive,
+            limit,
+        } => {
+            let waveform = store
+                .get(waveform_id)
+                .ok_or_else(|| format!("Waveform not found: {}", waveform_id))?;
+
+            let hierarchy = waveform.hierarchy();
+            let lines = read_hierarchy(hierarchy, scope_path.as_deref(), *recursive, *limit)
+                .map_err(|e| format!("Error reading hierarchy: {}", e))?;
+
+            let header = match scope_path.as_deref() {
+                Some(path) => format!("Hierarchy rooted at '{}':", path),
+                None => "Hierarchy:".to_string(),
+            };
+            let body = if lines.is_empty() {
+                "No modules found".to_string()
+            } else {
+                lines.join("\n")
+            };
+
+            Ok(format!("{}\n{}", header, body))
         }
         Command::ReadSignal {
             waveform_id,

@@ -17,6 +17,12 @@ pub enum Command {
         recursive: bool,
         limit: Option<isize>,
     },
+    ReadHierarchy {
+        waveform_id: String,
+        scope_path: Option<String>,
+        recursive: bool,
+        limit: Option<isize>,
+    },
     ReadSignal {
         waveform_id: String,
         signal_path: String,
@@ -82,6 +88,7 @@ fn parse_command(group: Vec<String>) -> Result<Command, String> {
         "open_waveform" => parse_open_waveform(&cmd_args),
         "close_waveform" => parse_close_waveform(&cmd_args),
         "list_signals" => parse_list_signals(&cmd_args),
+        "read_hierarchy" => parse_read_hierarchy(&cmd_args),
         "read_signal" => parse_read_signal(&cmd_args),
         "get_signal_info" => parse_get_signal_info(&cmd_args),
         "find_signal_events" => parse_find_signal_events(&cmd_args),
@@ -182,6 +189,56 @@ fn parse_list_signals(args: &[String]) -> Result<Command, String> {
         waveform_id,
         name_pattern,
         hierarchy_prefix,
+        recursive,
+        limit,
+    })
+}
+
+fn parse_read_hierarchy(args: &[String]) -> Result<Command, String> {
+    if args.is_empty() {
+        return Err("read_hierarchy requires a waveform_id".to_string());
+    }
+
+    let waveform_id = args[0].clone();
+    let mut scope_path = None;
+    let mut recursive = false;
+    let mut limit = Some(200isize);
+
+    let mut i = 1;
+    while i < args.len() {
+        match args[i].as_str() {
+            "--scope" | "--hierarchy" | "-s" => {
+                i += 1;
+                if i < args.len() {
+                    scope_path = Some(args[i].clone());
+                } else {
+                    return Err("--scope requires a value".to_string());
+                }
+            }
+            "--recursive" | "-r" => {
+                i += 1;
+                if i < args.len() {
+                    recursive = args[i].parse().unwrap_or(false);
+                } else {
+                    return Err("--recursive requires a value (true/false)".to_string());
+                }
+            }
+            "--limit" | "-l" => {
+                i += 1;
+                if i < args.len() {
+                    limit = args[i].parse().ok();
+                } else {
+                    return Err("--limit requires a value".to_string());
+                }
+            }
+            _ => return Err(format!("Unknown option '{}' for read_hierarchy", args[i])),
+        }
+        i += 1;
+    }
+
+    Ok(Command::ReadHierarchy {
+        waveform_id,
+        scope_path,
         recursive,
         limit,
     })
@@ -528,6 +585,49 @@ mod tests {
                 signal_path: "top.clk".to_string(),
                 time_index: Some(5),
                 time_indices: None,
+            }
+        );
+    }
+
+    #[test]
+    fn test_parse_read_hierarchy_minimal() {
+        let args = vec!["read_hierarchy".to_string(), "test.vcd".to_string()];
+        let result = parse_args(args);
+        assert!(result.is_ok());
+        let commands = result.unwrap();
+        assert_eq!(
+            commands[0].clone(),
+            Command::ReadHierarchy {
+                waveform_id: "test.vcd".to_string(),
+                scope_path: None,
+                recursive: false,
+                limit: Some(200),
+            }
+        );
+    }
+
+    #[test]
+    fn test_parse_read_hierarchy_with_options() {
+        let args = vec![
+            "read_hierarchy".to_string(),
+            "test.vcd".to_string(),
+            "--scope".to_string(),
+            "top.submodule".to_string(),
+            "--recursive".to_string(),
+            "true".to_string(),
+            "--limit".to_string(),
+            "50".to_string(),
+        ];
+        let result = parse_args(args);
+        assert!(result.is_ok());
+        let commands = result.unwrap();
+        assert_eq!(
+            commands[0].clone(),
+            Command::ReadHierarchy {
+                waveform_id: "test.vcd".to_string(),
+                scope_path: Some("top.submodule".to_string()),
+                recursive: true,
+                limit: Some(50),
             }
         );
     }

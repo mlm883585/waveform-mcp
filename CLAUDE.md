@@ -13,15 +13,16 @@ An MCP (Model Context Protocol) server for reading and analyzing VCD/FST wavefor
 - **hierarchy.rs**: Signal/scope lookup by hierarchical path
 - **signal.rs**: Signal reading, event finding, and metadata
 
-## MCP Tools (7 total)
+## MCP Tools (8 total)
 
 1. `open_waveform` - Open VCD/FST files, assign optional alias
 2. `close_waveform` - Close waveform and free memory
 3. `list_signals` - List signals with name_pattern, hierarchy_prefix filters
-4. `read_signal` - Read values at time_index or time_indices
-5. `get_signal_info` - Get signal type, width, index range
-6. `find_signal_events` - Find all changes in time range
-7. `find_conditional_events` - Complex condition search with expression parser
+4. `read_hierarchy` - Read hierarchy tree from an optional scope
+5. `read_signal` - Read values at time_index or time_indices
+6. `get_signal_info` - Get signal type, width, index range
+7. `find_signal_events` - Find all changes in time range
+8. `find_conditional_events` - Complex condition search with expression parser
 
 ## Key Dependencies
 
@@ -66,6 +67,7 @@ waveform-cli open_waveform test.vcd -- read_signal test.vcd top.clk --time-index
 - `open_waveform <path> [--alias <name>]` - Open waveform file
 - `close_waveform <id>` - Close waveform
 - `list_signals <id> [--pattern <p>] [--hierarchy <h>] [--recursive <bool>] [--limit <n>]`
+- `read_hierarchy <id> [--scope <scope>] [--recursive <bool>] [--limit <n>]`
 - `read_signal <id> <signal> [--time-index <idx> | --time-indices <list>]`
 - `get_signal_info <id> <signal>`
 - `find_signal_events <id> <signal> [--start <idx>] [--end <idx>] [--limit <n>]`

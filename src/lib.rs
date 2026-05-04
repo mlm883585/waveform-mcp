@@ -14,6 +14,7 @@ pub use condition::find_conditional_events;
 pub use formatting::{format_signal_value, format_time};
 pub use hierarchy::find_scope_by_path;
 pub use hierarchy::find_signal_by_path;
+pub use hierarchy::read_hierarchy;
 pub use signal::find_signal_events;
 pub use signal::get_signal_metadata;
 pub use signal::list_signals;

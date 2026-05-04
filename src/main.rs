@@ -15,7 +15,7 @@ use tokio_util::sync::CancellationToken;
 use tracing_subscriber::prelude::*;
 use waveform_mcp::{
     find_conditional_events, find_signal_by_path, find_signal_events, get_signal_metadata,
-    list_signals, read_signal_values,
+    list_signals, read_hierarchy, read_signal_values,
 };
 
 /// Command line arguments for the waveform MCP server
@@ -65,6 +65,25 @@ fn default_recursive() -> Option<bool> {
 
 fn default_list_signals_limit() -> Option<isize> {
     Some(100)
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
+pub struct ReadHierarchyArgs {
+    pub waveform_id: String,
+    #[serde(default)]
+    pub scope_path: Option<String>,
+    #[serde(default = "default_read_hierarchy_recursive")]
+    pub recursive: Option<bool>,
+    #[serde(default = "default_read_hierarchy_limit")]
+    pub limit: Option<isize>,
+}
+
+fn default_read_hierarchy_recursive() -> Option<bool> {
+    Some(false)
+}
+
+fn default_read_hierarchy_limit() -> Option<isize> {
+    Some(200)
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, schemars::JsonSchema)]
@@ -218,6 +237,45 @@ impl WaveformHandler {
             "Found {} signals:\n{}",
             signals.len(),
             signals.join("\n")
+        ))]))
+    }
+
+    #[tool(
+        description = "Read the waveform module hierarchy as an indented tree. Only module scopes are returned. Use waveform_id from open_waveform. Optional: scope_path to start from a specific scope, recursive (default: false), and limit to cap the number of returned modules."
+    )]
+    async fn read_hierarchy(
+        &self,
+        args: Parameters<ReadHierarchyArgs>,
+    ) -> Result<CallToolResult, McpError> {
+        let args = &args.0;
+        let waveforms = self.waveforms.read().await;
+
+        let waveform = waveforms.get(&args.waveform_id).ok_or_else(|| {
+            McpError::invalid_params(format!("Waveform not found: {}", args.waveform_id), None)
+        })?;
+
+        let hierarchy = waveform.hierarchy();
+        let lines = read_hierarchy(
+            hierarchy,
+            args.scope_path.as_deref(),
+            args.recursive.unwrap_or(false),
+            args.limit,
+        )
+        .map_err(|e| McpError::invalid_params(e, None))?;
+
+        let header = match args.scope_path.as_deref() {
+            Some(path) => format!("Hierarchy rooted at '{}':", path),
+            None => "Hierarchy:".to_string(),
+        };
+        let body = if lines.is_empty() {
+            "No modules found".to_string()
+        } else {
+            lines.join("\n")
+        };
+
+        Ok(CallToolResult::success(vec![Content::text(format!(
+            "{}\n{}",
+            header, body
         ))]))
     }
 
@@ -387,7 +445,7 @@ impl ServerHandler for WaveformHandler {
         ServerInfo::new(ServerCapabilities::builder().enable_tools().build())
             .with_protocol_version(ProtocolVersion::V_2025_06_18)
             .with_server_info(Implementation::from_build_env())
-            .with_instructions("MCP server for reading VCD/FST waveform files using the wellen library. Available tools: open_waveform, close_waveform, list_signals, read_signal, get_signal_info, find_signal_events, find_conditional_events.")
+            .with_instructions("MCP server for reading VCD/FST waveform files using the wellen library. Available tools: open_waveform, close_waveform, list_signals, read_hierarchy, read_signal, get_signal_info, find_signal_events, find_conditional_events.")
     }
 }
 
@@ -400,7 +458,7 @@ async fn main() -> anyhow::Result<()> {
             tracing_subscriber::EnvFilter::try_from_default_env()
                 .unwrap_or_else(|_| "debug".to_string().into()),
         )
-        .with(tracing_subscriber::fmt::layer())
+        .with(tracing_subscriber::fmt::layer().with_writer(std::io::stderr))
         .init();
 
     if args.http {

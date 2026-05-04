@@ -53,6 +53,7 @@ When running in HTTP mode, the server listens on the specified bind address (def
 
 - Open VCD (Value Change Dump) and FST (Fast Signal Trace) waveform files
 - List all signals in a waveform with hierarchical paths
+- Read the waveform module hierarchy as an indented tree
 - Read signal values at specific time indices (single or multiple)
 - Get signal metadata (type, width, index range)
 - Find signal events (changes) within a time range
@@ -61,7 +62,7 @@ When running in HTTP mode, the server listens on the specified bind address (def
 
 ## Tools
 
-The server provides 7 MCP tools:
+The server provides 8 MCP tools:
 
 1. **open_waveform** - Open a waveform file
    - `file_path`: Path to .vcd or .fst file
@@ -95,7 +96,20 @@ The server provides 7 MCP tools:
    top.data
    ```
 
-4. **read_signal** - Read signal values at specific time indices
+4. **read_hierarchy** - Read the waveform module hierarchy as an indented tree
+   - `waveform_id`: ID or alias of the waveform
+   - `scope_path`: Optional scope path to start from
+   - `recursive`: Optional flag to include descendants (default: false)
+   - `limit`: Optional maximum number of modules to return (default: 200)
+
+   **Example response:**
+   ```
+   Hierarchy rooted at 'top':
+   top
+     submodule
+   ```
+
+5. **read_signal** - Read signal values at specific time indices
    - `waveform_id`: ID or alias of the waveform
    - `signal_path`: Hierarchical path to signal (e.g., "top.module.signal")
    - `time_index`: Optional single time index to read
@@ -108,7 +122,7 @@ The server provides 7 MCP tools:
    Time index 20 (20ns): 1
    ```
 
-5. **get_signal_info** - Get metadata about a signal
+6. **get_signal_info** - Get metadata about a signal
    - `waveform_id`: ID or alias of the waveform
    - `signal_path`: Hierarchical path to signal
 
@@ -120,7 +134,7 @@ The server provides 7 MCP tools:
    Index: [7:0]
    ```
 
-6. **find_signal_events** - Find all signal changes within a time range
+7. **find_signal_events** - Find all signal changes within a time range
    - `waveform_id`: ID or alias of the waveform
    - `signal_path`: Hierarchical path to signal
    - `start_time_index`: Optional start of time range (default: 0)
@@ -135,7 +149,7 @@ The server provides 7 MCP tools:
    Time index 20 (20ns): 0
    ```
 
-7. **find_conditional_events** - Find events where a condition is satisfied
+8. **find_conditional_events** - Find events where a condition is satisfied
    - `waveform_id`: ID or alias of waveform
    - `condition`: Conditional expression to evaluate
    - `start_time_index`: Optional start of time range (default: 0)
@@ -203,6 +217,7 @@ waveform-cli open_waveform test.vcd --alias mywave -- \\
 - **open_waveform** `<file_path>` [--alias `<name>`] - Open waveform file
 - **close_waveform** `<id>` - Close waveform
 - **list_signals** `<id>` [--pattern `<p>`] [--hierarchy `<h>`] [--recursive `<bool>`] [--limit `<n>`]
+- **read_hierarchy** `<id>` [--scope `<scope>`] [--recursive `<bool>`] [--limit `<n>`]
 - **read_signal** `<id>` `<signal>` [--time-index `<idx>` | --time-indices `<list>`]
 - **get_signal_info** `<id>` `<signal>` - Get signal metadata
 - **find_signal_events** `<id>` `<signal>` [--start `<idx>`] [--end `<idx>`] [--limit `<n>`]

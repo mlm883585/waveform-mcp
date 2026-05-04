@@ -5,6 +5,7 @@ use tempfile::NamedTempFile;
 use waveform_mcp::find_scope_by_path;
 use waveform_mcp::find_signal_by_path;
 use waveform_mcp::list_signals;
+use waveform_mcp::read_hierarchy;
 
 #[test]
 fn test_signal_full_name() {
@@ -254,4 +255,183 @@ $enddefinitions $end\n\
         3,
         "Should return all signals with -1 limit"
     );
+}
+
+#[test]
+fn test_read_hierarchy_lib_recursive() {
+    let vcd_content = "\
+$date 2024-01-01 $end\n\
+$version Test VCD file $end\n\
+$timescale 1ns $end\n\
+$scope module top $end\n\
+$var wire 1 ! clk $end\n\
+$scope module submodule1 $end\n\
+$var wire 1 @ data1 $end\n\
+$scope module inner $end\n\
+$var wire 1 # data2 $end\n\
+$upscope $end\n\
+$upscope $end\n\
+$scope module submodule2 $end\n\
+$var wire 1 $ data3 $end\n\
+$upscope $end\n\
+$upscope $end\n\
+$enddefinitions $end\n\
+#0\n\
+0!\n\
+0@\n\
+0#\n\
+0$";
+
+    let mut temp_file = NamedTempFile::new().expect("Failed to create temp file");
+    write!(temp_file, "{}", vcd_content).expect("Failed to write VCD content");
+    temp_file.flush().expect("Failed to flush");
+
+    let waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
+    let hierarchy = waveform.hierarchy();
+
+    let lines = read_hierarchy(hierarchy, Some("top"), true, None)
+        .expect("Should read hierarchy for 'top'");
+
+    assert_eq!(
+        lines,
+        vec!["top", "  submodule1", "    inner", "  submodule2",]
+    );
+}
+
+#[test]
+fn test_read_hierarchy_lib_non_recursive_scope() {
+    let vcd_content = "\
+$date 2024-01-01 $end\n\
+$version Test VCD file $end\n\
+$timescale 1ns $end\n\
+$scope module top $end\n\
+$var wire 1 ! clk $end\n\
+$scope module submodule1 $end\n\
+$var wire 1 @ data1 $end\n\
+$scope module inner $end\n\
+$var wire 1 # data2 $end\n\
+$upscope $end\n\
+$upscope $end\n\
+$upscope $end\n\
+$enddefinitions $end\n\
+#0\n\
+0!\n\
+0@\n\
+0#";
+
+    let mut temp_file = NamedTempFile::new().expect("Failed to create temp file");
+    write!(temp_file, "{}", vcd_content).expect("Failed to write VCD content");
+    temp_file.flush().expect("Failed to flush");
+
+    let waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
+    let hierarchy = waveform.hierarchy();
+
+    let lines = read_hierarchy(hierarchy, Some("top.submodule1"), false, None)
+        .expect("Should read hierarchy for 'top.submodule1'");
+
+    assert_eq!(lines, vec!["top.submodule1", "  inner"]);
+}
+
+#[test]
+fn test_read_hierarchy_lib_with_limit() {
+    let vcd_content = "\
+$date 2024-01-01 $end\n\
+$version Test VCD file $end\n\
+$timescale 1ns $end\n\
+$scope module top $end\n\
+$var wire 1 ! clk $end\n\
+$scope module submodule1 $end\n\
+$var wire 1 @ data1 $end\n\
+$scope module inner $end\n\
+$var wire 1 # data2 $end\n\
+$upscope $end\n\
+$upscope $end\n\
+$scope module submodule2 $end\n\
+$var wire 1 $ data3 $end\n\
+$upscope $end\n\
+$upscope $end\n\
+$enddefinitions $end\n\
+#0\n\
+0!\n\
+0@\n\
+0#\n\
+0$";
+
+    let mut temp_file = NamedTempFile::new().expect("Failed to create temp file");
+    write!(temp_file, "{}", vcd_content).expect("Failed to write VCD content");
+    temp_file.flush().expect("Failed to flush");
+
+    let waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
+    let hierarchy = waveform.hierarchy();
+
+    let lines =
+        read_hierarchy(hierarchy, Some("top"), true, Some(3)).expect("Should read hierarchy");
+
+    assert_eq!(
+        lines,
+        vec![
+            "top",
+            "  submodule1",
+            "    inner",
+            "... truncated after 3 items",
+        ]
+    );
+}
+
+#[test]
+fn test_read_hierarchy_lib_missing_scope() {
+    let vcd_content = "\
+$date 2024-01-01 $end\n\
+$version Test VCD file $end\n\
+$timescale 1ns $end\n\
+$scope module top $end\n\
+$var wire 1 ! clk $end\n\
+$upscope $end\n\
+$enddefinitions $end\n\
+#0\n\
+0!";
+
+    let mut temp_file = NamedTempFile::new().expect("Failed to create temp file");
+    write!(temp_file, "{}", vcd_content).expect("Failed to write VCD content");
+    temp_file.flush().expect("Failed to flush");
+
+    let waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
+    let hierarchy = waveform.hierarchy();
+
+    let result = read_hierarchy(hierarchy, Some("top.missing"), true, None);
+    assert_eq!(result.unwrap_err(), "Scope not found: top.missing");
+}
+
+#[test]
+fn test_read_hierarchy_lib_skips_non_module_scopes() {
+    let vcd_content = "\
+$date 2024-01-01 $end\n\
+$version Test VCD file $end\n\
+$timescale 1ns $end\n\
+$scope module top $end\n\
+$scope begin genblk1 $end\n\
+$scope module submodule1 $end\n\
+$var wire 1 ! data1 $end\n\
+$scope module inner $end\n\
+$var wire 1 @ data2 $end\n\
+$upscope $end\n\
+$upscope $end\n\
+$upscope $end\n\
+$upscope $end\n\
+$enddefinitions $end\n\
+#0\n\
+0!\n\
+0@";
+
+    let mut temp_file = NamedTempFile::new().expect("Failed to create temp file");
+    write!(temp_file, "{}", vcd_content).expect("Failed to write VCD content");
+    temp_file.flush().expect("Failed to flush");
+
+    let waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
+    let hierarchy = waveform.hierarchy();
+
+    let lines = read_hierarchy(hierarchy, Some("top"), true, None)
+        .expect("Should read hierarchy for 'top'");
+
+    assert_eq!(lines, vec!["top", "  submodule1", "    inner",]);
 }
