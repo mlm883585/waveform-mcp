@@ -5,6 +5,8 @@
 /.qwen/
 /.claude/
 /.agents/
+/docs/reference/
+/docs/superpowers/
 
 __pycache__/
 *.py[cod]
@@ -19,6 +21,8 @@ tools/deps-extractor/parsetab.py
 tools/deps-extractor/build/
 tools/deps-extractor/dist/
 tools/deps-extractor/*.spec
+example-skills/skills/*/bin/
+*.exe
 
 # Local caches and editor noise
 .DS_Store
