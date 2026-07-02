@@ -1,0 +1,62 @@
+# annotations.yaml -- 手工标注，补充自动提取无法覆盖的语义
+#
+# 用法:
+#   python deps_converter.py deps_raw.json -o deps.yaml --annotate annotations.yaml
+
+# ============================================================
+# 信号路径覆盖
+# ============================================================
+# 将 Vivado elaborate 后的路径通过正则替换为 canonical 名
+signal_overrides:
+  # generate 通道索引 → 逻辑通道号
+  - vivado_pattern: "TOP\\.gen_ch__(\\d+)"
+    canonical_template: "TOP.ch{0}"
+  # 实例前缀 u_ → 逻辑名
+  - vivado_pattern: "\\.u_([a-zA-Z]\\w*)"
+    canonical_template: ".{0}"
+
+# ============================================================
+# CDC 边界标注
+# ============================================================
+# 标注跨时钟域信号，BFS 在此停止自动展开
+cdc_boundaries:
+  - from_clock: "clk_sys"
+    to_clock: "clk_rf"
+    sync_stages: 2      # 同步器 FF 级数（默认 2）
+    signals:
+      - "TOP.sys_domain.sync_flag"
+    description: "系统时钟域到射频时钟域的 2-FF 同步器边界"
+
+# ============================================================
+# 黑盒模块标注
+# ============================================================
+# 不展开内部依赖的模块（IP 核、外部控制器等）
+blackbox_modules:
+  - instance: "TOP.u_ddr_ctrl"
+    boundary_kind: blackbox
+    description: "DDR 控制器 IP，内部不展开"
+  - instance: "TOP.u_clk_wiz"
+    boundary_kind: blackbox
+    description: "Clock Wizard IP，时钟生成模块"
+
+# ============================================================
+# 特殊延迟覆盖
+# ============================================================
+# 自动提取的 BRAM latency 通常为 2，但实际配置可能不同
+latency_overrides:
+  - signal: "TOP.bram_rd_data"
+    latency_cycles: 3     # 实际 BRAM 配置为 3 周期读延迟
+    clock: "clk_sys"
+    description: "BRAM 读延迟由寄存器配置决定"
+
+# ============================================================
+# 常量/配置信号
+# ============================================================
+# 不随仿真变化的固定值信号
+constants:
+  - signal: "TOP.CFG_MODE"
+    value: "2'b01"
+    description: "工作模式配置，固定为模式 1"
+  - signal: "TOP.CHANNEL_COUNT"
+    value: "8"
+    description: "通道数固定为 8"

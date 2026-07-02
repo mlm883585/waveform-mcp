@@ -1,0 +1,241 @@
+{
+  "format_version": "1.0",
+  "extractor": "pyverilog",
+  "extract_time": "2026-05-27T09:39:04",
+  "top_module": "fsm_counter",
+  "depth": 2,
+  "clocks": [
+    {
+      "logical_name": "clk",
+      "waveform_path": "TOP.clk",
+      "period_ns": 0.0
+    }
+  ],
+  "boundary_ports": [
+    {
+      "path": "TOP.clk",
+      "direction": "IN",
+      "width": 1,
+      "kind": "input_port"
+    },
+    {
+      "path": "TOP.rst_n",
+      "direction": "IN",
+      "width": 1,
+      "kind": "input_port"
+    },
+    {
+      "path": "TOP.start",
+      "direction": "IN",
+      "width": 1,
+      "kind": "input_port"
+    },
+    {
+      "path": "TOP.threshold",
+      "direction": "IN",
+      "width": 4,
+      "kind": "input_port"
+    },
+    {
+      "path": "TOP.state",
+      "direction": "OUT",
+      "width": 2,
+      "kind": "output_port"
+    },
+    {
+      "path": "TOP.count",
+      "direction": "OUT",
+      "width": 4,
+      "kind": "output_port"
+    },
+    {
+      "path": "TOP.done",
+      "direction": "OUT",
+      "width": 1,
+      "kind": "output_port"
+    }
+  ],
+  "modules": [],
+  "edges": [
+    {
+      "source": "TOP.next_state",
+      "target": "TOP.state",
+      "inferred_type": "combinational",
+      "inferred_by": "NET",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    },
+    {
+      "source": "TOP.S_IDLE",
+      "target": "TOP.state",
+      "inferred_type": "combinational",
+      "inferred_by": "NET",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    },
+    {
+      "source": "TOP.state",
+      "target": "TOP._rn0_next_state",
+      "inferred_type": "combinational",
+      "inferred_by": "NET",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    },
+    {
+      "source": "TOP._rn4_next_state",
+      "target": "TOP.next_state",
+      "inferred_type": "combinational",
+      "inferred_by": "DATAFLOW",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    },
+    {
+      "source": "TOP._rn6_next_state",
+      "target": "TOP.next_state",
+      "inferred_type": "combinational",
+      "inferred_by": "DATAFLOW",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    },
+    {
+      "source": "TOP.start",
+      "target": "TOP.next_state",
+      "inferred_type": "combinational",
+      "inferred_by": "DATAFLOW",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    },
+    {
+      "source": "TOP._rn0_next_state",
+      "target": "TOP.next_state",
+      "inferred_type": "combinational",
+      "inferred_by": "DATAFLOW",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    },
+    {
+      "source": "TOP._rn8_next_state",
+      "target": "TOP.next_state",
+      "inferred_type": "combinational",
+      "inferred_by": "DATAFLOW",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    },
+    {
+      "source": "TOP._rn2_next_state",
+      "target": "TOP.next_state",
+      "inferred_type": "combinational",
+      "inferred_by": "DATAFLOW",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    },
+    {
+      "source": "TOP._rn5_done",
+      "target": "TOP.done",
+      "inferred_type": "combinational",
+      "inferred_by": "DATAFLOW",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    },
+    {
+      "source": "TOP._rn1_done",
+      "target": "TOP.done",
+      "inferred_type": "combinational",
+      "inferred_by": "DATAFLOW",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    },
+    {
+      "source": "TOP._rn9_done",
+      "target": "TOP.done",
+      "inferred_type": "combinational",
+      "inferred_by": "DATAFLOW",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    },
+    {
+      "source": "TOP._rn7_done",
+      "target": "TOP.done",
+      "inferred_type": "combinational",
+      "inferred_by": "DATAFLOW",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    },
+    {
+      "source": "TOP._rn3_done",
+      "target": "TOP.done",
+      "inferred_type": "combinational",
+      "inferred_by": "DATAFLOW",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    },
+    {
+      "source": "TOP.S_RUN",
+      "target": "TOP._rn2_next_state",
+      "inferred_type": "combinational",
+      "inferred_by": "NET",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    },
+    {
+      "source": "TOP.S_DONE",
+      "target": "TOP._rn4_next_state",
+      "inferred_type": "combinational",
+      "inferred_by": "NET",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    },
+    {
+      "source": "TOP.S_IDLE",
+      "target": "TOP._rn6_next_state",
+      "inferred_type": "combinational",
+      "inferred_by": "NET",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    },
+    {
+      "source": "TOP.S_IDLE",
+      "target": "TOP._rn8_next_state",
+      "inferred_type": "combinational",
+      "inferred_by": "NET",
+      "clock": null,
+      "clock_edge": null,
+      "latency_cycles": 0,
+      "details": ""
+    }
+  ]
+}

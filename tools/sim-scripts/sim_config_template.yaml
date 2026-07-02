@@ -1,0 +1,58 @@
+# Simulation Configuration Template
+# Copy this file to your project as sim_config.yaml and modify as needed.
+
+project_name: "my_project"
+project_root: "."  # Relative or absolute path to project root
+
+# Vivado configuration (optional - only used if vivado.enabled = true)
+# vivado_bin 优先使用 VIVADO_PATH 环境变量（指向 Xilinx 安装根目录），此字段作为备选
+vivado:
+  enabled: false
+  vivado_bin: ""  # 留空则自动从 VIVADO_PATH 环境变量查找，或直接填写完整路径
+  project_file: "my_project.xpr"
+  compile_simlib_dir: "D:/eda_libs/vivado_2018_3_modelsim"
+  export_compile_order: true
+
+# ModelSim configuration (required)
+modelsim:
+  modelsim_bin: "D:/MentorGraphics/ModelSim/win64"
+  work_lib: "sim_work"
+  top_module: "tb_top"
+  vlog_flags:
+    - "-sv"
+    - "+acc"
+    - "+define+SIM"
+  vsim_flags:
+    - "-c"
+    - "-t"
+    - "1ps"
+    - "-assertdebug"
+
+# Compile sources
+compile_sources:
+  filelist: "sim/filelist.f"
+  include_dirs:
+    - "rtl/include"
+    - "tb/include"
+  macros:
+    - "SIM"
+
+# Simulation settings
+simulation:
+  mode: "run_all"           # run_all | fixed_time
+  run_time: null             # mode=fixed_time: e.g. "10us"
+  stop_on_error: false
+  transcript_file: "sim_output/transcript.log"
+  summary_file: "sim_output/run_summary.json"
+
+# Waveform dump settings
+wave_dump:
+  format: "vcd"              # vcd | wlf
+  file: "sim_output/dump.vcd"
+  # Visibility mode: quick (top signals only), debug (+acc on key modules), deep (full +acc)
+  visibility: "debug"
+  recursive_scopes:
+    - "/tb_top/dut/*"
+  critical_signals:
+    - "/tb_top/dut/data_o"
+    - "/tb_top/dut/valid"

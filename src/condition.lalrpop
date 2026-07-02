@@ -29,8 +29,18 @@ pub BitwiseAnd: Condition = {
 };
 
 pub Comparison: Condition = {
-    <left: Comparison> "==" <right: Atom> => Condition::Eq(Box::new(left), Box::new(right)),
-    <left: Comparison> "!=" <right: Atom> => Condition::Neq(Box::new(left), Box::new(right)),
+    <left: Comparison> "==" <right: Additive> => Condition::Eq(Box::new(left), Box::new(right)),
+    <left: Comparison> "!=" <right: Additive> => Condition::Neq(Box::new(left), Box::new(right)),
+    <left: Comparison> "<=" <right: Additive> => Condition::Le(Box::new(left), Box::new(right)),
+    <left: Comparison> ">=" <right: Additive> => Condition::Ge(Box::new(left), Box::new(right)),
+    <left: Comparison> "<" <right: Additive> => Condition::Lt(Box::new(left), Box::new(right)),
+    <left: Comparison> ">" <right: Additive> => Condition::Gt(Box::new(left), Box::new(right)),
+    Additive,
+};
+
+pub Additive: Condition = {
+    <left: Additive> "+" <right: Atom> => Condition::Add(Box::new(left), Box::new(right)),
+    <left: Additive> "-" <right: Atom> => Condition::Sub(Box::new(left), Box::new(right)),
     Atom,
 };
 
@@ -39,6 +49,11 @@ pub Atom: Condition = {
     "!" <expr: Atom> => Condition::Not(Box::new(expr)),
     "~" <expr: Atom> => Condition::BitwiseNot(Box::new(expr)),
     "$past" "(" <expr: Expr> ")" => Condition::Past(Box::new(expr)),
+    "$past" "(" <expr: Expr> "," <n:DecLiteral> ")" => Condition::PastN(Box::new(expr), n),
+    "$rose" "(" <ident:Identifier> ")" => Condition::Rose(ident),
+    "$fell" "(" <ident:Identifier> ")" => Condition::Fell(ident),
+    "$stable" "(" <ident:Identifier> ")" => Condition::Stable(ident),
+    <s:r"[0-9]+"> => Condition::Literal(crate::condition::parse_unsized_decimal_literal(s).unwrap()),
     Literal => Condition::Literal(<>),
     <signal:SignalWithBitSlice> => signal,
 };
@@ -58,9 +73,9 @@ pub DecLiteral: u32 = {
 };
 
 pub Literal: Literal = {
-    <s:r"[0-9]+'b[01_]+"> => crate::condition::parse_binary_literal(s),
-    <s:r"[0-9]+'d[0-9_]+"> => crate::condition::parse_decimal_literal(s),
-    <s:r"[0-9]+'h[0-9a-fA-F_]+"> => crate::condition::parse_hex_literal(s),
+    <s:r"[0-9]+'b[01_]+"> => crate::condition::parse_binary_literal(s).unwrap(),
+    <s:r"[0-9]+'d[0-9_]+"> => crate::condition::parse_decimal_literal(s).unwrap(),
+    <s:r"[0-9]+'h[0-9a-fA-F_]+"> => crate::condition::parse_hex_literal(s).unwrap(),
 };
 
 Identifier: String = {

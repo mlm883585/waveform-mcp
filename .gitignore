@@ -1,1 +1,25 @@
-/target
+/target/
+/tmp/
+/.pytest_cache/
+/.codegraph/
+/.qwen/
+/.claude/
+/.agents/
+
+__pycache__/
+*.py[cod]
+
+# Generated parser/debug artifacts
+/parser.out
+/parsetab.py
+tools/deps-extractor/parser.out
+tools/deps-extractor/parsetab.py
+
+# Packaged/generated sidecar outputs
+tools/deps-extractor/build/
+tools/deps-extractor/dist/
+tools/deps-extractor/*.spec
+
+# Local caches and editor noise
+.DS_Store
+Thumbs.db

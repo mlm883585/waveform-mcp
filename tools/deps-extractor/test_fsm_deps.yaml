@@ -1,0 +1,141 @@
+format_version: '1.0'
+description: Auto-generated from pyverilog extraction of fsm_counter
+signal_aliases: []
+clock_aliases:
+- clock_name: clk
+  modelsim: TOP.clk
+dependencies:
+- output: TOP._rn0_next_state
+  category: state
+  depends_on:
+  - signal: TOP.state
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+- output: TOP._rn2_next_state
+  category: state
+  depends_on:
+  - signal: TOP.S_RUN
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+- output: TOP._rn4_next_state
+  category: state
+  depends_on:
+  - signal: TOP.S_DONE
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+- output: TOP._rn6_next_state
+  category: state
+  depends_on:
+  - signal: TOP.S_IDLE
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+- output: TOP._rn8_next_state
+  category: state
+  depends_on:
+  - signal: TOP.S_IDLE
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+- output: TOP.done
+  category: data
+  depends_on:
+  - signal: TOP._rn5_done
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+  - signal: TOP._rn1_done
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+  - signal: TOP._rn9_done
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+  - signal: TOP._rn7_done
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+  - signal: TOP._rn3_done
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+- output: TOP.next_state
+  category: state
+  depends_on:
+  - signal: TOP._rn4_next_state
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+  - signal: TOP._rn6_next_state
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+  - signal: TOP.start
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+  - signal: TOP._rn0_next_state
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+  - signal: TOP._rn8_next_state
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+  - signal: TOP._rn2_next_state
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+- output: TOP.start
+  category: data
+  depends_on:
+  - signal: TOP.start
+    type: boundary
+    boundary_kind: input_port
+    clock: null
+    edge: null
+    latency_cycles: 0
+    check: null
+- output: TOP.state
+  category: state
+  depends_on:
+  - signal: TOP.next_state
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+  - signal: TOP.S_IDLE
+    type: combinational
+    clock: null
+    edge: null
+    latency_cycles: 0
+- output: TOP.threshold
+  category: data
+  depends_on:
+  - signal: TOP.threshold
+    type: boundary
+    boundary_kind: input_port
+    clock: null
+    edge: null
+    latency_cycles: 0
+    check: null

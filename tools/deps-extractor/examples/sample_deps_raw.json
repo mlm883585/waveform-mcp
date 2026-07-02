@@ -1,0 +1,73 @@
+{
+  "format_version": "1.0",
+  "extractor": "vivado_tcl",
+  "extract_time": "2026-05-26T10:00:00",
+  "top_module": "simple_reg",
+  "depth": 2,
+
+  "clocks": [
+    {
+      "logical_name": "clk",
+      "waveform_path": "TOP.clk",
+      "period_ns": 20.0
+    }
+  ],
+
+  "boundary_ports": [
+    {
+      "path": "TOP.clk",
+      "direction": "IN",
+      "width": 1,
+      "kind": "input_port"
+    },
+    {
+      "path": "TOP.rst_n",
+      "direction": "IN",
+      "width": 1,
+      "kind": "input_port"
+    },
+    {
+      "path": "TOP.data_i",
+      "direction": "IN",
+      "width": 8,
+      "kind": "input_port"
+    },
+    {
+      "path": "TOP.enable",
+      "direction": "IN",
+      "width": 1,
+      "kind": "input_port"
+    },
+    {
+      "path": "TOP.data_o",
+      "direction": "OUT",
+      "width": 8,
+      "kind": "output_port"
+    }
+  ],
+
+  "modules": [],
+
+  "edges": [
+    {
+      "source": "TOP.data_i",
+      "target": "TOP.data_o",
+      "inferred_type": "sequential",
+      "inferred_by": "FF",
+      "clock": "clk",
+      "clock_edge": "posedge",
+      "latency_cycles": 1,
+      "details": "FDRE: TOP.data_o_reg"
+    },
+    {
+      "source": "TOP.enable",
+      "target": "TOP.data_o",
+      "inferred_type": "control",
+      "inferred_by": "FF_CE",
+      "clock": "clk",
+      "clock_edge": "posedge",
+      "latency_cycles": 0,
+      "details": "CE pin of FDRE: TOP.data_o_reg"
+    }
+  ]
+}

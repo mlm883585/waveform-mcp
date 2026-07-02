@@ -1,7 +1,7 @@
 //! Formatting tests
 
-use waveform_mcp::format_signal_value;
-use waveform_mcp::format_time;
+use wave_analyzer_mcp::format_signal_value;
+use wave_analyzer_mcp::format_time;
 
 #[test]
 fn test_format_signal_value() {
@@ -39,15 +39,25 @@ fn test_format_signal_value() {
     let binary9 = wellen::SignalValue::Binary(&binary_data9, 9);
     assert_eq!(format_signal_value(binary9), "9'h1cd");
 
-    // Test FourValue
+    // Test FourValue (now uses Verilog format like Binary)
     let four_data: [u8; 1] = [0];
     let four = wellen::SignalValue::FourValue(&four_data, 1);
-    assert_eq!(format_signal_value(four), "[0]");
+    assert_eq!(format_signal_value(four), "1'b0");
 
-    // Test NineValue
+    // Test NineValue (now uses Verilog format like Binary)
     let nine_data: [u8; 1] = [0];
     let nine = wellen::SignalValue::NineValue(&nine_data, 1);
-    assert_eq!(format_signal_value(nine), "[0]");
+    assert_eq!(format_signal_value(nine), "1'b0");
+
+    // Test FourValue with multi-bit: 8 logical bits need 2 bytes in FourValue encoding.
+    // FourValue encoding: 00=0, 01=1, 10=X, 11=Z, packed MSB-first per wellen.
+    // For value=2 (binary 00000010, only bit1=1):
+    //   bit7=00, bit6=00, bit5=00, bit4=00 → byte0 = 0x00
+    //   bit3=00, bit2=00, bit1=01, bit0=00 → byte1 = 0x04
+    //   Display: "00000010" → BigUint=2 → format: "8'h02"
+    let four_data8: [u8; 2] = [0x00, 0x04];
+    let four8 = wellen::SignalValue::FourValue(&four_data8, 8);
+    assert_eq!(format_signal_value(four8), "8'h02");
 
     // Test String
     let string = wellen::SignalValue::String("test");

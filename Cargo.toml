@@ -1,12 +1,12 @@
 [package]
-name = "waveform-mcp"
+name = "wave-analyzer-mcp"
 version = "0.5.0"
 edition = "2024"
 description = "MCP server for reading VCD/FST waveform files using the wellen library"
 license = "MIT"
 readme = "README.md"
 authors = ["Jiajie Chen <c@jia.je>"]
-repository = "https://github.com/jiegec/waveform-mcp"
+repository = "https://github.com/jiegec/wave-analyzer-mcp"
 keywords = ["waveform", "vcd", "fst", "mcp"]
 categories = ["command-line-utilities", "development-tools"]
 
@@ -14,12 +14,12 @@ categories = ["command-line-utilities", "development-tools"]
 path = "src/lib.rs"
 
 [[bin]]
-name = "waveform-mcp"
-path = "src/main.rs"
+name = "wave-analyzer-mcp"
+path = "src/server/mod.rs"
 
 [[bin]]
-name = "waveform-cli"
-path = "src/bin/waveform-cli.rs"
+name = "wave-analyzer-cli"
+path = "src/bin/cli/mod.rs"
 
 [dependencies]
 wellen = "0.20"
@@ -28,7 +28,6 @@ tokio = { version = "1.48", features = ["full"] }
 tokio-util = { version = "0.7", features = [] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-anyhow = "1.0"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 async-trait = "0.1"
@@ -38,6 +37,9 @@ axum = "0.8.8"
 clap = { version = "4.5.53", features = ["derive"] }
 num-bigint = "0.4"
 num-traits = "0.2"
+serde_yaml = "0.9"
+regex = "1"
+thiserror = "2"
 
 [build-dependencies]
 lalrpop = "0.23"

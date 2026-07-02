@@ -1,0 +1,44 @@
+format_version: '1.0'
+description: Auto-generated from vivado_tcl extraction of simple_reg
+signal_aliases: []
+clock_aliases:
+- clock_name: clk
+  modelsim: TOP.clk
+dependencies:
+- output: TOP.data_i
+  category: data
+  depends_on:
+  - signal: TOP.data_i
+    type: boundary
+    boundary_kind: input_port
+    clock: null
+    edge: null
+    latency_cycles: 0
+    check: null
+- output: TOP.data_o
+  category: data
+  depends_on:
+  - signal: TOP.data_i
+    type: sequential
+    clock: clk
+    edge: posedge
+    latency_cycles: 1
+    check: '='
+    description: 'FDRE: TOP.data_o_reg'
+  - signal: TOP.enable
+    type: control
+    clock: clk
+    edge: posedge
+    latency_cycles: 0
+    check: '>0'
+    description: 'CE pin of FDRE: TOP.data_o_reg'
+- output: TOP.enable
+  category: control
+  depends_on:
+  - signal: TOP.enable
+    type: boundary
+    boundary_kind: input_port
+    clock: null
+    edge: null
+    latency_cycles: 0
+    check: null

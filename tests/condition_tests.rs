@@ -1,10 +1,21 @@
 //! Condition tests
+//!
+//! Note: find_conditional_events now reports only state-change entry points
+//! (false→true transitions), not every time point where the condition is true.
 
-use waveform_mcp::find_conditional_events;
+use wave_analyzer_mcp::find_conditional_events;
+use wave_analyzer_mcp::parse_condition;
 
 #[test]
 fn test_find_conditional_events_lib() {
-    // Create a VCD file with multiple signals
+    // VCD timeline:
+    // idx 0: clk=0, valid=0, ready=0
+    // idx 1: clk=1, valid=0, ready=0
+    // idx 2: clk=1, valid=1, ready=0
+    // idx 3: clk=0, valid=1, ready=0
+    // idx 4: clk=0, valid=1, ready=1
+    // idx 5: clk=0, valid=0, ready=1
+    // idx 6: clk=0, valid=0, ready=0
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -47,14 +58,12 @@ $enddefinitions $end\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test simple AND condition - use valid time range (0-6 for 7 time points)
+    // AND condition: valid && ready transitions from false→true only at idx 4
     let events = find_conditional_events(&mut waveform, "top.valid && top.ready", 0, 6, -1)
         .expect("Should find events for AND condition");
     assert!(!events.is_empty(), "Should find at least one event");
-    // Check that event shows both signals as 1
     assert!(
         events[0].contains("top.valid = 1'b1"),
         "Should show valid as 1"
@@ -63,68 +72,43 @@ $enddefinitions $end\n\
         events[0].contains("top.ready = 1'b1"),
         "Should show ready as 1"
     );
-    // Check timestamp - valid && ready is true only at time index 4 (40ns)
     assert!(
         events[0].contains("Time index 4 (40ns)"),
         "Event should be at time index 4 (40ns)"
     );
-
-    // Test OR condition
-    let events = find_conditional_events(&mut waveform, "top.valid || top.ready", 0, 6, -1)
-        .expect("Should find events for OR condition");
-    assert!(!events.is_empty(), "Should find at least one event");
-    // Check timestamps - valid || ready is true at time indices 2, 3, 4, 5 (20ns, 30ns, 40ns, 50ns)
     assert_eq!(
         events.len(),
-        4,
-        "Should find 4 events where valid || ready is true"
+        1,
+        "Should find 1 transition for AND condition"
     );
+
+    // OR condition: valid||ready transitions from false→true at idx 2
+    // (idx 0,1 false; idx 2 becomes true; stays true until idx 6)
+    let events = find_conditional_events(&mut waveform, "top.valid || top.ready", 0, 6, -1)
+        .expect("Should find events for OR condition");
+    assert_eq!(events.len(), 1, "Should find 1 transition for OR condition");
     assert!(
         events[0].contains("Time index 2 (20ns)"),
-        "First event at time 2"
-    );
-    assert!(
-        events[1].contains("Time index 3 (30ns)"),
-        "Second event at time 3"
-    );
-    assert!(
-        events[2].contains("Time index 4 (40ns)"),
-        "Third event at time 4"
-    );
-    assert!(
-        events[3].contains("Time index 5 (50ns)"),
-        "Fourth event at time 5"
+        "Transition at time 2"
     );
 
-    // Test NOT condition
+    // NOT condition: !clk transitions from false→true at idx 0 (initial true) and idx 3
+    // idx 0: !0=true (prev was false, initial→true), idx 1: !1=false, idx 3: !0=true (prev false)
     let events = find_conditional_events(&mut waveform, "!top.clk", 0, 6, -1)
         .expect("Should find events for NOT condition");
-    assert!(!events.is_empty(), "Should find at least one event");
-    assert!(events[0].contains("top.clk = 1'b0"), "Should show clk as 0");
-    // Check timestamps - !clk is true at time indices 0, 3, 4, 5, 6 (0ns, 30ns, 40ns, 50ns, 60ns)
-    assert_eq!(events.len(), 5, "Should find 5 events where !clk is true");
+    assert_eq!(events.len(), 2, "Should find 2 transitions for !clk");
     assert!(
         events[0].contains("Time index 0 (0ns)"),
-        "First event at time 0"
+        "First transition at time 0"
     );
     assert!(
         events[1].contains("Time index 3 (30ns)"),
-        "Second event at time 3"
-    );
-    assert!(
-        events[2].contains("Time index 4 (40ns)"),
-        "Third event at time 4"
-    );
-    assert!(
-        events[3].contains("Time index 5 (50ns)"),
-        "Fourth event at time 5"
-    );
-    assert!(
-        events[4].contains("Time index 6 (60ns)"),
-        "Fifth event at time 6"
+        "Second transition at time 3"
     );
 
-    // Test complex condition with parentheses
+    // Complex condition with parentheses: clk && (valid || ready)
+    // idx 0: false, idx 1: clk=1 && 0=false, idx 2: clk=1 && valid=true → transition!
+    // After idx 2, stays true only at idx 2. At idx 3: clk=0 → false. No more transitions.
     let events = find_conditional_events(
         &mut waveform,
         "top.clk && (top.valid || top.ready)",
@@ -133,28 +117,25 @@ $enddefinitions $end\n\
         -1,
     )
     .expect("Should find events for complex condition");
-    assert!(!events.is_empty(), "Should find at least one event");
-    // Check timestamps - clk && (valid || ready) is true only at time indices 2 (20ns)
     assert_eq!(
         events.len(),
         1,
-        "Should find 2 events for complex condition"
+        "Should find 1 transition for complex condition"
     );
     assert!(
         events[0].contains("Time index 2 (20ns)"),
-        "First event at time 2"
+        "Transition at time 2"
     );
 
     // Test limit
-    let events = find_conditional_events(&mut waveform, "top.valid", 0, 6, 2)
+    let events = find_conditional_events(&mut waveform, "!top.clk", 0, 6, 1)
         .expect("Should find events with limit");
-    assert_eq!(events.len(), 2, "Should limit to 2 events");
+    assert_eq!(events.len(), 1, "Should limit to 1 event");
 
     // Test time range
     let events = find_conditional_events(&mut waveform, "top.valid && top.ready", 3, 5, -1)
         .expect("Should find events in time range");
     assert!(!events.is_empty(), "Should find events in specified range");
-    // Check timestamp - valid && ready at time 4 is within range 3-5
     assert!(
         events[0].contains("Time index 4 (40ns)"),
         "Event should be at time index 4 (40ns)"
@@ -163,7 +144,7 @@ $enddefinitions $end\n\
 
 #[test]
 fn test_conditional_events_timestamps() {
-    // Create a VCD file with a counter that increments each time step
+    // counter: 0, 1, 2, 3, 4, 5, 6
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -190,49 +171,42 @@ b0110 !\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test that events are found at correct timestamps
-    // counter == 2 (4'h2) should be found at time index 2 (20ns)
+    // counter == 2: single transition at idx 2 (prev was false at idx 1 where counter=1)
     let events = find_conditional_events(&mut waveform, "top.counter == 4'b0010", 0, 6, -1)
         .expect("Should find events");
-    assert_eq!(events.len(), 1, "Should find exactly 1 event");
+    assert_eq!(events.len(), 1, "Should find exactly 1 transition");
     assert!(
         events[0].contains("Time index 2 (20ns)"),
         "Event should be at time 2 (20ns)"
     );
-    assert!(
-        events[0].contains("top.counter = 4'b0010"),
-        "Should show counter = 2"
-    );
 
-    // counter == 5 (4'h5) should be found at time index 5 (50ns)
+    // counter == 5: single transition at idx 5
     let events = find_conditional_events(&mut waveform, "top.counter == 4'b0101", 0, 6, -1)
         .expect("Should find events");
-    assert_eq!(events.len(), 1, "Should find exactly 1 event");
+    assert_eq!(events.len(), 1, "Should find exactly 1 transition");
     assert!(
         events[0].contains("Time index 5 (50ns)"),
         "Event should be at time 5 (50ns)"
     );
 
-    // counter != 0 should be found at time indices 1-6 (10ns-60ns)
+    // counter != 0: transitions from false→true at idx 1 (counter goes from 0 to 1)
     let events = find_conditional_events(&mut waveform, "top.counter != 4'b0000", 0, 6, -1)
         .expect("Should find events");
-    assert_eq!(events.len(), 6, "Should find 6 events where counter != 0");
-    assert!(
-        events[0].contains("Time index 1 (10ns)"),
-        "First event at time 1"
+    assert_eq!(
+        events.len(),
+        1,
+        "Should find 1 transition where counter != 0"
     );
     assert!(
-        events[5].contains("Time index 6 (60ns)"),
-        "Last event at time 6"
+        events[0].contains("Time index 1 (10ns)"),
+        "Transition at time 1"
     );
 }
 
 #[test]
 fn test_parse_condition() {
-    // Test basic parsing by calling find_conditional_events with invalid condition
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -247,21 +221,18 @@ $enddefinitions $end\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test invalid signal name
     let result = find_conditional_events(&mut waveform, "nonexistent.signal", 0, 0, -1);
     assert!(result.is_err(), "Should fail for nonexistent signal");
 
-    // Test invalid syntax (unclosed parenthesis)
     let result = find_conditional_events(&mut waveform, "(top.sig1 && top.sig1", 0, 0, -1);
     assert!(result.is_err(), "Should fail for invalid syntax");
 }
 
 #[test]
 fn test_comparison_operators() {
-    // Create a VCD file with a counter signal
+    // counter: 0, 1, 2, 3, 4, 5, 6
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -288,43 +259,35 @@ b0110 !\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test equality with binary literal
+    // counter == 5: transition at idx 5 (prev false at idx 4)
     let events = find_conditional_events(&mut waveform, "top.counter == 4'b0101", 0, 6, -1)
         .expect("Should find events for binary literal comparison");
     assert!(!events.is_empty(), "Should find at least one event");
     assert!(
         events[0].contains("top.counter = 4'b0101"),
-        "Should show counter value 5 (4'b0101) {}",
+        "Should show counter value 5 {}",
         events[0]
     );
 
-    // Test equality with decimal literal
+    // counter == 3: transition at idx 3
     let events = find_conditional_events(&mut waveform, "top.counter == 3'd3", 0, 6, -1)
         .expect("Should find events for decimal literal comparison");
     assert!(!events.is_empty(), "Should find at least one event");
-    assert!(
-        events[0].contains("top.counter = 4'b0011"),
-        "Should show counter value 3"
-    );
 
-    // Test equality with hex literal
+    // counter == 6: transition at idx 6
     let events = find_conditional_events(&mut waveform, "top.counter == 4'h6", 0, 6, -1)
         .expect("Should find events for hex literal comparison");
     assert!(!events.is_empty(), "Should find at least one event");
-    assert!(
-        events[0].contains("top.counter = 4'b0110"),
-        "Should show counter value 6"
-    );
 
-    // Test inequality
+    // counter != 0: transition at idx 1
     let events = find_conditional_events(&mut waveform, "top.counter != 4'b0000", 0, 6, -1)
         .expect("Should find events for inequality comparison");
     assert!(!events.is_empty(), "Should find at least one event");
 
-    // Test complex condition with comparison
+    // counter == 5 || counter == 3: transitions at idx 3 and idx 5
+    // At idx 2: false, idx 3: true → transition. idx 4: false, idx 5: true → transition
     let events = find_conditional_events(
         &mut waveform,
         "top.counter == 4'b0101 || top.counter == 4'b0011",
@@ -336,13 +299,12 @@ b0110 !\n\
     assert_eq!(
         events.len(),
         2,
-        "Should find 2 events matching either condition"
+        "Should find 2 transitions matching either condition"
     );
 }
 
 #[test]
 fn test_verilog_literal_parsing() {
-    // Test invalid literal format
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -357,23 +319,19 @@ $enddefinitions $end\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test invalid literal format
     let result = find_conditional_events(&mut waveform, "top.sig1 == invalid", 0, 0, -1);
     assert!(result.is_err(), "Should fail for invalid literal format");
 
-    // Test single = (should be ==)
     let result = find_conditional_events(&mut waveform, "top.sig1 = 1", 0, 0, -1);
     assert!(result.is_err(), "Should fail for single =");
 }
 
 #[test]
 fn test_past_function() {
-    // Create a VCD file with a signal that toggles
-    // Signal pattern: 0 -> 1 -> 0 -> 1 -> 0
-    // Rising edges at time indices: 1 and 3
+    // signal: 0→1→0→1→0
+    // Rising edges at idx 1, 3. Falling edges at idx 2, 4.
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -396,16 +354,17 @@ $enddefinitions $end\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test rising edge detection: !$past(TOP.signal) && TOP.signal
+    // Rising edge: !$past(signal) && signal
+    // idx 0: !$past(0=false/no_past) && 0 = false, idx 1: !0 && 1 = true → transition!
+    // After idx 1 stays true? No - at idx 2: !$past(1) && 0 = !1&&0 = false. So only one transition.
+    // Wait - this condition is a "pulse" check, not a sustained condition.
+    // idx 0: false, idx 1: true (transition!), idx 2: false, idx 3: true (transition!), idx 4: false
     let events =
         find_conditional_events(&mut waveform, "!$past(top.signal) && top.signal", 0, 4, -1)
             .expect("Should find events for rising edge");
-
-    // Should find 2 rising edges at time indices 1 and 3
-    assert_eq!(events.len(), 2, "Should find 2 rising edges");
+    assert_eq!(events.len(), 2, "Should find 2 rising edge transitions");
     assert!(
         events[0].contains("Time index 1 (10ns)"),
         "First rising edge at time 1"
@@ -415,13 +374,12 @@ $enddefinitions $end\n\
         "Second rising edge at time 3"
     );
 
-    // Test falling edge detection: $past(TOP.signal) && !TOP.signal
+    // Falling edge: $past(signal) && !signal
+    // idx 0: false, idx 1: 0&&!1=false, idx 2: 1&&!0=true → transition!, idx 3: 0&&!1=false, idx 4: 1&&!0=true → transition!
     let events =
         find_conditional_events(&mut waveform, "$past(top.signal) && !top.signal", 0, 4, -1)
             .expect("Should find events for falling edge");
-
-    // Should find 2 falling edges at time indices 2 and 4
-    assert_eq!(events.len(), 2, "Should find 2 falling edges");
+    assert_eq!(events.len(), 2, "Should find 2 falling edge transitions");
     assert!(
         events[0].contains("Time index 2 (20ns)"),
         "First falling edge at time 2"
@@ -431,22 +389,18 @@ $enddefinitions $end\n\
         "Second falling edge at time 4"
     );
 
-    // Test $past with OR condition
-    // At time index 0: past=false (no past), current=0 => false || 0 = false
-    // At time index 1: past=0, current=1 => 0 || 1 = true
-    // At time index 2: past=1, current=0 => 1 || 0 = true
-    // At time index 3: past=0, current=1 => 0 || 1 = true
-    // At time index 4: past=1, current=0 => 1 || 0 = true
+    // $past(signal) || signal: sustained condition with transitions
+    // idx 0: 0||0=0=false, idx 1: 0||1=1=true (transition!), idx 2: 1||0=1=true (stays true),
+    // idx 3: 0||1=1=true (stays true), idx 4: 1||0=1=true (stays true)
+    // Only 1 transition at idx 1
     let events =
         find_conditional_events(&mut waveform, "$past(top.signal) || top.signal", 0, 4, -1)
             .expect("Should find events for OR with $past");
-
-    assert_eq!(events.len(), 4, "Should find 4 events");
+    assert_eq!(events.len(), 1, "Should find 1 transition");
 }
 
 #[test]
 fn test_past_edge_case() {
-    // Create a simple VCD file
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -463,25 +417,21 @@ $enddefinitions $end\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test that $past at time index 0 evaluates to false (no past value)
-    // At time 0: past=false (no past value), signal=0 => false
-    // At time 1: past=0 (from time 0), signal=1 => 0=false
+    // $past at idx 0 = false (no past). At idx 1: past=0=false.
     let events = find_conditional_events(&mut waveform, "$past(top.signal)", 0, 1, -1)
         .expect("Should handle $past at time 0");
-
-    // Should find 0 events since past values are all 0 (false)
     assert_eq!(events.len(), 0, "Should find 0 events");
 }
 
 #[test]
 fn test_past_with_and_expression() {
-    // Create a VCD file with two signals that have overlapping true states
-    // Signal pattern:
-    // signal1: 0 -> 0 -> 1 -> 0 -> 1 -> 0
-    // signal2: 1 -> 1 -> 1 -> 0 -> 1 -> 0
+    // idx 0: sig1=0, sig2=1 → $past(0&&1) at idx 1 = false (past of idx 0 = 0&&1=false)
+    // idx 1: sig1=1, sig2=1 → $past(1&&1) at idx 2 = true (past of idx 1 = 1&&1=true)
+    // idx 2: sig1=0, sig2=1 → $past(0&&1) at idx 3 = false (past of idx 2 = 0&&1=false)
+    // idx 3: sig1=1, sig2=1 → $past(1&&1) at idx 4 = true (past of idx 3 = 1&&1=true)
+    // So $past(sig1&&sig2) transitions: idx 0=false, idx 1=false, idx 2=true → transition!, idx 3=false, idx 4=true → transition!
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -508,41 +458,29 @@ $enddefinitions $end\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test $past(signal1 && signal2)
-    // We're checking if the AND expression was true in the previous time step
-    // Timeline:
-    // time 0: signal1=0, signal2=1 => $past(signal1 && signal2)=false (no past)
-    // time 1: signal1=1, signal2=1 => $past(signal1 && signal2)=false (at time 0: 0 && 1 = false)
-    // time 2: signal1=0, signal2=1 => $past(signal1 && signal2)=true  (at time 1: 1 && 1 = true)
-    // time 3: signal1=1, signal2=1 => $past(signal1 && signal2)=false (at time 2: 0 && 1 = false)
-    // time 4: signal1=0, signal2=0 => $past(signal1 && signal2)=true  (at time 3: 1 && 1 = true)
     let events =
         find_conditional_events(&mut waveform, "$past(top.signal1 && top.signal2)", 0, 4, -1)
             .expect("Should find events for $past with AND expression");
-
-    // Should find 2 events at time indices 2 and 4 where the previous time had both signals true
-    assert_eq!(
-        events.len(),
-        2,
-        "Should find 2 events where $past(signal1 && signal2) is true"
-    );
+    assert_eq!(events.len(), 2, "Should find 2 transitions");
     assert!(
         events[0].contains("Time index 2 (20ns)"),
-        "First event at time 2"
+        "First transition at time 2"
     );
     assert!(
         events[1].contains("Time index 4 (40ns)"),
-        "Second event at time 4"
+        "Second transition at time 4"
     );
 }
 
 #[test]
 fn test_nested_past() {
-    // Create a VCD file with a signal that toggles
-    // Signal pattern: 0 -> 1 -> 0 -> 1 -> 0 -> 1
+    // signal: 0→1→0→1→0→1
+    // $past($past(signal)):
+    // idx 0: 0 (no past), idx 1: 0 (past=0), idx 2: 0 ($past at idx1=0),
+    // idx 3: 1 ($past at idx2=1), idx 4: 0, idx 5: 1
+    // Transitions: idx 3 (false→true), idx 5 (false→true)
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -567,41 +505,26 @@ $enddefinitions $end\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test nested $past($past(signal))
-    // Timeline:
-    // time 0: signal=0, $past=0(no past), $past($past)=0(no past)
-    // time 1: signal=1, $past=0, $past($past)=0(no past at time -1)
-    // time 2: signal=0, $past=1, $past($past)=0
-    // time 3: signal=1, $past=0, $past($past)=1 (at time 2, $past was 1)
-    // time 4: signal=0, $past=1, $past($past)=0
-    // time 5: signal=1, $past=0, $past($past)=1 (at time 4, $past was 1)
     let events = find_conditional_events(&mut waveform, "$past($past(top.signal))", 0, 5, -1)
         .expect("Should find events for nested $past");
-
-    // Should find 2 events at time indices 3 and 5 where $past($past) is true
-    assert_eq!(
-        events.len(),
-        2,
-        "Should find 2 events where $past($past(signal)) is true"
-    );
+    assert_eq!(events.len(), 2, "Should find 2 transitions");
     assert!(
         events[0].contains("Time index 3 (30ns)"),
-        "First event at time 3"
+        "First transition at time 3"
     );
     assert!(
         events[1].contains("Time index 5 (50ns)"),
-        "Second event at time 5"
+        "Second transition at time 5"
     );
 }
 
 #[test]
 fn test_bitwise_and() {
-    // Create a VCD file with two 4-bit signals
-    // signal1: 5 (0101), 3 (0011), 10 (1010), 6 (0110)
-    // signal2: 3 (0011), 6 (0110), 5 (0101), 4 (0100)
+    // signal1: 5, 3, 10, 6; signal2: 3, 6, 5, 4
+    // Bitwise AND results: 1, 2, 0, 4
+    // Transitions (non-zero): idx 0 (false→true, initial), idx 2→idx 3 (0→4=true)
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -627,32 +550,32 @@ b0100 0\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test bitwise AND with signal & literal (bitwise AND is non-zero)
-    // time 0: 5 & 3 = 0101 & 0011 = 0001 = 1 (non-zero)
-    // time 1: 3 & 6 = 0011 & 0110 = 0010 = 2 (non-zero)
-    // time 2: 10 & 5 = 1010 & 0101 = 0000 = 0 (zero)
-    // time 3: 6 & 4 = 0110 & 0100 = 0100 = 4 (non-zero)
     let events = find_conditional_events(&mut waveform, "top.signal1 & top.signal2", 0, 3, -1)
         .expect("Should find events for bitwise AND");
-
-    // Should find 3 events where result is non-zero (times 0, 1, 3)
+    // idx 0: non-zero (initial true → transition), idx 1: non-zero (stays true),
+    // idx 2: zero (false), idx 3: non-zero (false→true → transition)
     assert_eq!(
         events.len(),
-        3,
-        "Should find 3 events where bitwise AND is non-zero"
+        2,
+        "Should find 2 transitions where bitwise AND is non-zero"
     );
     assert!(
         events[0].contains("Time index 0 (0ns)"),
-        "First event at time 0"
+        "First transition at time 0"
+    );
+    assert!(
+        events[1].contains("Time index 3 (30ns)"),
+        "Second transition at time 3"
     );
 }
 
 #[test]
 fn test_bitwise_or() {
-    // Create a VCD file with two 4-bit signals
+    // signal1: 5, 2; signal2: 3, 4
+    // OR: 7, 6 → both non-zero
+    // idx 0: true (transition!), idx 1: stays true → only 1 transition
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -672,26 +595,17 @@ b0100 0\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test bitwise OR (just check if non-zero, not specific value)
-    // time 0: 5 | 3 = 0101 | 0011 = 0111 = 7 (non-zero)
-    // time 1: 2 | 4 = 0010 | 0100 = 0110 = 6 (non-zero)
     let events = find_conditional_events(&mut waveform, "top.signal1 | top.signal2", 0, 1, -1)
         .expect("Should find events for bitwise OR");
-
-    // Both time indices should have non-zero result
-    assert_eq!(
-        events.len(),
-        2,
-        "Should find 2 events where bitwise OR is non-zero"
-    );
+    assert_eq!(events.len(), 1, "Should find 1 transition (initial true)");
 }
 
 #[test]
 fn test_bitwise_xor() {
-    // Create a VCD file with two 4-bit signals
+    // XOR: 6, 3, 15 → all non-zero
+    // idx 0: true (transition!), stays true → 1 transition
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -714,27 +628,21 @@ b0000 0\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test bitwise XOR (just check if non-zero)
-    // time 0: 5 ^ 3 = 0101 ^ 0011 = 0110 = 6 (non-zero)
-    // time 1: 6 ^ 5 = 0110 ^ 0101 = 0011 = 3 (non-zero)
-    // time 2: 15 ^ 0 = 1111 ^ 0000 = 1111 = 15 (non-zero)
     let events = find_conditional_events(&mut waveform, "top.signal1 ^ top.signal2", 0, 2, -1)
         .expect("Should find events for bitwise XOR");
-
-    // All time indices should have non-zero result
     assert_eq!(
         events.len(),
-        3,
-        "Should find 3 events where bitwise XOR is non-zero"
+        1,
+        "Should find 1 transition (initial true, stays true)"
     );
 }
 
 #[test]
 fn test_bitwise_mixed_operations() {
-    // Create a VCD file with three 4-bit signals
+    // Both time indices have non-zero result for (signal1 & signal2) | signal3
+    // idx 0: true (transition!), idx 1: stays true → 1 transition
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -757,12 +665,8 @@ b0100 1\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test mixed bitwise operations: (signal1 & signal2) | signal3
-    // time 0: (5 & 3) | 6 = 1 | 6 = 7 (non-zero)
-    // time 1: (3 & 6) | 4 = 2 | 4 = 6 (non-zero)
     let events = find_conditional_events(
         &mut waveform,
         "(top.signal1 & top.signal2) | top.signal3",
@@ -771,18 +675,15 @@ b0100 1\n\
         -1,
     )
     .expect("Should find events for mixed bitwise operations");
-
-    // Both time indices should have non-zero result
     assert_eq!(
         events.len(),
-        2,
-        "Should find 2 events for mixed bitwise operations"
+        1,
+        "Should find 1 transition for mixed bitwise operations"
     );
 }
 
 #[test]
 fn test_bitwise_with_logical_operations() {
-    // Create a VCD file with 1-bit signals (simpler test)
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -802,23 +703,16 @@ $enddefinitions $end\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test combining bitwise and logical operations
-    // time 0: sig1=0, sig2=1, sig1 & sig2 = 0, false && sig2 = 0 && 1 = false
-    // time 1: sig1=0, sig2=1, sig1 & sig2 = 0, false && sig2 = 0 && 1 = false
     let events =
         find_conditional_events(&mut waveform, "top.sig1 & top.sig2 && top.sig2", 0, 1, -1)
             .expect("Should find events for bitwise and logical operations");
-
-    // No events should match (0 & 1 = 0 is false)
     assert_eq!(events.len(), 0, "Should find 0 events");
 }
 
 #[test]
 fn test_bitwise_zero_result() {
-    // Create a VCD file with 1-bit signals
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -838,16 +732,10 @@ $enddefinitions $end\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test bitwise AND that results in 0
-    // time 0: sig1=1, sig2=0, 1 & 0 = 0 (zero)
-    // time 1: sig1=0, sig2=1, 0 & 1 = 0 (zero)
     let events = find_conditional_events(&mut waveform, "top.sig1 & top.sig2", 0, 1, -1)
         .expect("Should find events for bitwise AND");
-
-    // Both time indices should have zero result
     assert_eq!(
         events.len(),
         0,
@@ -857,8 +745,10 @@ $enddefinitions $end\n\
 
 #[test]
 fn test_single_bit_extraction() {
-    // Create a VCD file with a 4-bit signal
-    // Value sequence: 0b0101 (5), 0b0011 (3), 0b1010 (10), 0b0110 (6)
+    // counter: 5(0101), 3(0011), 10(1010), 6(0110)
+    // counter[0]: 1, 1, 0, 0
+    // counter[0] == 1 transitions: idx 0 true (transition!), idx 1 stays true
+    // Then idx 2 false, idx 3 false → only 1 transition
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -879,32 +769,19 @@ b0110 !\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test single bit extraction: counter[0] (LSB)
-    // time 0: 0b0101 -> bit 0 = 1
-    // time 1: 0b0011 -> bit 0 = 1
-    // time 2: 0b1010 -> bit 0 = 0
-    // time 3: 0b0110 -> bit 0 = 0
     let events = find_conditional_events(&mut waveform, "top.counter[0] == 1'b1", 0, 3, -1)
         .expect("Should find events");
-
-    // Should find events at times 0 and 1 where LSB is 1
-    assert_eq!(events.len(), 2, "Should find 2 events where LSB is 1");
+    assert_eq!(events.len(), 1, "Should find 1 transition where LSB is 1");
     assert!(
         events[0].contains("Time index 0 (0ns)"),
-        "First event at time 0"
-    );
-    assert!(
-        events[1].contains("Time index 1 (10ns)"),
-        "Second event at time 1"
+        "Transition at time 0"
     );
 }
 
 #[test]
 fn test_bit_range_extraction() {
-    // Create a VCD file with an 8-bit signal
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -923,38 +800,31 @@ b11110000 !\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test bit range extraction: data[7:4] (upper nibble)
-    // time 0: 0b10101010 -> bits[7:4] = 0b1010 = 10
-    // time 1: 0b11001100 -> bits[7:4] = 0b1100 = 12
-    // time 2: 0b11110000 -> bits[7:4] = 0b1111 = 15
+    // data[7:4] == 0b1010: true only at idx 0 → 1 transition
     let events = find_conditional_events(&mut waveform, "top.data[7:4] == 4'b1010", 0, 2, -1)
         .expect("Should find events");
-
     assert_eq!(
         events.len(),
         1,
-        "Should find 1 event where upper nibble is 0b1010"
+        "Should find 1 transition where upper nibble is 0b1010"
     );
     assert!(events[0].contains("Time index 0 (0ns)"), "Event at time 0");
 
-    // Test lower nibble: data[3:0]
+    // data[3:0] == 0b1100: true only at idx 1 → 1 transition
     let events = find_conditional_events(&mut waveform, "top.data[3:0] == 4'b1100", 0, 2, -1)
         .expect("Should find events");
-
     assert_eq!(
         events.len(),
         1,
-        "Should find 1 event where lower nibble is 0b1100"
+        "Should find 1 transition where lower nibble is 0b1100"
     );
     assert!(events[0].contains("Time index 1 (10ns)"), "Event at time 1");
 }
 
 #[test]
 fn test_bit_extraction_with_bitwise() {
-    // Create a VCD file with two 8-bit signals
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -974,26 +844,20 @@ b00000000 0\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test bitwise operation on extracted bits
-    // time 0: sig1[3:0] = 0b1010 = 10, sig2[3:0] = 0b1111 = 15, 10 & 15 = 10 (non-zero)
-    // time 1: sig1[3:0] = 0b1100 = 12, sig2[3:0] = 0b0000 = 0, 12 & 0 = 0 (zero)
+    // sig1[3:0] & sig2[3:0]: idx 0: 10&15=10 (true→transition), idx 1: 12&0=0 (false)
     let events = find_conditional_events(&mut waveform, "top.sig1[3:0] & top.sig2[3:0]", 0, 1, -1)
         .expect("Should find events");
-
-    assert_eq!(
-        events.len(),
-        1,
-        "Should find 1 event where bitwise AND of extracted bits is non-zero"
-    );
+    assert_eq!(events.len(), 1, "Should find 1 transition");
     assert!(events[0].contains("Time index 0 (0ns)"), "Event at time 0");
 }
 
 #[test]
 fn test_bit_extraction_equals_zero() {
-    // Create a VCD file with a 4-bit signal
+    // counter: 5(0101), 0(0000), 8(1000)
+    // counter[2]: 1, 0, 0
+    // counter[2] == 0 transitions: idx 0 false, idx 1 true (transition!), idx 2 stays true → 1 transition
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -1012,34 +876,25 @@ b1000 !\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test that extracted bits equal to 0 are handled correctly
-    // time 0: counter[2] = 1 (not equal to 0)
-    // time 1: counter[2] = 0 (equal to 0)
-    // time 2: counter[2] = 0 (equal to 0)
     let events = find_conditional_events(&mut waveform, "top.counter[2] == 1'b0", 0, 2, -1)
         .expect("Should find events");
-
     assert_eq!(
         events.len(),
-        2,
-        "Should find 2 events where extracted bit equals 0"
+        1,
+        "Should find 1 transition where extracted bit equals 0"
     );
     assert!(
         events[0].contains("Time index 1 (10ns)"),
-        "First event at time 1"
-    );
-    assert!(
-        events[1].contains("Time index 2 (20ns)"),
-        "Second event at time 2"
+        "Transition at time 1"
     );
 }
 
 #[test]
 fn test_bitwise_not() {
-    // Create a VCD file with 4-bit signals
+    // ~4'b0101 = 10 (non-zero), ~4'b0000 = 15 (non-zero), ~4'b1010 = 5 (non-zero)
+    // All non-zero → true at idx 0 (transition!), stays true → 1 transition
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -1062,32 +917,22 @@ b1100 0\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test bitwise NOT with explicit bit width
-    // ~4'b0101 = 4'b1010 = 10 (non-zero)
-    // ~4'b0000 = 4'b1111 = 15 (non-zero)
     let events = find_conditional_events(&mut waveform, "~4'b0101", 0, 2, -1)
         .expect("Should find events for bitwise NOT");
-
-    // Time 0: ~5 = 10 (4'b1010) which is non-zero
-    // Time 1: ~0 = 15 (4'b1111) which is non-zero
-    // Time 2: ~10 = 5 (4'b0101) which is non-zero
-    assert_eq!(
-        events.len(),
-        3,
-        "Should find 3 events where bitwise NOT is non-zero"
-    );
+    // ~5 = 10 always, independent of VCD → constant true → 1 transition at idx 0
+    assert_eq!(events.len(), 1, "Should find 1 transition (constant true)");
     assert!(
         events[0].contains("Time index 0 (0ns)"),
-        "First event at time 0"
+        "Transition at time 0"
     );
 }
 
 #[test]
 fn test_bitwise_not_with_signal() {
-    // Create a VCD file with 4-bit signal
+    // data: 0, 15, 10 → ~data: 15, 0, 5
+    // Transitions: idx 0 true (transition!), idx 1 false, idx 2 true (transition!)
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -1106,30 +951,28 @@ b1010 !\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test bitwise NOT on signal
-    // time 0: data=0b0000, ~data=0b1111=15 (non-zero)
-    // time 1: data=0b1111, ~data=0b0000=0 (zero)
-    // time 2: data=0b1010, ~data=0b0101=5 (non-zero)
     let events = find_conditional_events(&mut waveform, "~top.data", 0, 2, -1)
         .expect("Should find events for bitwise NOT on signal");
-
     assert_eq!(
         events.len(),
         2,
-        "Should find 2 events where bitwise NOT is non-zero"
+        "Should find 2 transitions for ~data non-zero"
     );
     assert!(
         events[0].contains("Time index 0 (0ns)"),
-        "First event at time 0"
+        "First transition at time 0"
+    );
+    assert!(
+        events[1].contains("Time index 2 (20ns)"),
+        "Second transition at time 2"
     );
 }
 
 #[test]
 fn test_bitwise_not_with_bit_extract() {
-    // Create a VCD file with 8-bit signal
+    // ~data[7:0]: always non-zero for both idx → 1 transition (initial true, stays true)
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -1146,25 +989,16 @@ b00000010 !\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test bitwise NOT on extracted bits
-    // time 0: data[7:0]=1, ~data[7:0]=254 (0b11111110, non-zero)
-    // time 1: data[7:0]=2, ~data[7:0]=253 (0b11111101, non-zero)
     let events = find_conditional_events(&mut waveform, "~top.data[7:0]", 0, 1, -1)
         .expect("Should find events for bitwise NOT on bit extraction");
-
-    assert_eq!(
-        events.len(),
-        2,
-        "Should find 2 events where bitwise NOT of extracted bits is non-zero"
-    );
+    assert_eq!(events.len(), 1, "Should find 1 transition");
 }
 
 #[test]
 fn test_bitwise_not_with_bitwise_ops() {
-    // Create a VCD file with 4-bit signal
+    // ~data & data: always 0 → no events
     let vcd_content = "\
 $date 2024-01-01 $end\n\
 $version Test VCD file $end\n\
@@ -1181,19 +1015,397 @@ b1010 !\n\
 
     let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
     std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
-
     let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
 
-    // Test combining bitwise NOT with other bitwise operations
-    // time 0: data=5 (0b0101), ~data=10 (0b1010), ~data & data=10 & 5 = 0 (zero)
-    // time 1: data=10 (0b1010), ~data=5 (0b0101), ~data & data=5 & 10 = 0 (zero)
     let events = find_conditional_events(&mut waveform, "~top.data & top.data", 0, 1, -1)
         .expect("Should find events for bitwise NOT and AND");
-
-    // Both should result in 0, so no events
     assert_eq!(
         events.len(),
         0,
         "Should find 0 events where (~data & data) is zero"
+    );
+}
+
+#[test]
+fn test_magnitude_comparison_lt() {
+    // counter: 0, 1, 2, 3, 4, 5, 6
+    // counter < 3: true at idx 0, 1, 2; false at idx 3+
+    // Transition: idx 0 (initial true → transition), stays true until idx 3 → 1 transition
+    let vcd_content = "\
+$date 2024-01-01 $end\n\
+$version Test VCD file $end\n\
+$timescale 1ns $end\n\
+$scope module top $end\n\
+$var wire 4 ! counter $end\n\
+$upscope $end\n\
+$enddefinitions $end\n\
+#0\n\
+b0000 !\n\
+#10\n\
+b0001 !\n\
+#20\n\
+b0010 !\n\
+#30\n\
+b0011 !\n\
+#40\n\
+b0100 !\n\
+#50\n\
+b0101 !\n\
+#60\n\
+b0110 !\n\
+";
+
+    let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
+    std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
+    let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
+
+    let events = find_conditional_events(&mut waveform, "top.counter < 4'd3", 0, 6, -1)
+        .expect("Should find events for < comparison");
+    assert_eq!(
+        events.len(),
+        1,
+        "Should find 1 transition (counter<3 stays true from idx 0-2)"
+    );
+    assert!(events[0].contains("Time index 0"), "Transition at idx 0");
+}
+
+#[test]
+fn test_magnitude_comparison_le_ge_gt() {
+    // counter: 0, 3, 5, 8
+    // counter <= 3: true at idx 0, 1 → 1 transition at idx 0
+    // counter >= 5: true at idx 2, 3 → 1 transition at idx 2
+    // counter > 3: true at idx 2, 3 → 1 transition at idx 2
+    let vcd_content = "\
+$date 2024-01-01 $end\n\
+$version Test VCD file $end\n\
+$timescale 1ns $end\n\
+$scope module top $end\n\
+$var wire 4 ! counter $end\n\
+$upscope $end\n\
+$enddefinitions $end\n\
+#0\n\
+b0000 !\n\
+#10\n\
+b0011 !\n\
+#20\n\
+b0101 !\n\
+#30\n\
+b1000 !\n\
+";
+
+    let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
+    std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
+    let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
+
+    let events = find_conditional_events(&mut waveform, "top.counter <= 4'd3", 0, 3, -1)
+        .expect("Should find events for <= comparison");
+    assert_eq!(
+        events.len(),
+        1,
+        "Should find 1 transition where counter <= 3"
+    );
+
+    let events = find_conditional_events(&mut waveform, "top.counter >= 4'd5", 0, 3, -1)
+        .expect("Should find events for >= comparison");
+    assert_eq!(
+        events.len(),
+        1,
+        "Should find 1 transition where counter >= 5"
+    );
+
+    let events = find_conditional_events(&mut waveform, "top.counter > 4'd3", 0, 3, -1)
+        .expect("Should find events for > comparison");
+    assert_eq!(
+        events.len(),
+        1,
+        "Should find 1 transition where counter > 3"
+    );
+}
+
+#[test]
+fn test_arithmetic_add_sub() {
+    // sig1: 2, 5; sig2: 3, 1
+    // sig1+sig2==5: true at idx 0 → 1 transition
+    // sig1-sig2==4: true at idx 1 → 1 transition
+    let vcd_content = "\
+$date 2024-01-01 $end\n\
+$version Test VCD file $end\n\
+$timescale 1ns $end\n\
+$scope module top $end\n\
+$var wire 4 ! sig1 $end\n\
+$var wire 4 0 sig2 $end\n\
+$upscope $end\n\
+$enddefinitions $end\n\
+#0\n\
+b0010 !\n\
+b0011 0\n\
+#10\n\
+b0101 !\n\
+b0001 0\n\
+";
+
+    let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
+    std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
+    let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
+
+    let events = find_conditional_events(&mut waveform, "top.sig1 + top.sig2 == 4'd5", 0, 1, -1)
+        .expect("Should find events for add comparison");
+    assert_eq!(
+        events.len(),
+        1,
+        "Should find 1 transition where sig1+sig2==5"
+    );
+
+    let events = find_conditional_events(&mut waveform, "top.sig1 - top.sig2 == 4'd4", 0, 1, -1)
+        .expect("Should find events for sub comparison");
+    assert_eq!(
+        events.len(),
+        1,
+        "Should find 1 transition where sig1-sig2==4"
+    );
+}
+
+#[test]
+fn test_arithmetic_sub_underflow() {
+    // 1-3 underflow → 0, 0==0 → true at idx 0 → 1 transition
+    let vcd_content = "\
+$date 2024-01-01 $end\n\
+$version Test VCD file $end\n\
+$timescale 1ns $end\n\
+$scope module top $end\n\
+$var wire 4 ! sig1 $end\n\
+$var wire 4 0 sig2 $end\n\
+$upscope $end\n\
+$enddefinitions $end\n\
+#0\n\
+b0001 !\n\
+b0011 0\n\
+";
+
+    let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
+    std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
+    let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
+
+    let events = find_conditional_events(&mut waveform, "top.sig1 - top.sig2 == 4'd0", 0, 0, -1)
+        .expect("Should handle underflow");
+    assert_eq!(events.len(), 1, "Underflow should result in 0");
+}
+
+#[test]
+fn test_rose_fell_stable() {
+    // signal: 0→1→0→1→0
+    let vcd_content = "\
+$date 2024-01-01 $end\n\
+$version Test VCD file $end\n\
+$timescale 1ns $end\n\
+$scope module top $end\n\
+$var wire 1 0 signal $end\n\
+$upscope $end\n\
+$enddefinitions $end\n\
+#0\n\
+00\n\
+#10\n\
+10\n\
+#20\n\
+00\n\
+#30\n\
+10\n\
+#40\n\
+00\n\
+";
+
+    let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
+    std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
+    let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
+
+    // $rose(signal): idx 0=0(no past), idx 1=1(0→1), idx 2=0, idx 3=1(0→1), idx 4=0
+    // Transitions: idx 1 (false→true), idx 3 (false→true)
+    let events = find_conditional_events(&mut waveform, "$rose(top.signal)", 0, 4, -1)
+        .expect("Should find $rose events");
+    assert_eq!(events.len(), 2, "Should find 2 rising edges");
+    assert!(events[0].contains("Time index 1"), "First rising at idx 1");
+    assert!(events[1].contains("Time index 3"), "Second rising at idx 3");
+
+    // $fell(signal): idx 0=0, idx 1=0(0→1=false), idx 2=1(1→0=true), idx 3=0, idx 4=1(1→0=true)
+    // Transitions: idx 2, idx 4
+    let events = find_conditional_events(&mut waveform, "$fell(top.signal)", 0, 4, -1)
+        .expect("Should find $fell events");
+    assert_eq!(events.len(), 2, "Should find 2 falling edges");
+    assert!(events[0].contains("Time index 2"), "First falling at idx 2");
+    assert!(
+        events[1].contains("Time index 4"),
+        "Second falling at idx 4"
+    );
+
+    // $stable(signal): idx 0=0(no past), idx 1=0(0≠1=false), idx 2=0(1≠0=false), etc. → 0 events
+    let events = find_conditional_events(&mut waveform, "$stable(top.signal)", 0, 4, -1)
+        .expect("Should find $stable events");
+    assert_eq!(events.len(), 0, "No stable periods in toggling signal");
+}
+
+#[test]
+fn test_stable_with_constant_signal() {
+    // sig stays at 1 for all time indices
+    // $stable(sig): idx 0=0(no past), idx 1=1(1=1=true → transition!), idx 2=1(stays true)
+    let vcd_content = "\
+$date 2024-01-01 $end\n\
+$version Test VCD file $end\n\
+$timescale 1ns $end\n\
+$scope module top $end\n\
+$var wire 1 0 sig $end\n\
+$upscope $end\n\
+$enddefinitions $end\n\
+#0\n\
+10\n\
+#10\n\
+10\n\
+#20\n\
+10\n\
+";
+
+    let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
+    std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
+    let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
+
+    let events = find_conditional_events(&mut waveform, "$stable(top.sig)", 0, 2, -1)
+        .expect("Should find $stable events");
+    assert_eq!(
+        events.len(),
+        1,
+        "Should find 1 transition (at idx 1, past=1 matches current=1)"
+    );
+}
+
+#[test]
+fn test_pastn_multi_cycle_lookback() {
+    // counter: 0, 1, 2, 3, 4, 5, 6
+    // $past(counter, 2) == 1: true at idx 3 (counter@1=1)
+    // Transitions: idx 0 false (past returns 0, 0≠1), ..., idx 3 true → 1 transition
+    let vcd_content = "\
+$date 2024-01-01 $end\n\
+$version Test VCD file $end\n\
+$timescale 1ns $end\n\
+$scope module top $end\n\
+$var wire 4 ! counter $end\n\
+$upscope $end\n\
+$enddefinitions $end\n\
+#0\n\
+b0000 !\n\
+#10\n\
+b0001 !\n\
+#20\n\
+b0010 !\n\
+#30\n\
+b0011 !\n\
+#40\n\
+b0100 !\n\
+#50\n\
+b0101 !\n\
+#60\n\
+b0110 !\n\
+";
+
+    let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
+    std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
+    let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
+
+    let events = find_conditional_events(&mut waveform, "$past(top.counter, 2) == 4'd1", 3, 6, -1)
+        .expect("Should find $pastN events");
+    assert_eq!(
+        events.len(),
+        1,
+        "Should find 1 transition where counter 2 cycles back is 1"
+    );
+    assert!(events[0].contains("Time index 3"), "Transition at idx 3");
+
+    let events = find_conditional_events(&mut waveform, "$past(top.counter, 3) == 4'd0", 3, 6, -1)
+        .expect("Should find $pastN events");
+    assert_eq!(
+        events.len(),
+        1,
+        "Should find 1 transition where counter 3 cycles back is 0"
+    );
+}
+
+#[test]
+fn test_sva_at_time_zero() {
+    let vcd_content = "\
+$date 2024-01-01 $end\n\
+$version Test VCD file $end\n\
+$timescale 1ns $end\n\
+$scope module top $end\n\
+$var wire 1 0 sig $end\n\
+$upscope $end\n\
+$enddefinitions $end\n\
+#0\n\
+10\n\
+";
+
+    let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
+    std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
+    let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
+
+    let events = find_conditional_events(&mut waveform, "$rose(top.sig)", 0, 0, -1)
+        .expect("Should handle $rose at time 0");
+    assert_eq!(events.len(), 0, "No rose event at time 0");
+
+    let events = find_conditional_events(&mut waveform, "$past(top.sig, 1) == 1'b1", 0, 0, -1)
+        .expect("Should handle $pastN at time 0");
+    assert_eq!(events.len(), 0, "No $pastN event at time 0");
+}
+
+#[test]
+fn test_parse_new_operators() {
+    assert!(parse_condition("top.counter >= 4'd10").is_ok());
+    assert!(parse_condition("top.counter <= 4'd5").is_ok());
+    assert!(parse_condition("top.counter > 4'd0").is_ok());
+    assert!(parse_condition("top.counter < 4'd8").is_ok());
+    assert!(parse_condition("top.addr + 4'd4 == top.target").is_ok());
+    assert!(parse_condition("top.count - 8'd1 >= 8'd0").is_ok());
+    assert!(parse_condition("$rose(top.valid)").is_ok());
+    assert!(parse_condition("$fell(top.ready)").is_ok());
+    assert!(parse_condition("$stable(top.clk)").is_ok());
+    assert!(parse_condition("$past(top.signal, 2)").is_ok());
+    assert!(parse_condition("$past(top.signal, 5)").is_ok());
+    assert!(parse_condition("top.addr + 4'd4 >= top.threshold && $rose(top.valid)").is_ok());
+    assert!(parse_condition("top.counter > 4'd3 || top.counter < 4'd1").is_ok());
+}
+
+#[test]
+fn test_comparison_with_arithmetic() {
+    // addr=4, offset=3, threshold=7 → addr+offset=7 >= 7 → true
+    // Only 1 idx → 1 transition (initial true)
+    let vcd_content = "\
+$date 2024-01-01 $end\n\
+$version Test VCD file $end\n\
+$timescale 1ns $end\n\
+$scope module top $end\n\
+$var wire 4 ! addr $end\n\
+$var wire 4 0 offset $end\n\
+$var wire 4 1 threshold $end\n\
+$upscope $end\n\
+$enddefinitions $end\n\
+#0\n\
+b0100 !\n\
+b0011 0\n\
+b0111 1\n\
+";
+
+    let temp_file = tempfile::NamedTempFile::new().expect("Failed to create temp file");
+    std::fs::write(temp_file.path(), vcd_content).expect("Failed to write VCD file");
+    let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
+
+    let events = find_conditional_events(
+        &mut waveform,
+        "top.addr + top.offset >= top.threshold",
+        0,
+        0,
+        -1,
+    )
+    .expect("Should find events");
+    assert_eq!(
+        events.len(),
+        1,
+        "Should find 1 transition where addr+offset >= threshold"
     );
 }

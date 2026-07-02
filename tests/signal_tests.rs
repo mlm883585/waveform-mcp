@@ -2,10 +2,11 @@
 
 use std::io::Write;
 use tempfile::NamedTempFile;
-use waveform_mcp::find_signal_by_path;
-use waveform_mcp::find_signal_events;
-use waveform_mcp::get_signal_metadata;
-use waveform_mcp::read_signal_values;
+use wave_analyzer_mcp::find_signal_by_path;
+use wave_analyzer_mcp::find_signal_events;
+use wave_analyzer_mcp::get_signal_metadata;
+use wave_analyzer_mcp::read_signal_values;
+use wave_analyzer_mcp::read_signal_values_by_path;
 
 #[test]
 fn test_read_signal_values_lib() {
@@ -43,13 +44,24 @@ b000011011 1";
     // Load the signal
     waveform.load_signals(&[signal_ref]);
 
-    // Read values at different time indices
-    let values = read_signal_values(&waveform, signal_ref, &[0, 1, 2, 3])
+    // Read values at valid time indices only (time table has max index 2)
+    let values = read_signal_values(&waveform, signal_ref, &[0, 1, 2], 0)
         .expect("Should read signal values");
 
-    assert_eq!(values.len(), 4, "Should read 4 values");
+    assert_eq!(values.len(), 3, "Should read 3 values");
     assert!(values[0].contains("0ns"), "First value should be at 0ns");
     assert!(values[1].contains("10ns"), "Second value should be at 10ns");
+
+    // Test that out-of-range indices now return an error (Bug 2 fix)
+    let result = read_signal_values(&waveform, signal_ref, &[0, 1, 2, 3], 0);
+    assert!(
+        result.is_err(),
+        "Should return error when any time index is out of range"
+    );
+    assert!(
+        result.unwrap_err().to_string().contains("out of range"),
+        "Error should mention out of range"
+    );
 
     // Find the signal
     let hierarchy = waveform.hierarchy();
@@ -59,11 +71,11 @@ b000011011 1";
     // Load the signal
     waveform.load_signals(&[signal_ref]);
 
-    // Read values at different time indices
-    let values = read_signal_values(&waveform, signal_ref, &[0, 1, 2, 3])
-        .expect("Should read signal values");
+    // Read values at valid time indices only (time table has max index 2)
+    let values = read_signal_values(&waveform, signal_ref, &[0, 1, 2], 0)
+        .expect("Should read signal values for top.test");
 
-    assert_eq!(values.len(), 4, "Should read 4 values");
+    assert_eq!(values.len(), 3, "Should read 3 values");
     assert!(values[0].contains("9'h155"), "First value should be 9'h155");
 }
 
@@ -174,5 +186,98 @@ $enddefinitions $end\n\
     assert!(
         !range_events.is_empty(),
         "Should find events in specified range"
+    );
+}
+
+#[test]
+fn test_bus_signal_metadata_and_read_uses_full_width() {
+    let vcd_content = "\
+$date 2026-05-29 $end\n\
+$version led-blink bus regression $end\n\
+$timescale 1ps $end\n\
+$scope module led_blink_tb $end\n\
+$var wire 1 ! status [1] $end\n\
+$var wire 1 \" status [0] $end\n\
+$scope module dut $end\n\
+$var wire 1 # status [1] $end\n\
+$var wire 1 $ status [0] $end\n\
+$var reg 6 % counter [5:0] $end\n\
+$upscope $end\n\
+$upscope $end\n\
+$enddefinitions $end\n\
+#0\n\
+$dumpvars\n\
+0!\n\
+1\"\n\
+1#\n\
+0$\n\
+b101010 %\n\
+$end\n\
+#10\n\
+1!\n\
+0\"\n\
+0#\n\
+1$\n\
+b000111 %";
+
+    let mut temp_file = NamedTempFile::new().expect("Failed to create temp file");
+    write!(temp_file, "{}", vcd_content).expect("Failed to write VCD content");
+    temp_file.flush().expect("Failed to flush");
+
+    let mut waveform = wellen::simple::read(temp_file.path()).expect("Failed to read VCD file");
+    let hierarchy = waveform.hierarchy();
+
+    let status_metadata = get_signal_metadata(hierarchy, "led_blink_tb.dut.status")
+        .expect("Should get metadata for dut.status");
+    assert!(
+        status_metadata.contains("Width: 2 bits"),
+        "Expected 2-bit status metadata, got: {}",
+        status_metadata
+    );
+    assert!(
+        status_metadata.contains("Index: [1:0]"),
+        "Expected [1:0] status index, got: {}",
+        status_metadata
+    );
+
+    let counter_metadata = get_signal_metadata(hierarchy, "led_blink_tb.dut.counter")
+        .expect("Should get metadata for dut.counter");
+    assert!(
+        counter_metadata.contains("Width: 6 bits"),
+        "Expected 6-bit counter metadata, got: {}",
+        counter_metadata
+    );
+    assert!(
+        counter_metadata.contains("Index: [5:0]"),
+        "Expected [5:0] counter index, got: {}",
+        counter_metadata
+    );
+
+    let status_values =
+        read_signal_values_by_path(&mut waveform, "led_blink_tb.dut.status", &[0, 1])
+            .expect("Should read bus status values");
+    assert!(
+        status_values[0].contains("2'b10"),
+        "Expected full-width status at t0, got: {:?}",
+        status_values
+    );
+    assert!(
+        status_values[1].contains("2'b01"),
+        "Expected full-width status at t1, got: {:?}",
+        status_values
+    );
+
+    let counter_values =
+        read_signal_values_by_path(&mut waveform, "led_blink_tb.dut.counter", &[0, 1])
+            .expect("Should read bus counter values");
+    assert!(
+        counter_values[0].contains("6'h2a"),
+        "Expected full-width counter at t0, got: {:?}",
+        counter_values
+    );
+    assert!(
+        counter_values[1].contains("6'h07"),
+        "Expected full-width counter at t1, got: {:?}",
+        counter_values
     );
 }

@@ -1,0 +1,1360 @@
+Command: /home/robin/Projects/uvm_demo_cc4/tb/../tb/simv +UVM_TESTNAME=my_case0 +UVM_VERBOSITY=UVM_LOW -l /home/robin/Projects/uvm_demo_cc4/tb/../tb/run.log +ntb_random_seed=1872097659
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-SP2-11_Full64; Runtime version O-2018.09-SP2-11_Full64;  Mar 20 21:10 2026
+----------------------------------------------------------------
+UVM-1.1d.Synopsys
+(C) 2007-2013 Mentor Graphics Corporation
+(C) 2007-2013 Cadence Design Systems, Inc.
+(C) 2006-2013 Synopsys, Inc.
+(C) 2011-2013 Cypress Semiconductor Corp.
+----------------------------------------------------------------
+
+  ***********       IMPORTANT RELEASE NOTES         ************
+
+  You are using a version of the UVM library that has been compiled
+  with `UVM_NO_DEPRECATED undefined.
+  See http://www.eda.org/svdb/view.php?id=3313 for more details.
+
+      (Specify +UVM_NO_RELNOTES to turn off this notice)
+
+UVM_INFO @ 0: reporter [RNTST] Running test my_case0...
+*Verdi* Loading libsscore_vcs201809.so
+FSDB Dumper for VCS, Release Verdi_O-2018.09-SP2-11, Linux x86_64/64bit, 02/05/2020
+(C) 1996 - 2020 by Synopsys, Inc.
+*Verdi* FSDB WARNING: The FSDB file already exists. Overwriting the FSDB file may crash the programs that are using this file.
+*Verdi* : Create FSDB file 'top_tb.fsdb'
+*Verdi* : Begin traversing the scope (top_tb), layer (0).
+*Verdi* : End of traversing.
+*Verdi* : Begin traversing the SVA assertions, layer (0).
+*Verdi* : End of traversing the SVA assertions.
+*Verdi* : Dumping the MDA (top_tb.x).
+*Verdi* : Flush all FSDB Files at 0 ps.
+INFO: Signal dump enabled ...
+
+
+0111000111001010100010110111000100100000011010001001010101001001
+71ca8b7120689549
+1100110000011100011001101111100101111110100100011111000110110001
+cc1c66f97e91f1b1
+1101110100101100111010111100011100010010111001110010110001111000
+dd2cebc712e72c78
+0110000011110010101100010010111110001001100011001001010110100111
+60f2b12f898c95a7
+0000000100001101000110101110011010111101011001011101101111000011
+010d1ae6bd65dbc3
+1001111010010011101000001000100100011100100111111111101000101000
+9e93a0891c9ffa28
+0101101011100010000011110110010010110011101010110001101011100001
+5ae20f64b3ab1ae1
+1110010000000100000100111011111101100101100101110110001111000101
+e40413bf659763c5
+1101110001100100110010110010110101110010110001110010101001101101
+dc64cb2d72c72a6d
+1001001000010001001000111010101100011111011000101110111101100110
+921123ab1f62ef66
+1101000001010101101011100111101101110111001101010010101011101100
+d055ae7b77352aec
+0000101111111000011111001101100000110101101100101111001100111110
+0bf87cd835b2f33e
+1110100100100111011001111001000111111011111011000111100111010101
+e9276791fbec79d5
+1010000111011010111010110111101101000110000001001101001010001001
+a1daeb7b4604d289
+0010000011000011000111100110111101001100100001000110111110010000
+20c31e6f4c846f90
+1001110100100111010100111011111010001010010100100110100001110011
+9d2753be8a526873
+aaa=0000000000000005
+aaa=0000000000000007
+aaa=0000000000000000
+aaa=0000000000000005
+aaa=0000000000000003
+aaa=0000000000000004
+aaa=0000000000000006
+aaa=0000000000000001
+aaa=0000000000000006
+aaa=0000000000000002
+aaa=0000000000000005
+aaa=0000000000000003
+aaa=0000000000000002
+aaa=0000000000000007
+aaa=0000000000000000
+aaa=0000000000000004
+aaa=0000000000000001
+aaa=0000000000000007
+aaa=0000000000000003
+aaa=0000000000000001
+aaa=0000000000000002
+aaa=0000000000000001
+aaa=0000000000000001
+aaa=0000000000000005
+aaa=0000000000000005
+aaa=0000000000000001
+aaa=0000000000000000
+aaa=0000000000000002
+aaa=0000000000000005
+aaa=0000000000000007
+aaa=0000000000000006
+aaa=0000000000000003
+aaa=0000000000000000
+aaa=0000000000000003
+aaa=0000000000000002
+aaa=0000000000000005
+aaa=0000000000000000
+aaa=0000000000000007
+aaa=0000000000000006
+aaa=0000000000000004
+aaa=0000000000000005
+aaa=0000000000000000
+aaa=0000000000000006
+aaa=0000000000000003
+aaa=0000000000000003
+aaa=0000000000000000
+aaa=0000000000000007
+aaa=0000000000000001
+aaa=0000000000000006
+aaa=0000000000000004
+aaa=0000000000000005
+aaa=0000000000000007
+aaa=0000000000000004
+aaa=0000000000000000
+aaa=0000000000000006
+aaa=0000000000000001
+aaa=0000000000000005
+aaa=0000000000000003
+aaa=0000000000000002
+aaa=0000000000000007
+aaa=0000000000000006
+aaa=0000000000000003
+aaa=0000000000000006
+aaa=0000000000000001
+
+
+
+*********************************************************
+* Area Optimized DES core simulation started ...        *
+*********************************************************
+
+
+
+**************************************
+* Starting DES Test ...              *
+**************************************
+
+Running Encrypt test ...
+
+UVM_ERROR /home/robin/Projects/uvm_demo_cc4/tb/../tb/top_tb.sv(131) @ 1060.000 ns: reporter [TOP] a=0, b=4
+UVM_INFO bus_driver.sv(37) @ 1100.000 ns: uvm_test_top.env.bus_agt.drv [bus_driver] begin to drive one pkt
+UVM_ERROR /home/robin/Projects/uvm_demo_cc4/tb/../tb/top_tb.sv(131) @ 1419.000 ns: reporter [TOP] a=7, b=4
+UVM_INFO my_case0.sv(34) @ 1700.000 ns: uvm_test_top.v_sqr@@case0_cfg_vseq [case0_cfg_vseq] invert's initial value is 0
+UVM_INFO bus_driver.sv(37) @ 1700.000 ns: uvm_test_top.env.bus_agt.drv [bus_driver] begin to drive one pkt
+UVM_ERROR /home/robin/Projects/uvm_demo_cc4/tb/../tb/top_tb.sv(131) @ 1860.000 ns: reporter [TOP] a=7, b=8
+UVM_ERROR /home/robin/Projects/uvm_demo_cc4/tb/../tb/top_tb.sv(131) @ 1951.000 ns: reporter [TOP] a=6, b=8
+UVM_ERROR /home/robin/Projects/uvm_demo_cc4/tb/../tb/top_tb.sv(131) @ 2052.000 ns: reporter [TOP] a=6, b=1
+UVM_ERROR /home/robin/Projects/uvm_demo_cc4/tb/../tb/top_tb.sv(131) @ 2070.000 ns: reporter [TOP] a=6, b=4
+UVM_INFO bus_driver.sv(37) @ 2300.000 ns: uvm_test_top.env.bus_agt.drv [bus_driver] begin to drive one pkt
+UVM_ERROR /home/robin/Projects/uvm_demo_cc4/tb/../tb/top_tb.sv(131) @ 2371.000 ns: reporter [TOP] a=6, b=8
+UVM_ERROR /home/robin/Projects/uvm_demo_cc4/tb/../tb/top_tb.sv(131) @ 2635.000 ns: reporter [TOP] a=6, b=0
+UVM_ERROR /home/robin/Projects/uvm_demo_cc4/tb/../tb/top_tb.sv(131) @ 2864.000 ns: reporter [TOP] a=6, b=8
+UVM_INFO my_case0.sv(37) @ 2900.000 ns: uvm_test_top.v_sqr@@case0_cfg_vseq [case0_cfg_vseq] after set, invert's value is 1
+UVM_INFO bus_driver.sv(37) @ 2900.000 ns: uvm_test_top.env.bus_agt.drv [bus_driver] begin to drive one pkt
+UVM_ERROR /home/robin/Projects/uvm_demo_cc4/tb/../tb/top_tb.sv(131) @ 2908.000 ns: reporter [TOP] a=4, b=8
+UVM_INFO bus_monitor.sv(46) @ 3500.000 ns: uvm_test_top.env.bus_agt.mon [bus_monitor] end collect one pkt
+UVM_ERROR /home/robin/Projects/uvm_demo_cc4/tb/../tb/top_tb.sv(131) @ 3790.000 ns: reporter [TOP] a=4, b=5
+UVM_ERROR /home/robin/Projects/uvm_demo_cc4/tb/../tb/top_tb.sv(131) @ 4262.000 ns: reporter [TOP] a=6, b=5
+UVM_ERROR /home/robin/Projects/uvm_demo_cc4/tb/../tb/top_tb.sv(131) @ 4276.000 ns: reporter [TOP] a=6, b=4
+UVM_ERROR /home/robin/Projects/uvm_demo_cc4/tb/../tb/top_tb.sv(131) @ 4873.000 ns: reporter [TOP] a=1, b=4
+UVM_ERROR /home/robin/Projects/uvm_demo_cc4/tb/../tb/top_tb.sv(131) @ 5007.000 ns: reporter [TOP] a=0, b=4
+UVM_ERROR /home/robin/Projects/uvm_demo_cc4/tb/../tb/top_tb.sv(131) @ 5690.000 ns: reporter [TOP] a=3, b=4
+ERROR: @5700.000 ns (0) Expected 82dcbafbdeab6602 Got 8X00a2Xcab814ebd
+ERROR: @11300.000 ns (1) Expected 8000000000000000 Got 6X347eX1fd13221b
+ERROR: @17900.000 ns (2) Expected 4000000000000000 Got eX633dX838436d1d
+ERROR: @25500.000 ns (3) Expected 2000000000000000 Got 5Xd1b3X63c5734db
+ERROR: @30300.000 ns (4) Expected 1000000000000000 Got 4Xd864X79ce4aea5
+ERROR: @37700.000 ns (5) Expected 0800000000000000 Got 5X9ae7X9334a6488
+ERROR: @43300.000 ns (6) Expected 0400000000000000 Got 6Xd45fXbfbcc78df
+ERROR: @51100.000 ns (7) Expected 0200000000000000 Got 1XfccdXa5ef7a21b
+ERROR: @59100.000 ns (8) Expected 0100000000000000 Got 4X9607X46a59bdbf
+ERROR: @64700.000 ns (9) Expected 0080000000000000 Got 6X863fXdb0bde932
+ERROR: @72500.000 ns (10) Expected 0040000000000000 Got 0Xbca8Xf1d3f2e83
+ERROR: @79900.000 ns (11) Expected 0020000000000000 Got bX3927X5cc6412ca
+ERROR: @87100.000 ns (12) Expected 0010000000000000 Got bX572fX05657b205
+UVM_INFO @ 90100.000 ns: reporter [MISCMP] Miscompare for uvm_sequence_item.dmac: lhs = 'hd54bb0bbfefa : rhs = 'hd54bb0bbfefb
+UVM_INFO @ 90100.000 ns: reporter [MISCMP] 1 Miscompare(s) for object uvm_sequence_item@1422 vs. uvm_sequence_item@1386
+UVM_ERROR my_scoreboard.sv(43) @ 90100.000 ns: uvm_test_top.env.scb [my_scoreboard] Compare FAILED
+the expect pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1422         
+  dmac             integral        48    'hd54bb0bbfefb
+  smac             integral        48    'h3131825b0ca6
+  ether_type       integral        16    'h801f        
+  pload            da(integral)    362   -             
+    [0]            integral        8     'h38          
+    [1]            integral        8     'hb4          
+    [2]            integral        8     'he1          
+    [3]            integral        8     'h12          
+    [4]            integral        8     'h1f          
+    ...            ...             ...   ...           
+    [357]          integral        8     'h1a          
+    [358]          integral        8     'h60          
+    [359]          integral        8     'h7           
+    [360]          integral        8     'h9a          
+    [361]          integral        8     'h95          
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+the actual pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1386         
+  dmac             integral        48    'hd54bb0bbfefa
+  smac             integral        48    'h3131825b0ca6
+  ether_type       integral        16    'h801f        
+  pload            da(integral)    362   -             
+    [0]            integral        8     'h38          
+    [1]            integral        8     'hb4          
+    [2]            integral        8     'he1          
+    [3]            integral        8     'h12          
+    [4]            integral        8     'h1f          
+    ...            ...             ...   ...           
+    [357]          integral        8     'h1a          
+    [358]          integral        8     'h60          
+    [359]          integral        8     'h7           
+    [360]          integral        8     'h9a          
+    [361]          integral        8     'h95          
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+ERROR: @93700.000 ns (13) Expected 0008000000000000 Got 9Xe5d8Xc1dd9936d
+ERROR: @99500.000 ns (14) Expected 0004000000000000 Got 1Xe7d4X583d453ea
+ERROR: @107700.000 ns (15) Expected 0002000000000000 Got 1X85d3X1ff28219c
+ERROR: @112700.000 ns (16) Expected 0001000000000000 Got fX1a67X89778d2c9
+ERROR: @120500.000 ns (17) Expected 0000800000000000 Got 1X4878Xf21b17b55
+UVM_INFO @ 122700.000 ns: reporter [MISCMP] Miscompare for uvm_sequence_item.dmac: lhs = 'hec4ccacb7967 : rhs = 'hec4ccacb7966
+UVM_INFO @ 122700.000 ns: reporter [MISCMP] 1 Miscompare(s) for object uvm_sequence_item@1438 vs. uvm_sequence_item@1426
+UVM_ERROR my_scoreboard.sv(43) @ 122700.000 ns: uvm_test_top.env.scb [my_scoreboard] Compare FAILED
+the expect pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1438         
+  dmac             integral        48    'hec4ccacb7966
+  smac             integral        48    'h69fb56c5a752
+  ether_type       integral        16    'h20fe        
+  pload            da(integral)    141   -             
+    [0]            integral        8     'hce          
+    [1]            integral        8     'hd5          
+    [2]            integral        8     'hec          
+    [3]            integral        8     'hcb          
+    [4]            integral        8     'h20          
+    ...            ...             ...   ...           
+    [136]          integral        8     'h16          
+    [137]          integral        8     'h83          
+    [138]          integral        8     'hc0          
+    [139]          integral        8     'h68          
+    [140]          integral        8     'h25          
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+the actual pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1426         
+  dmac             integral        48    'hec4ccacb7967
+  smac             integral        48    'h69fb56c5a752
+  ether_type       integral        16    'h20fe        
+  pload            da(integral)    141   -             
+    [0]            integral        8     'hce          
+    [1]            integral        8     'hd5          
+    [2]            integral        8     'hec          
+    [3]            integral        8     'hcb          
+    [4]            integral        8     'h20          
+    ...            ...             ...   ...           
+    [136]          integral        8     'h16          
+    [137]          integral        8     'h83          
+    [138]          integral        8     'hc0          
+    [139]          integral        8     'h68          
+    [140]          integral        8     'h25          
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+ERROR: @130100.000 ns (18) Expected 0000400000000000 Got cX32fcX5a2ce83eb
+ERROR: @137100.000 ns (19) Expected 0000200000000000 Got 1X7b1bXa48562548
+ERROR: @142900.000 ns (20) Expected 0000100000000000 Got fXc17dX0811969f0
+ERROR: @150500.000 ns (21) Expected 0000080000000000 Got 1Xb1f5X92a8fb053
+ERROR: @159500.000 ns (22) Expected 0000040000000000 Got 6X50e6X7cd90ed88
+ERROR: @167500.000 ns (23) Expected 0000020000000000 Got 9X71d3X6362d6c08
+ERROR: @172900.000 ns (24) Expected 0000010000000000 Got 3X2405X11c395aa0
+ERROR: @182300.000 ns (25) Expected 0000008000000000 Got 3Xcd37X7386a67ab
+ERROR: @189100.000 ns (26) Expected 0000004000000000 Got 1Xe2deX0b14c5b73
+ERROR: @197100.000 ns (27) Expected 0000002000000000 Got fXcc15X320eb9f86
+ERROR: @203900.000 ns (28) Expected 0000001000000000 Got aXa8b6X565d2b49d
+ERROR: @212300.000 ns (29) Expected 0000000800000000 Got 6Xe1ebX87fa222e0
+ERROR: @218900.000 ns (30) Expected 0000000400000000 Got 9X4c00X312b1d46f
+ERROR: @227700.000 ns (31) Expected 0000000200000000 Got dX369cX22b7c8fb4
+ERROR: @233500.000 ns (32) Expected 0000000100000000 Got 5Xc7faXed05da117
+ERROR: @241300.000 ns (33) Expected 0000000080000000 Got dX76f3X0264e0882
+ERROR: @248700.000 ns (34) Expected 0000000040000000 Got 2X5fe8X79fa73c97
+ERROR: @258100.000 ns (35) Expected 0000000020000000 Got 3Xe9d4X92e94569c
+ERROR: @266100.000 ns (36) Expected 0000000010000000 Got 3X3e91Xf7f5d0d77
+ERROR: @272700.000 ns (37) Expected 0000000008000000 Got 4X1d3fX13edf0a28
+ERROR: @282500.000 ns (38) Expected 0000000004000000 Got 2X9122Xf34caaff7
+ERROR: @289100.000 ns (39) Expected 0000000002000000 Got cX86f7X76226071f
+ERROR: @295300.000 ns (40) Expected 0000000001000000 Got 8X5de7X1009cac6d
+ERROR: @301700.000 ns (41) Expected 0000000000800000 Got 9X50b3Xe273ac12a
+ERROR: @309900.000 ns (42) Expected 0000000000400000 Got 1X2d30Xc63c62c8b
+ERROR: @314900.000 ns (43) Expected 0000000000200000 Got 3X2e1aXf658318cc
+ERROR: @321700.000 ns (44) Expected 0000000000100000 Got 8XbeedXe41b07f09
+ERROR: @331100.000 ns (45) Expected 0000000000080000 Got 8Xad83X82e7f5864
+ERROR: @336900.000 ns (46) Expected 0000000000040000 Got 5Xabe3Xba8aaf4ba
+ERROR: @345100.000 ns (47) Expected 0000000000020000 Got 0Xf0c9X489c3a50b
+ERROR: @353300.000 ns (48) Expected 0000000000010000 Got cX2585Xa5f3c3aa8
+ERROR: @359900.000 ns (49) Expected 0000000000008000 Got aX37daX9450e09d1
+ERROR: @367100.000 ns (50) Expected 0000000000004000 Got eX4fd7Xf932f3d54
+UVM_INFO @ 370300.000 ns: reporter [MISCMP] Miscompare for uvm_sequence_item.dmac: lhs = 'h858868784fdb : rhs = 'h858868784fda
+UVM_INFO @ 370300.000 ns: reporter [MISCMP] 1 Miscompare(s) for object uvm_sequence_item@1454 vs. uvm_sequence_item@1442
+UVM_ERROR my_scoreboard.sv(43) @ 370300.000 ns: uvm_test_top.env.scb [my_scoreboard] Compare FAILED
+the expect pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1454         
+  dmac             integral        48    'h858868784fda
+  smac             integral        48    'h25e4834d8e4b
+  ether_type       integral        16    'h4397        
+  pload            da(integral)    1216  -             
+    [0]            integral        8     'hd6          
+    [1]            integral        8     'hdb          
+    [2]            integral        8     'h8           
+    [3]            integral        8     'h98          
+    [4]            integral        8     'h1f          
+    ...            ...             ...   ...           
+    [1211]         integral        8     'h2           
+    [1212]         integral        8     'hae          
+    [1213]         integral        8     'hd5          
+    [1214]         integral        8     'hd6          
+    [1215]         integral        8     'h15          
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+the actual pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1442         
+  dmac             integral        48    'h858868784fdb
+  smac             integral        48    'h25e4834d8e4b
+  ether_type       integral        16    'h4397        
+  pload            da(integral)    1216  -             
+    [0]            integral        8     'hd6          
+    [1]            integral        8     'hdb          
+    [2]            integral        8     'h8           
+    [3]            integral        8     'h98          
+    [4]            integral        8     'h1f          
+    ...            ...             ...   ...           
+    [1211]         integral        8     'h2           
+    [1212]         integral        8     'hae          
+    [1213]         integral        8     'hd5          
+    [1214]         integral        8     'hd6          
+    [1215]         integral        8     'h15          
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+ERROR: @373500.000 ns (51) Expected 0000000000002000 Got eX905cX95e7e8480
+ERROR: @382100.000 ns (52) Expected 0000000000001000 Got cXbc27X53b3e7924
+ERROR: @388300.000 ns (53) Expected 0000000000000800 Got cX5bfaXcc1dffaa5
+ERROR: @394700.000 ns (54) Expected 0000000000000400 Got dX1fcfX010d38514
+ERROR: @399900.000 ns (55) Expected 0000000000000200 Got 0Xa107Xa9a72cd22
+ERROR: @409500.000 ns (56) Expected 0000000000000100 Got 6X6e07Xa62c5beab
+ERROR: @417700.000 ns (57) Expected 0000000000000080 Got 5X4f0eX5a8e4befb
+ERROR: @426500.000 ns (58) Expected 0000000000000040 Got 5X5238X76924592d
+ERROR: @433900.000 ns (59) Expected 0000000000000020 Got cX80f1Xe4dccec69
+ERROR: @442700.000 ns (60) Expected 0000000000000010 Got 2X552bXc0f597de7
+ERROR: @450900.000 ns (61) Expected 0000000000000008 Got 4Xb233X98f8746f3
+ERROR: @457500.000 ns (62) Expected 0000000000000004 Got 2Xc444X0284052fe
+ERROR: @464500.000 ns (63) Expected 0000000000000002 Got 0X3ee5X5fda0b857
+ERROR: @470900.000 ns (64) Expected 0000000000000001 Got aX8490Xc87b583e2
+ERROR: @478300.000 ns (65) Expected 95f8a5e5dd31d900 Got 4X2520Xca2680011
+ERROR: @486900.000 ns (66) Expected dd7f121ca5015619 Got 4X9738X880e8080f
+ERROR: @491900.000 ns (67) Expected 2e8653104f3834ea Got 1Xe538X173dd4035
+ERROR: @497300.000 ns (68) Expected 4bd388ff6cd81d4f Got aX8708Xc709a8821
+ERROR: @503100.000 ns (69) Expected 20b9e767b2fb1456 Got 8X9928X4b2a74434
+ERROR: @511300.000 ns (70) Expected 55579380d77138ef Got cX4124X95299081d
+ERROR: @517100.000 ns (71) Expected 6cc5defaaf04512f Got cX8110Xe80a9043a
+ERROR: @523700.000 ns (72) Expected 0d9f279ba5d87260 Got 0X5e14X871dbc419
+ERROR: @530100.000 ns (73) Expected d9031b0271bd5a0a Got 8Xb330X0f2cc440d
+ERROR: @536700.000 ns (74) Expected 424250b37c3dd951 Got cXda28X8411b041d
+ERROR: @544700.000 ns (75) Expected b8061b7ecd9a21e5 Got 8Xe31cXe11990c33
+ERROR: @551500.000 ns (76) Expected f15d0f286b65bd28 Got 0X8838X47298cc1c
+ERROR: @556900.000 ns (77) Expected add0cc8d6e5deba1 Got 4X3230X2b1ffcc14
+ERROR: @566100.000 ns (78) Expected e6d5f82752ad63d1 Got 8X610cXef2c4c403
+ERROR: @576100.000 ns (79) Expected ecbfe3bd3f591a5e Got 8X932cX3f142cc30
+ERROR: @581100.000 ns (80) Expected f356834379d165cd Got cX5614Xb71d7042c
+ERROR: @587300.000 ns (81) Expected 2b9f982f20037fa9 Got 0Xc75cX03331001a
+ERROR: @595700.000 ns (82) Expected 889de068a16f0be6 Got 0X9aa8X4812bcc03
+ERROR: @603300.000 ns (83) Expected e19e275d846a1298 Got cXb918Xb3120c035
+ERROR: @610300.000 ns (84) Expected 329a8ed523d71aec Got 0Xa818X47298cc1c
+ERROR: @616700.000 ns (85) Expected e7fce22557d23c97 Got 8X411cX2b368c03d
+UVM_INFO @ 619900.000 ns: reporter [MISCMP] Miscompare for uvm_sequence_item.dmac: lhs = 'hde9619de0500 : rhs = 'hde9619de0501
+UVM_INFO @ 619900.000 ns: reporter [MISCMP] 1 Miscompare(s) for object uvm_sequence_item@1470 vs. uvm_sequence_item@1458
+UVM_ERROR my_scoreboard.sv(43) @ 619900.000 ns: uvm_test_top.env.scb [my_scoreboard] Compare FAILED
+the expect pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1470         
+  dmac             integral        48    'hde9619de0501
+  smac             integral        48    'hc66378df5b1e
+  ether_type       integral        16    'hcc19        
+  pload            da(integral)    1226  -             
+    [0]            integral        8     'ha           
+    [1]            integral        8     'h71          
+    [2]            integral        8     'hc8          
+    [3]            integral        8     'hec          
+    [4]            integral        8     'ha2          
+    ...            ...             ...   ...           
+    [1221]         integral        8     'h83          
+    [1222]         integral        8     'had          
+    [1223]         integral        8     'hb           
+    [1224]         integral        8     'hcd          
+    [1225]         integral        8     'hb9          
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+the actual pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1458         
+  dmac             integral        48    'hde9619de0500
+  smac             integral        48    'hc66378df5b1e
+  ether_type       integral        16    'hcc19        
+  pload            da(integral)    1226  -             
+    [0]            integral        8     'ha           
+    [1]            integral        8     'h71          
+    [2]            integral        8     'hc8          
+    [3]            integral        8     'hec          
+    [4]            integral        8     'ha2          
+    ...            ...             ...   ...           
+    [1221]         integral        8     'h83          
+    [1222]         integral        8     'had          
+    [1223]         integral        8     'hb           
+    [1224]         integral        8     'hcd          
+    [1225]         integral        8     'hb9          
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+ERROR: @622900.000 ns (86) Expected 12a9f5817ff2d65d Got cX7738X982fe0427
+ERROR: @630900.000 ns (87) Expected a484c3ad38dc9c19 Got 0X9319X0338e4433
+ERROR: @638500.000 ns (88) Expected fbe00a8a1ef8ad72 Got cX7f02X4705e0417
+UVM_INFO @ 644700.000 ns: reporter [MISCMP] Miscompare for uvm_sequence_item.dmac: lhs = 'h8f6d2357223d : rhs = 'h8f6d2357223c
+UVM_INFO @ 644700.000 ns: reporter [MISCMP] 1 Miscompare(s) for object uvm_sequence_item@1486 vs. uvm_sequence_item@1474
+UVM_ERROR my_scoreboard.sv(43) @ 644700.000 ns: uvm_test_top.env.scb [my_scoreboard] Compare FAILED
+the expect pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1486         
+  dmac             integral        48    'h8f6d2357223c
+  smac             integral        48    'haf4204d4a5da
+  ether_type       integral        16    'h2e2         
+  pload            da(integral)    102   -             
+    [0]            integral        8     'h7a          
+    [1]            integral        8     'h75          
+    [2]            integral        8     'hac          
+    [3]            integral        8     'hb9          
+    [4]            integral        8     'ha           
+    ...            ...             ...   ...           
+    [97]           integral        8     'hbb          
+    [98]           integral        8     'h4c          
+    [99]           integral        8     'hc2          
+    [100]          integral        8     'h1e          
+    [101]          integral        8     'h84          
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+the actual pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1474         
+  dmac             integral        48    'h8f6d2357223d
+  smac             integral        48    'haf4204d4a5da
+  ether_type       integral        16    'h2e2         
+  pload            da(integral)    102   -             
+    [0]            integral        8     'h7a          
+    [1]            integral        8     'h75          
+    [2]            integral        8     'hac          
+    [3]            integral        8     'hb9          
+    [4]            integral        8     'ha           
+    ...            ...             ...   ...           
+    [97]           integral        8     'hbb          
+    [98]           integral        8     'h4c          
+    [99]           integral        8     'hc2          
+    [100]          integral        8     'h1e          
+    [101]          integral        8     'h84          
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+ERROR: @645900.000 ns (89) Expected 750d079407521363 Got 8X8b24X4311e0429
+ERROR: @655500.000 ns (90) Expected 64feed9c724c2faf Got 4X9808Xd63194800
+ERROR: @660700.000 ns (91) Expected f02b263b328e2b60 Got cXfc38X110770c15
+ERROR: @668700.000 ns (92) Expected 9d64555a9a10b852 Got 0Xa838X47298cc1c
+ERROR: @675300.000 ns (93) Expected d106ff0bed5255d7 Got 8X3f10X223ab4c1e
+ERROR: @682500.000 ns (94) Expected e1652c6b138c64a5 Got 4Xc610X6c0970c3a
+ERROR: @688700.000 ns (95) Expected e428581186ec8f46 Got cX6c28X7f3508c2b
+ERROR: @694100.000 ns (96) Expected aeb5f5ede22d1a36 Got 4Xd900X103844c37
+ERROR: @702500.000 ns (97) Expected e943d7568aec0c5c Got 4Xdf2cX4b3420817
+ERROR: @708500.000 ns (98) Expected df98c8276f54b04b Got 8Xb508X9423b8008
+UVM_INFO @ 711900.000 ns: reporter [MISCMP] Miscompare for uvm_sequence_item.dmac: lhs = 'h41723e269f74 : rhs = 'h41723e269f75
+UVM_INFO @ 711900.000 ns: reporter [MISCMP] 1 Miscompare(s) for object uvm_sequence_item@1502 vs. uvm_sequence_item@1490
+UVM_ERROR my_scoreboard.sv(43) @ 711900.000 ns: uvm_test_top.env.scb [my_scoreboard] Compare FAILED
+the expect pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1502         
+  dmac             integral        48    'h41723e269f75
+  smac             integral        48    'h426ae689f882
+  ether_type       integral        16    'hdb9b        
+  pload            da(integral)    314   -             
+    [0]            integral        8     'h4a          
+    [1]            integral        8     'h3e          
+    [2]            integral        8     'h7a          
+    [3]            integral        8     'h48          
+    [4]            integral        8     'h4f          
+    ...            ...             ...   ...           
+    [309]          integral        8     'h75          
+    [310]          integral        8     'h78          
+    [311]          integral        8     'hbe          
+    [312]          integral        8     'h52          
+    [313]          integral        8     'h89          
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+the actual pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1490         
+  dmac             integral        48    'h41723e269f74
+  smac             integral        48    'h426ae689f882
+  ether_type       integral        16    'hdb9b        
+  pload            da(integral)    314   -             
+    [0]            integral        8     'h4a          
+    [1]            integral        8     'h3e          
+    [2]            integral        8     'h7a          
+    [3]            integral        8     'h48          
+    [4]            integral        8     'h4f          
+    ...            ...             ...   ...           
+    [309]          integral        8     'h75          
+    [310]          integral        8     'h78          
+    [311]          integral        8     'hbe          
+    [312]          integral        8     'h52          
+    [313]          integral        8     'h89          
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+ERROR: @716100.000 ns (99) Expected b160e4680f6c696f Got 0X2130X813c00435
+ERROR: @723900.000 ns (100) Expected fa0752b07d9c4ab8 Got 0Xa838X45298cc1c
+ERROR: @729300.000 ns (101) Expected ca3a2b036dbc8502 Got 0Xbd34X056f9c01c
+ERROR: @736700.000 ns (102) Expected 5e0905517bb59bcf Got 0Xf304Xacaae880e
+ERROR: @741900.000 ns (103) Expected 814eeb3b91d90726 Got 4Xf23cXc63944c0b
+ERROR: @748700.000 ns (104) Expected 4d49db1532919c9f Got 0Xc53cX120748c02
+ERROR: @755700.000 ns (105) Expected 25eb5fc3f8cf0621 Got cX0d14Xc12800019
+ERROR: @764300.000 ns (106) Expected ab6a20c0620d1c6f Got cXfe34X540b1cc1b
+ERROR: @770700.000 ns (107) Expected 79e90dbc98f92cca Got 0Xbe18Xc83ba8c36
+ERROR: @779700.000 ns (108) Expected 866ecedd8072bb0e Got 0Xa838X472b8cc1c
+ERROR: @786900.000 ns (109) Expected 8b54536f2f3e64a8 Got 0X0600Xed114442e
+ERROR: @794100.000 ns (110) Expected ea51d3975595b86b Got 4Xb204Xc73ed0805
+ERROR: @801100.000 ns (111) Expected caffc6ac4542de31 Got cX3b3cX241accc04
+ERROR: @807500.000 ns (112) Expected 8dd45a2ddf90796c Got 0X591cX38095c41a
+ERROR: @813100.000 ns (113) Expected 1029d55e880ec2d0 Got 8Xa924Xbb216401e
+ERROR: @821300.000 ns (114) Expected 5d86cb23639dbea9 Got 4Xb508Xcb2e78813
+ERROR: @827900.000 ns (115) Expected 1d1ca853ae7c0c5f Got 4X3510Xc00c3dc2c
+ERROR: @836700.000 ns (116) Expected ce332329248f3228 Got 0Xa838X47298ec1c
+ERROR: @844100.000 ns (117) Expected 8405d1abe24fb942 Got cX3800X1112c4410
+ERROR: @851900.000 ns (118) Expected e643d78090ca4207 Got 8Xae18Xc739a4801
+ERROR: @859300.000 ns (119) Expected 48221b9937748a23 Got cX8110Xc304ac514
+ERROR: @867300.000 ns (120) Expected dd7c0bbd61fafd54 Got 8Xb634X63087c62e
+ERROR: @873500.000 ns (121) Expected 2fbc291a570db5c4 Got cXa020X88229c07e
+ERROR: @880100.000 ns (122) Expected e07c30d7e4e26e12 Got 0X4804Xab057089c
+ERROR: @887900.000 ns (123) Expected 0953e2258e8e90a1 Got cXc70cX4c270c42b
+ERROR: @897700.000 ns (124) Expected 5b711bc4ceebf2ee Got cX6e34X3b0d8c817
+ERROR: @906100.000 ns (125) Expected cc083f1e6d9e85f6 Got 8X6e28Xb43c68407
+ERROR: @913300.000 ns (126) Expected d2fd8867d50d2dfe Got 0X8d04Xf82d4883c
+ERROR: @922700.000 ns (127) Expected 06e7ea22ce92708f Got 0X8c28X1c05acc1b
+ERROR: @932100.000 ns (128) Expected 166b40b44aba4bd6 Got 0X1300X2d011c406
+ERROR: @940900.000 ns (129) Expected 95a8d72813daa94d Got 4Xdc34X7ea566017
+ERROR: @945900.000 ns (130) Expected 0eec1487dd8c26d5 Got 0Xc83cX831704c30
+ERROR: @953700.000 ns (131) Expected 7ad16ffb79c45926 Got eXa7baXc82a98401
+ERROR: @958700.000 ns (132) Expected d3746294ca6a6cf3 Got 4Xb038X8826b0c2f
+ERROR: @966100.000 ns (133) Expected 809f5f873c1fd761 Got 4Xda00Xe90a00c0c
+ERROR: @973100.000 ns (134) Expected c02faffec989d1fc Got cX0128X6f060c016
+UVM_INFO @ 980900.000 ns: reporter [MISCMP] Miscompare for uvm_sequence_item.dmac: lhs = 'hebd9992af3ea : rhs = 'hebd9992af3eb
+UVM_INFO @ 980900.000 ns: reporter [MISCMP] 1 Miscompare(s) for object uvm_sequence_item@1518 vs. uvm_sequence_item@1506
+UVM_ERROR my_scoreboard.sv(43) @ 980900.000 ns: uvm_test_top.env.scb [my_scoreboard] Compare FAILED
+the expect pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1518         
+  dmac             integral        48    'hebd9992af3eb
+  smac             integral        48    'h9d36beac8fe 
+  ether_type       integral        16    'h7ac2        
+  pload            da(integral)    1323  -             
+    [0]            integral        8     'h4a          
+    [1]            integral        8     'h5d          
+    [2]            integral        8     'hf2          
+    [3]            integral        8     'h46          
+    [4]            integral        8     'hd1          
+    ...            ...             ...   ...           
+    [1318]         integral        8     'h9e          
+    [1319]         integral        8     'h22          
+    [1320]         integral        8     'h54          
+    [1321]         integral        8     'hdd          
+    [1322]         integral        8     'hd           
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+the actual pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1506         
+  dmac             integral        48    'hebd9992af3ea
+  smac             integral        48    'h9d36beac8fe 
+  ether_type       integral        16    'h7ac2        
+  pload            da(integral)    1323  -             
+    [0]            integral        8     'h4a          
+    [1]            integral        8     'h5d          
+    [2]            integral        8     'hf2          
+    [3]            integral        8     'h46          
+    [4]            integral        8     'hd1          
+    ...            ...             ...   ...           
+    [1318]         integral        8     'h9e          
+    [1319]         integral        8     'h22          
+    [1320]         integral        8     'h54          
+    [1321]         integral        8     'hdd          
+    [1322]         integral        8     'hd           
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+ERROR: @982900.000 ns (135) Expected 4615aa1d33e72f10 Got 0X1720Xf80c6881c
+ERROR: @990100.000 ns (136) Expected 2055123350c00858 Got cXd42cX731f14c2c
+ERROR: @999700.000 ns (137) Expected df3b99d6577397c8 Got 8Xff20X0229e2a0f
+ERROR: @1007300.000 ns (138) Expected 31fe17369b5288c9 Got 8Xa838X881aa8c1c
+ERROR: @1013900.000 ns (139) Expected dfdd3cc64dae1642 Got 4Xdd0cX8314ecc27
+ERROR: @1020300.000 ns (140) Expected 178c83ce2b399d94 Got 8Xfd3cX2e147400c
+ERROR: @1029300.000 ns (141) Expected 50f636324a9b7f80 Got cX4c0cX731d38811
+UVM_INFO @ 1034500.000 ns: reporter [MISCMP] Miscompare for uvm_sequence_item.dmac: lhs = 'h8041c4d9c49c : rhs = 'h8041c4d9c49d
+UVM_INFO @ 1034500.000 ns: reporter [MISCMP] 1 Miscompare(s) for object uvm_sequence_item@1534 vs. uvm_sequence_item@1522
+UVM_ERROR my_scoreboard.sv(43) @ 1034500.000 ns: uvm_test_top.env.scb [my_scoreboard] Compare FAILED
+the expect pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1534         
+  dmac             integral        48    'h8041c4d9c49d
+  smac             integral        48    'hc4444273f6b 
+  ether_type       integral        16    'h7691        
+  pload            da(integral)    246   -             
+    [0]            integral        8     'ha7          
+    [1]            integral        8     'h76          
+    [2]            integral        8     'h5a          
+    [3]            integral        8     'h91          
+    [4]            integral        8     'h51          
+    ...            ...             ...   ...           
+    [241]          integral        8     'hab          
+    [242]          integral        8     'he0          
+    [243]          integral        8     'hb1          
+    [244]          integral        8     'he4          
+    [245]          integral        8     'h54          
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+the actual pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1522         
+  dmac             integral        48    'h8041c4d9c49c
+  smac             integral        48    'hc4444273f6b 
+  ether_type       integral        16    'h7691        
+  pload            da(integral)    246   -             
+    [0]            integral        8     'ha7          
+    [1]            integral        8     'h76          
+    [2]            integral        8     'h5a          
+    [3]            integral        8     'h91          
+    [4]            integral        8     'h51          
+    ...            ...             ...   ...           
+    [241]          integral        8     'hab          
+    [242]          integral        8     'he0          
+    [243]          integral        8     'hb1          
+    [244]          integral        8     'he4          
+    [245]          integral        8     'h54          
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+ERROR: @1035700.000 ns (142) Expected a8468ee3bc18f06d Got 4Xb028Xf80f3c034
+ERROR: @1042700.000 ns (143) Expected a2dc9e92fd3cde92 Got 0X0d86Xb01638404
+ERROR: @1050300.000 ns (144) Expected cac09f797d031287 Got 2X6a34Xcc06aea3d
+ERROR: @1056900.000 ns (145) Expected 90ba680b22aeb525 Got 0X1514Xdc08d869b
+ERROR: @1063100.000 ns (146) Expected ce7a24f350e280b6 Got 8X4514X6d313cc3e
+ERROR: @1072500.000 ns (147) Expected 882bff0aa01a0b87 Got 8X8634X263778c33
+ERROR: @1078100.000 ns (148) Expected 25610288924511c2 Got cX9038Xfd043c424
+ERROR: @1086300.000 ns (149) Expected c71516c29c75d170 Got cX0c30X6e12f4c21
+ERROR: @1093100.000 ns (150) Expected 5199c29a52c9f059 Got 8Xb292X8c3034c33
+ERROR: @1099900.000 ns (151) Expected c22f0a294a71f29f Got eXe21cX732f2483c
+ERROR: @1105500.000 ns (152) Expected ee371483714c02ea Got 4X7e82X4c1ec0eaa
+ERROR: @1113700.000 ns (153) Expected a81fbd448f9e522f Got cXc214Xb7003cc19
+ERROR: @1119700.000 ns (154) Expected 4f644c92e192dfed Got cXc118Xb51f28c0f
+ERROR: @1129300.000 ns (155) Expected 1afa9a66a6df92ae Got 4X0a04X223aac812
+ERROR: @1139100.000 ns (156) Expected b3c1cc715cb879d8 Got 4Xa62cX7b314c401
+ERROR: @1146300.000 ns (157) Expected 19d032e64ab0bd8b Got 0X0720X4c20d223b
+ERROR: @1155100.000 ns (158) Expected 3cfaa7a7dc8720dc Got 0X8514X781968834
+ERROR: @1162100.000 ns (159) Expected b7265f7f447ac6f3 Got 0X2c82X803c1cc21
+ERROR: @1166500.000 ns (160) Expected 9db73b3c0d163f54 Got 4Xb61eX23914e080
+ERROR: @1176300.000 ns (161) Expected 8181b65babf4a975 Got cXf90cXe12630021
+ERROR: @1181900.000 ns (162) Expected 93c9b64042eaa240 Got 4X7e00X2b03bc41c
+ERROR: @1189100.000 ns (163) Expected 5570530829705592 Got cX2630X4d1ed8c1b
+ERROR: @1197900.000 ns (164) Expected 8638809e878787a0 Got 0Xdb0cX3b3d6e628
+ERROR: @1207100.000 ns (165) Expected 41b9a79af79ac208 Got 0Xd438X4a3090023
+ERROR: @1213700.000 ns (166) Expected 7a9be42f2009a892 Got 0X9e18X8b2e6c03d
+ERROR: @1220900.000 ns (167) Expected 29038d56ba6d2745 Got 0X3002Xbf2c04c1c
+ERROR: @1227300.000 ns (168) Expected 5495c6abf1e5df51 Got 0Xe628X862ca4407
+ERROR: @1233900.000 ns (169) Expected ae13dbd561488933 Got cXb304X28385c432
+ERROR: @1243300.000 ns (170) Expected 024d1ffa8904e389 Got cXeb24X9c1268c06
+ERROR: @1250500.000 ns (171) Expected d1399712f99bf02e Got 4Xac3cXd51a68818
+ERROR: @1258100.000 ns (172) Expected 14c1d7c1cffec79e Got aXf7baXc329b0036
+ERROR: @1265500.000 ns (173) Expected 1de5279dae3bed6f Got cXb118X4bbe8caa3
+ERROR: @1274700.000 ns (174) Expected e941a33f85501303 Got cX4218Xc81ffcc24
+ERROR: @1282700.000 ns (175) Expected da99dbbc9a03f379 Got 0X6f34Xc7270c43c
+ERROR: @1287500.000 ns (176) Expected b7fc92f91d8e92e9 Got cXf418X933a24815
+ERROR: @1293500.000 ns (177) Expected ae8e5caa3ca04e85 Got 4Xb728X630ad481f
+ERROR: @1299300.000 ns (178) Expected 9cc62df43b6eed74 Got 8X8d38X37b29e89c
+ERROR: @1308700.000 ns (179) Expected d863dbb5c59a91a0 Got 2X98aaX888e86c0f
+UVM_INFO @ 1315700.000 ns: reporter [MISCMP] Miscompare for uvm_sequence_item.dmac: lhs = 'h365f80804a7b : rhs = 'h365f80804a7a
+UVM_INFO @ 1315700.000 ns: reporter [MISCMP] 1 Miscompare(s) for object uvm_sequence_item@1550 vs. uvm_sequence_item@1538
+UVM_ERROR my_scoreboard.sv(43) @ 1315700.000 ns: uvm_test_top.env.scb [my_scoreboard] Compare FAILED
+the expect pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1550         
+  dmac             integral        48    'h365f80804a7a
+  smac             integral        48    'h6fb82701b04b
+  ether_type       integral        16    'h8fcd        
+  pload            da(integral)    1384  -             
+    [0]            integral        8     'h56          
+    [1]            integral        8     'hec          
+    [2]            integral        8     'h8b          
+    [3]            integral        8     'hdb          
+    [4]            integral        8     'ha4          
+    ...            ...             ...   ...           
+    [1379]         integral        8     'h9b          
+    [1380]         integral        8     'h13          
+    [1381]         integral        8     'h23          
+    [1382]         integral        8     'h61          
+    [1383]         integral        8     'hb           
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+the actual pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1538         
+  dmac             integral        48    'h365f80804a7b
+  smac             integral        48    'h6fb82701b04b
+  ether_type       integral        16    'h8fcd        
+  pload            da(integral)    1384  -             
+    [0]            integral        8     'h56          
+    [1]            integral        8     'hec          
+    [2]            integral        8     'h8b          
+    [3]            integral        8     'hdb          
+    [4]            integral        8     'ha4          
+    ...            ...             ...   ...           
+    [1379]         integral        8     'h9b          
+    [1380]         integral        8     'h13          
+    [1381]         integral        8     'h23          
+    [1382]         integral        8     'h61          
+    [1383]         integral        8     'hb           
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+ERROR: @1316900.000 ns (180) Expected a1ab2190545b91d7 Got 4X2800X67ac48a92
+ERROR: @1323900.000 ns (181) Expected 0875041e64c570f7 Got 2X03b2Xf7144c82e
+ERROR: @1331900.000 ns (182) Expected 5a594528bebef1cc Got cXb31cX072d8c006
+UVM_INFO @ 1334300.000 ns: reporter [MISCMP] Miscompare for uvm_sequence_item.dmac: lhs = 'hd259b83de177 : rhs = 'hd259b83de176
+UVM_INFO @ 1334300.000 ns: reporter [MISCMP] 1 Miscompare(s) for object uvm_sequence_item@1562 vs. uvm_sequence_item@1554
+UVM_ERROR my_scoreboard.sv(43) @ 1334300.000 ns: uvm_test_top.env.scb [my_scoreboard] Compare FAILED
+the expect pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1562         
+  dmac             integral        48    'hd259b83de176
+  smac             integral        48    'h6ef5c95a7d90
+  ether_type       integral        16    'he6c4        
+  pload            da(integral)    71    -             
+    [0]            integral        8     'hf0          
+    [1]            integral        8     'hf0          
+    [2]            integral        8     'h24          
+    [3]            integral        8     'h4e          
+    [4]            integral        8     'h81          
+    ...            ...             ...   ...           
+    [66]           integral        8     'hf1          
+    [67]           integral        8     'hef          
+    [68]           integral        8     'h4c          
+    [69]           integral        8     'h66          
+    [70]           integral        8     'h1c          
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+the actual pkt is
+-------------------------------------------------------
+Name               Type            Size  Value         
+-------------------------------------------------------
+uvm_sequence_item  my_transaction  -     @1554         
+  dmac             integral        48    'hd259b83de177
+  smac             integral        48    'h6ef5c95a7d90
+  ether_type       integral        16    'he6c4        
+  pload            da(integral)    71    -             
+    [0]            integral        8     'hf0          
+    [1]            integral        8     'hf0          
+    [2]            integral        8     'h24          
+    [3]            integral        8     'h4e          
+    [4]            integral        8     'h81          
+    ...            ...             ...   ...           
+    [66]           integral        8     'hf1          
+    [67]           integral        8     'hef          
+    [68]           integral        8     'h4c          
+    [69]           integral        8     'h66          
+    [70]           integral        8     'h1c          
+  crc              integral        32    'hffffffff    
+-------------------------------------------------------
+ERROR: @1340700.000 ns (183) Expected fcdb3291de21f0c0 Got cXb91cXce27e4c2e
+ERROR: @1348500.000 ns (184) Expected 869efd7f9f265a09 Got 4Xb90cXc33278408
+ERROR: @1355900.000 ns (185) Expected 88d55e54f54c97b4 Got 8X3422X2c2550227
+ERROR: @1363700.000 ns (186) Expected 0c0cc00c83ea48fd Got 0X2bb4Xcb93306bd
+ERROR: @1372700.000 ns (187) Expected 83bc8ef3a6570183 Got 4X4e8cX7eba506a2
+ERROR: @1380500.000 ns (188) Expected df725dcad94ea2e9 Got 4X79b0X2e0a0c236
+ERROR: @1386500.000 ns (189) Expected e652b53b550be8b0 Got 2X4e32Xeebfba0a5
+ERROR: @1391700.000 ns (190) Expected af527120c485cbb0 Got 2Xb926Xeb859acb5
+ERROR: @1398700.000 ns (191) Expected 0f04ce393db926d5 Got eXf816X0699ba618
+ERROR: @1405300.000 ns (192) Expected c9f00ffc74079067 Got aX750aX3fad86e3e
+ERROR: @1414900.000 ns (193) Expected 7cfd82a593252b4e Got eX561aX3f95802a3
+ERROR: @1422500.000 ns (194) Expected cb49a2f9e91363e3 Got 8X7606X39ac0c29c
+ERROR: @1429300.000 ns (195) Expected 00b588be70d23f56 Got 2X201cX0b8b28025
+ERROR: @1436900.000 ns (196) Expected 406a9a6ab43399ae Got 2X5ab6Xb9b81880e
+ERROR: @1445900.000 ns (197) Expected 6cb773611dca9ada Got aX898eX949284894
+ERROR: @1455500.000 ns (198) Expected 67fd21c17dbb5d70 Got 8X5994X8d2584685
+ERROR: @1461700.000 ns (199) Expected 9592cb4110430787 Got eXdaa2Xbfa102294
+ERROR: @1467500.000 ns (200) Expected a6b7ff68a318ddd3 Got eX99b4Xf8968c215
+ERROR: @1476500.000 ns (201) Expected 4d102196c914ca16 Got 2Xb102Xeb85b42b7
+ERROR: @1484100.000 ns (202) Expected 2dfa9f4573594965 Got 2Xdf02Xa6a3ac68e
+ERROR: @1491900.000 ns (203) Expected b46604816c0e0774 Got 6X7d06Xf4bebcea8
+ERROR: @1499500.000 ns (204) Expected 6e7e6221a4f34e87 Got 6X753eXccb4186bc
+ERROR: @1504300.000 ns (205) Expected aa85e74643233199 Got 2X0e12X7da438e9f
+ERROR: @1511300.000 ns (206) Expected 2e5a19db4d1962d6 Got aX5722X7bb04ceaf
+ERROR: @1518300.000 ns (207) Expected 23a866a809d30894 Got 2X3e36Xb29b2828c
+ERROR: @1526700.000 ns (208) Expected d812d961f017d320 Got eX0736Xba9a34697
+ERROR: @1536100.000 ns (209) Expected 055605816e58608f Got aX3906X45a0202b8
+ERROR: @1542300.000 ns (210) Expected abd88e8b1b7716f1 Got aX921eX0396b8ea1
+ERROR: @1548700.000 ns (211) Expected 537ac95be69da1e1 Got aXed12Xbf84dcaac
+ERROR: @1555100.000 ns (212) Expected aed0f6ae3c25cdd8 Got aXc80aXac82a4699
+ERROR: @1563100.000 ns (213) Expected b3e35a5ee53e7b8d Got aXad0aXa480f02b1
+ERROR: @1572900.000 ns (214) Expected 61c79c71921a2ef8 Got 2Xb406X9d87442aa
+ERROR: @1578900.000 ns (215) Expected e2f5728f0995013c Got eXbf16X59ae402b1
+ERROR: @1584300.000 ns (216) Expected 1aeac39a61f0a464 Got 6X711aX3d90ec6b3
+ERROR: @1589500.000 ns (217) Expected 690f5b0d9a26939b Got 4XcefbXde7719b37
+ERROR: @1597900.000 ns (218) Expected 7a389d10354bd271 Got eX6904X2bcd7e9cd
+ERROR: @1604900.000 ns (219) Expected 868ebb51cab4599a Got 4X6154X062a67433
+ERROR: @1612700.000 ns (220) Expected 7178876e01f19b2a Got 0Xf71bXe84c8820b
+ERROR: @1619900.000 ns (221) Expected af37fb421f8c4095 Got 2Xc83aXd04103fd8
+ERROR: @1627700.000 ns (222) Expected 86a560f10ec6d85b Got 6X5c29X4f03d221d
+ERROR: @1633700.000 ns (223) Expected 0cd3da020021dc09 Got 2X30feXc036f7aee
+ERROR: @1641300.000 ns (224) Expected ea676b2cb7db2b7a Got 7X3a82X0bcbd8892
+ERROR: @1647300.000 ns (225) Expected dfd64a815caf1a0f Got fXe60aX4a612f480
+ERROR: @1653900.000 ns (226) Expected 5c513c9c4886c088 Got 1X139dX01baaf8dc
+ERROR: @1660500.000 ns (227) Expected 0a2aeeae3ff4ab77 Got cXf6abXb5770639d
+ERROR: @1667500.000 ns (228) Expected ef1bf03e5dfa575a Got 7XeeabX1e9fa6ae6
+ERROR: @1673500.000 ns (229) Expected 88bf0db6d70dee56 Got 0X14f3Xc84ac7cb2
+ERROR: @1679900.000 ns (230) Expected a1f9915541020b56 Got 8Xac3aXfcdaafbe2
+ERROR: @1688700.000 ns (231) Expected 6fbf1cafcffd0556 Got cX3b28X0b40d187a
+ERROR: @1694100.000 ns (232) Expected 2f22e49bab7ca1ac Got 8Xe413Xe50b0a7e9
+ERROR: @1699300.000 ns (233) Expected 5a6b612cc26cce4a Got 8Xb938X2cbc390bf
+ERROR: @1704100.000 ns (234) Expected 5f4c038ed12b2e41 Got 0X5ea4Xc855092c5
+ERROR: @1710100.000 ns (235) Expected 63fac0d034d9f793 Got 1X353fX1bcc99a21
+ERROR: @1716700.000 ns (236) Expected 8ca64de9c1b123a7 Got 0Xa838X47298cc1c
+ERROR: @1723500.000 ns (237) Expected 7359b2163e4edc58 Got fX57c7Xb8d6733e3
+ERROR: @1728700.000 ns (238) Expected 958e6e627a05557b Got 8Xc7aeX2e213482d
+ERROR: @1736100.000 ns (239) Expected f40379ab9e0ec533 Got 4Xb104X8e894c2bf
+ERROR: @1742700.000 ns (240) Expected 17668dfc7292532d Got cXa6a0Xe2ba18aa1
+ERROR: @1747900.000 ns (241) Expected 8a5ae1f81ab8f2dd Got 2X2d2aXbcef6c0c2
+ERROR: @1754500.000 ns (242) Expected 8ca64de9c1b123a7 Got 0Xa838X47298cc1c
+ERROR: @1763500.000 ns (243) Expected ed39d950fa74bcc4 Got 2X1f0eX19d8ac2d9
+ERROR: @1771300.000 ns (244) Expected 690f5b0d9a26939b Got 4XcefbXde7719b37
+ERROR: @1780900.000 ns (245) Expected 7a389d10354bd271 Got eX6904X2bcd7e9cd
+ERROR: @1788100.000 ns (246) Expected 868ebb51cab4599a Got 4X6154X062a67433
+ERROR: @1793300.000 ns (247) Expected 7178876e01f19b2a Got 0Xf71bXe84c8820b
+ERROR: @1801700.000 ns (248) Expected af37fb421f8c4095 Got 2Xc83aXd04103fd8
+ERROR: @1808100.000 ns (249) Expected 86a560f10ec6d85b Got 6X5c29X4f03d221d
+ERROR: @1815100.000 ns (250) Expected 0cd3da020021dc09 Got 2X30feXc036f7aee
+ERROR: @1822300.000 ns (251) Expected ea676b2cb7db2b7a Got 7X3a82X0bcbd8892
+ERROR: @1830300.000 ns (252) Expected dfd64a815caf1a0f Got fXe60aX4a612f480
+ERROR: @1837700.000 ns (253) Expected 5c513c9c4886c088 Got 1X139dX01baaf8dc
+ERROR: @1844700.000 ns (254) Expected 0a2aeeae3ff4ab77 Got cXf6abXb5770639d
+ERROR: @1851900.000 ns (255) Expected ef1bf03e5dfa575a Got 7XeeabX1e9fa6ae6
+ERROR: @1859900.000 ns (256) Expected 88bf0db6d70dee56 Got 0X14f3Xc84ac7cb2
+ERROR: @1868700.000 ns (257) Expected a1f9915541020b56 Got 8Xac3aXfcdaafbe2
+ERROR: @1877300.000 ns (258) Expected 6fbf1cafcffd0556 Got cX3b28X0b40d187a
+ERROR: @1884700.000 ns (259) Expected 2f22e49bab7ca1ac Got 8Xa02fXff0b22be1
+ERROR: @1890300.000 ns (260) Expected 5a6b612cc26cce4a Got 8Xb938X2cbc390bf
+ERROR: @1897900.000 ns (261) Expected 5f4c038ed12b2e41 Got 0X5ea4Xc855092c5
+ERROR: @1904500.000 ns (262) Expected 63fac0d034d9f793 Got 1X353fX1bcc99a21
+ERROR: @1909100.000 ns (263) Expected 617b3a0ce8f07100 Got cX90baXd46df86ed
+ERROR: @1918700.000 ns (264) Expected db958605f8c8c606 Got 0X23aaX746560ef4
+ERROR: @1925700.000 ns (265) Expected edbfd1c66c29ccc7 Got 0X4aa6Xfe7c9c2ee
+ERROR: @1935700.000 ns (266) Expected 355550b2150e2451 Got fXd5d7Xf5e97bbf4
+ERROR: @1942900.000 ns (267) Expected caaaaf4deaf1dbae Got 0X2a28X0a168440b
+ERROR: @1948100.000 ns (268) Expected d5d44ff720683d0d Got 6X8caaXe8bebe4bf
+ERROR: @1954700.000 ns (269) Expected 2a2bb008df97c2f2 Got 1X695dXff67d134e
+ERROR: @1959700.000 ns (270) Expected 95a8d72813daa94d Got 4Xdc34X7ea566017
+ERROR: @1968300.000 ns (271) Expected 0eec1487dd8c26d5 Got 0Xc83cX831704c30
+ERROR: @1976900.000 ns (272) Expected 7ad16ffb79c45926 Got eXa7baXc82a98401
+ERROR: @1984100.000 ns (273) Expected d3746294ca6a6cf3 Got 4Xb038X8826b0c2f
+ERROR: @1990300.000 ns (274) Expected 809f5f873c1fd761 Got 4Xda00Xe90a00c0c
+ERROR: @1999700.000 ns (275) Expected c02faffec989d1fc Got cX0128X6f060c016
+ERROR: @2006900.000 ns (276) Expected 4615aa1d33e72f10 Got 0X1720Xf80c6881c
+ERROR: @2014700.000 ns (277) Expected 2055123350c00858 Got cXd42cX731f14c2c
+ERROR: @2020500.000 ns (278) Expected df3b99d6577397c8 Got 8Xff20X0229e2a0f
+ERROR: @2026700.000 ns (279) Expected 31fe17369b5288c9 Got 8Xa838X881aa8c1c
+ERROR: @2033300.000 ns (280) Expected dfdd3cc64dae1642 Got 4Xdd0cX8314ecc27
+ERROR: @2040100.000 ns (281) Expected 178c83ce2b399d94 Got 8Xfd3cX2e147400c
+ERROR: @2044900.000 ns (282) Expected 50f636324a9b7f80 Got cX4c0cX731d38811
+ERROR: @2050900.000 ns (283) Expected a8468ee3bc18f06d Got 4Xb028Xf80f3c034
+ERROR: @2057100.000 ns (284) Expected a2dc9e92fd3cde92 Got 0X0d86Xb01638404
+ERROR: @2064500.000 ns (285) Expected cac09f797d031287 Got 2X6a34Xcc06aea3d
+ERROR: @2071700.000 ns (286) Expected 90ba680b22aeb525 Got 0X1514Xdc08d869b
+ERROR: @2080300.000 ns (287) Expected ce7a24f350e280b6 Got 8X4514X6d313cc3e
+ERROR: @2085700.000 ns (288) Expected 882bff0aa01a0b87 Got 8X8634X263778c33
+ERROR: @2094500.000 ns (289) Expected 25610288924511c2 Got cX9038Xfd043c424
+ERROR: @2100500.000 ns (290) Expected c71516c29c75d170 Got cX0c30X6e12f4c21
+ERROR: @2107900.000 ns (291) Expected 5199c29a52c9f059 Got 8Xb292X8c3034c33
+ERROR: @2116300.000 ns (292) Expected c22f0a294a71f29f Got eXe21cX732f2483c
+ERROR: @2124700.000 ns (293) Expected ee371483714c02ea Got 4X7e82X4c1ec0eaa
+ERROR: @2130900.000 ns (294) Expected a81fbd448f9e522f Got cXc214Xb7003cc19
+ERROR: @2139900.000 ns (295) Expected 4f644c92e192dfed Got cXc118Xb51f28c0f
+ERROR: @2147300.000 ns (296) Expected 1afa9a66a6df92ae Got 4X0a04X223aac812
+ERROR: @2154300.000 ns (297) Expected b3c1cc715cb879d8 Got 4Xa62cX7b314c401
+ERROR: @2160700.000 ns (298) Expected 19d032e64ab0bd8b Got 4X3e34Xfc16c2207
+ERROR: @2167900.000 ns (299) Expected 3cfaa7a7dc8720dc Got 0X8514X781968834
+ERROR: @2173500.000 ns (300) Expected b7265f7f447ac6f3 Got 0X2c82X803c1cc21
+ERROR: @2181100.000 ns (301) Expected 9db73b3c0d163f54 Got 4Xb61eX23914e080
+ERROR: @2190300.000 ns (302) Expected 8181b65babf4a975 Got cXf90cXe12630021
+ERROR: @2196100.000 ns (303) Expected 93c9b64042eaa240 Got 4X7e00X2b03bc41c
+ERROR: @2201900.000 ns (304) Expected 5570530829705592 Got cX2630X4d1ed8c1b
+ERROR: @2208700.000 ns (305) Expected 8638809e878787a0 Got 0Xdb0cX3b3d6e628
+ERROR: @2216900.000 ns (306) Expected 41b9a79af79ac208 Got 0Xd438X4a3090023
+ERROR: @2224700.000 ns (307) Expected 7a9be42f2009a892 Got 0X9e18X8b2e6c03d
+ERROR: @2233500.000 ns (308) Expected 29038d56ba6d2745 Got 0X3002Xbf2c04c1c
+ERROR: @2239300.000 ns (309) Expected 5495c6abf1e5df51 Got 0Xe628X862ca4407
+ERROR: @2247300.000 ns (310) Expected ae13dbd561488933 Got cXb304X28385c432
+ERROR: @2255300.000 ns (311) Expected 024d1ffa8904e389 Got cXeb24X9c1268c06
+ERROR: @2261100.000 ns (312) Expected d1399712f99bf02e Got 4Xac3cXd51a68818
+ERROR: @2267100.000 ns (313) Expected 14c1d7c1cffec79e Got aXf7baXc329b0036
+ERROR: @2275900.000 ns (314) Expected 1de5279dae3bed6f Got cXb118X4bbe8caa3
+ERROR: @2282300.000 ns (315) Expected e941a33f85501303 Got cX4218Xc81ffcc24
+ERROR: @2290900.000 ns (316) Expected da99dbbc9a03f379 Got 0X6f34Xc7270c43c
+ERROR: @2298100.000 ns (317) Expected b7fc92f91d8e92e9 Got cXf418X933a24815
+ERROR: @2302900.000 ns (318) Expected ae8e5caa3ca04e85 Got 4Xb728X630ad481f
+ERROR: @2309900.000 ns (319) Expected 9cc62df43b6eed74 Got 8X8d38X37b29e89c
+ERROR: @2316900.000 ns (320) Expected d863dbb5c59a91a0 Got 2X98aaX888e86c0f
+ERROR: @2325100.000 ns (321) Expected a1ab2190545b91d7 Got 4X2800X67ac48a92
+ERROR: @2332500.000 ns (322) Expected 0875041e64c570f7 Got 2X03b2Xf7144c82e
+ERROR: @2339500.000 ns (323) Expected 5a594528bebef1cc Got cXb31cX072d8c006
+ERROR: @2348100.000 ns (324) Expected fcdb3291de21f0c0 Got cXb91cXce27e4c2e
+ERROR: @2355500.000 ns (325) Expected 869efd7f9f265a09 Got 4Xb90cXc33278408
+ERROR: @2362300.000 ns (326) Expected a0d4c9a558a7e855 Got 0X9baaX4bfc851ee
+ERROR: @2369500.000 ns (327) Expected d1c00c0e082750a5 Got 7X023dX6dfbe901a
+ERROR: @2378700.000 ns (328) Expected d8751843712f0594 Got 4X7af8X69fca8bdb
+ERROR: @2387100.000 ns (329) Expected 062c08f81608636e Got 8X759eX1dc188b7a
+Running Decrypt test ...
+
+ERROR: @2394700.000 ns (0) Expected 0000000000000000 Got cXd87dX46f9fb312
+ERROR: @2402300.000 ns (1) Expected 95f8a5e5dd31d900 Got 4X2520Xca2680011
+ERROR: @2409500.000 ns (2) Expected dd7f121ca5015619 Got 4X9738X880e8080f
+ERROR: @2415700.000 ns (3) Expected 2e8653104f3834ea Got 1Xe538X173dd4035
+ERROR: @2423500.000 ns (4) Expected 4bd388ff6cd81d4f Got aX8708Xc709a8821
+ERROR: @2429300.000 ns (5) Expected 20b9e767b2fb1456 Got 8X9928X4b2a74434
+ERROR: @2436900.000 ns (6) Expected 55579380d77138ef Got cX4124X95299081d
+ERROR: @2444100.000 ns (7) Expected 6cc5defaaf04512f Got cX8110Xe80a9043a
+ERROR: @2449900.000 ns (8) Expected 0d9f279ba5d87260 Got 0X5e14X871dbc419
+ERROR: @2456700.000 ns (9) Expected d9031b0271bd5a0a Got 8Xb330X0f2cc440d
+ERROR: @2463700.000 ns (10) Expected 424250b37c3dd951 Got cXda28X8411b041d
+ERROR: @2469900.000 ns (11) Expected b8061b7ecd9a21e5 Got 8Xe31cXe11990c33
+ERROR: @2475100.000 ns (12) Expected f15d0f286b65bd28 Got 0X8838X47298cc1c
+ERROR: @2480500.000 ns (13) Expected add0cc8d6e5deba1 Got 4X3230X2b1ffcc14
+ERROR: @2486700.000 ns (14) Expected e6d5f82752ad63d1 Got 8X610cXef2c4c403
+ERROR: @2493100.000 ns (15) Expected ecbfe3bd3f591a5e Got 8X932cX3f142cc30
+ERROR: @2499500.000 ns (16) Expected f356834379d165cd Got cX5614Xb71d7042c
+ERROR: @2509300.000 ns (17) Expected 2b9f982f20037fa9 Got 0Xc75cX03331001a
+ERROR: @2515500.000 ns (18) Expected 889de068a16f0be6 Got 0X9aa8X4812bcc03
+ERROR: @2522500.000 ns (19) Expected e19e275d846a1298 Got cXb918Xb3120c035
+ERROR: @2529700.000 ns (20) Expected 329a8ed523d71aec Got 0Xa818X47298cc1c
+ERROR: @2536900.000 ns (21) Expected e7fce22557d23c97 Got 8X411cX2b368c03d
+ERROR: @2542700.000 ns (22) Expected 12a9f5817ff2d65d Got cX7738X982fe0427
+ERROR: @2547300.000 ns (23) Expected a484c3ad38dc9c19 Got 0X9319X0338e4433
+ERROR: @2556500.000 ns (24) Expected fbe00a8a1ef8ad72 Got cX7f02X4705e0417
+ERROR: @2562700.000 ns (25) Expected 750d079407521363 Got 8X8b24X4311e0429
+ERROR: @2572100.000 ns (26) Expected 64feed9c724c2faf Got 4X9808Xd63194800
+ERROR: @2578900.000 ns (27) Expected f02b263b328e2b60 Got cXfc38X110770c15
+ERROR: @2586700.000 ns (28) Expected 9d64555a9a10b852 Got 0Xa838X47298cc1c
+ERROR: @2594900.000 ns (29) Expected d106ff0bed5255d7 Got 8X3f10X223ab4c1e
+ERROR: @2602900.000 ns (30) Expected e1652c6b138c64a5 Got 4Xc610X6c0970c3a
+ERROR: @2610300.000 ns (31) Expected e428581186ec8f46 Got cX6c28X7f3508c2b
+ERROR: @2617300.000 ns (32) Expected aeb5f5ede22d1a36 Got 4Xd900X103844c37
+ERROR: @2624900.000 ns (33) Expected e943d7568aec0c5c Got 4Xdf2cX4b3420817
+ERROR: @2630500.000 ns (34) Expected df98c8276f54b04b Got 8Xb508X9423b8008
+ERROR: @2637900.000 ns (35) Expected b160e4680f6c696f Got 0X2130X813c00435
+ERROR: @2646500.000 ns (36) Expected fa0752b07d9c4ab8 Got 0Xa838X45298cc1c
+ERROR: @2651500.000 ns (37) Expected ca3a2b036dbc8502 Got 0Xbd34X056f9c01c
+ERROR: @2659900.000 ns (38) Expected 5e0905517bb59bcf Got 0Xf304Xacaae880e
+ERROR: @2667100.000 ns (39) Expected 814eeb3b91d90726 Got 4Xf23cXc63944c0b
+ERROR: @2673700.000 ns (40) Expected 4d49db1532919c9f Got 0Xc53cX120748c02
+ERROR: @2681300.000 ns (41) Expected 25eb5fc3f8cf0621 Got cX0d14Xc12800019
+ERROR: @2689900.000 ns (42) Expected ab6a20c0620d1c6f Got cXfe34X540b1cc1b
+ERROR: @2699500.000 ns (43) Expected 79e90dbc98f92cca Got 0Xbe18Xc83ba8c36
+ERROR: @2706900.000 ns (44) Expected 866ecedd8072bb0e Got 0Xa838X472b8cc1c
+ERROR: @2715300.000 ns (45) Expected 8b54536f2f3e64a8 Got 0X0600Xed114442e
+ERROR: @2724500.000 ns (46) Expected ea51d3975595b86b Got 4Xb204Xc73ed0805
+ERROR: @2733100.000 ns (47) Expected caffc6ac4542de31 Got cX3b3cX241accc04
+ERROR: @2741500.000 ns (48) Expected 8dd45a2ddf90796c Got 0X591cX38095c41a
+ERROR: @2747700.000 ns (49) Expected 1029d55e880ec2d0 Got 8Xa924Xbb216401e
+ERROR: @2754700.000 ns (50) Expected 5d86cb23639dbea9 Got 4Xb508Xcb2e78813
+ERROR: @2762500.000 ns (51) Expected 1d1ca853ae7c0c5f Got 4X3510Xc00c3dc2c
+ERROR: @2768300.000 ns (52) Expected ce332329248f3228 Got 0Xa838X47298ec1c
+ERROR: @2775900.000 ns (53) Expected 8405d1abe24fb942 Got cX3800X1112c4410
+ERROR: @2783100.000 ns (54) Expected e643d78090ca4207 Got 8Xae18Xc739a4801
+ERROR: @2790500.000 ns (55) Expected 48221b9937748a23 Got cX8110Xc304ac514
+ERROR: @2798900.000 ns (56) Expected dd7c0bbd61fafd54 Got 8Xb634X63087c62e
+ERROR: @2806300.000 ns (57) Expected 2fbc291a570db5c4 Got cXa020X88229c07e
+ERROR: @2813300.000 ns (58) Expected e07c30d7e4e26e12 Got 0X4804Xab057089c
+ERROR: @2822300.000 ns (59) Expected 0953e2258e8e90a1 Got cXc70cX4c270c42b
+ERROR: @2830300.000 ns (60) Expected 5b711bc4ceebf2ee Got cX6e34X3b0d8c817
+ERROR: @2839300.000 ns (61) Expected cc083f1e6d9e85f6 Got 8X6e28Xb43c68407
+ERROR: @2844500.000 ns (62) Expected d2fd8867d50d2dfe Got 0X8d04Xf82d4883c
+ERROR: @2851900.000 ns (63) Expected 06e7ea22ce92708f Got 0X8c28X1c05acc1b
+ERROR: @2861300.000 ns (64) Expected 166b40b44aba4bd6 Got 0X1300X2d011c406
+ERROR: @2871100.000 ns (65) Expected 8000000000000000 Got 6X347eX1fd13221b
+ERROR: @2878100.000 ns (66) Expected 4000000000000000 Got eX633dX838436d1d
+ERROR: @2885900.000 ns (67) Expected 2000000000000000 Got 5Xd1b3X63c5734db
+ERROR: @2892900.000 ns (68) Expected 1000000000000000 Got 4Xd864X79ce4aea5
+ERROR: @2902300.000 ns (69) Expected 0800000000000000 Got 5X9ae7X9334a6488
+ERROR: @2909900.000 ns (70) Expected 0400000000000000 Got 6Xd45fXbfbcc78df
+ERROR: @2918500.000 ns (71) Expected 0200000000000000 Got 1XfccdXa5ef7a21b
+ERROR: @2926500.000 ns (72) Expected 0100000000000000 Got 4X9607X46a59bdbf
+ERROR: @2934300.000 ns (73) Expected 0080000000000000 Got 6X863fXdb0bde932
+ERROR: @2941500.000 ns (74) Expected 0040000000000000 Got 0Xbca8Xf1d3f2e83
+ERROR: @2949900.000 ns (75) Expected 0020000000000000 Got bX3927X5cc6412ca
+ERROR: @2956700.000 ns (76) Expected 0010000000000000 Got bX572fX05657b205
+ERROR: @2964300.000 ns (77) Expected 0008000000000000 Got 9Xe5d8Xc1dd9936d
+ERROR: @2970900.000 ns (78) Expected 0004000000000000 Got 5Xe6e4Xba31c5fd7
+ERROR: @2977500.000 ns (79) Expected 0002000000000000 Got 1X85d3X1ff28219c
+ERROR: @2986100.000 ns (80) Expected 0001000000000000 Got bX1277X8977a96d5
+ERROR: @2992700.000 ns (81) Expected 0000800000000000 Got 1X4878Xf21b17b55
+ERROR: @2999700.000 ns (82) Expected 0000400000000000 Got cX21fcX5a3cdc3df
+ERROR: @3006500.000 ns (83) Expected 0000200000000000 Got 1X7b1bXa48562548
+ERROR: @3015900.000 ns (84) Expected 0000100000000000 Got fXc17dX0811969f0
+ERROR: @3023300.000 ns (85) Expected 0000080000000000 Got 5X86e5X12bcdf073
+ERROR: @3031100.000 ns (86) Expected 0000040000000000 Got 6X50e6X7cd90ed88
+ERROR: @3037900.000 ns (87) Expected 0000020000000000 Got 9X71d3X6362d6c08
+ERROR: @3044700.000 ns (88) Expected 0000010000000000 Got 3X2405X11c395aa0
+ERROR: @3052500.000 ns (89) Expected 0000008000000000 Got 3Xcd37X7386a67ab
+ERROR: @3059100.000 ns (90) Expected 0000004000000000 Got 1Xe2deX0b14c5b73
+ERROR: @3065100.000 ns (91) Expected 0000002000000000 Got fXcc15X320eb9f86
+ERROR: @3071100.000 ns (92) Expected 0000001000000000 Got aXa8b6X565d2b49d
+ERROR: @3079100.000 ns (93) Expected 0000000800000000 Got 6Xe1ebX87fa222e0
+ERROR: @3085100.000 ns (94) Expected 0000000400000000 Got 9X4c00X312b1d46f
+ERROR: @3091100.000 ns (95) Expected 0000000200000000 Got dX369cX22b7c8fb4
+ERROR: @3096900.000 ns (96) Expected 0000000100000000 Got 9X42faXc5355ad06
+ERROR: @3104700.000 ns (97) Expected 0000000080000000 Got dX76f3X0264e0882
+ERROR: @3110500.000 ns (98) Expected 0000000040000000 Got 2X5fe8X79fa73c97
+ERROR: @3116500.000 ns (99) Expected 0000000020000000 Got 3Xe9d4X92e94569c
+ERROR: @3124300.000 ns (100) Expected 0000000010000000 Got 3X3e91Xf7f5d0d77
+ERROR: @3133100.000 ns (101) Expected 0000000008000000 Got 4X1d3fX13edf0a28
+ERROR: @3141500.000 ns (102) Expected 0000000004000000 Got 2X9122Xf34caaff7
+ERROR: @3149700.000 ns (103) Expected 0000000002000000 Got cX86f7X76226071f
+ERROR: @3155900.000 ns (104) Expected 0000000001000000 Got 8X5de7X1009cac6d
+ERROR: @3163700.000 ns (105) Expected 0000000000800000 Got 9X50b3Xe273ac12a
+ERROR: @3169900.000 ns (106) Expected 0000000000400000 Got 1X2d30Xc63c62c8b
+ERROR: @3176900.000 ns (107) Expected 0000000000200000 Got 3X2e1aXf658318cc
+ERROR: @3184700.000 ns (108) Expected 0000000000100000 Got 8XbeedXe41b07f09
+ERROR: @3191500.000 ns (109) Expected 0000000000080000 Got 8Xb383Xc2f7c5870
+ERROR: @3199300.000 ns (110) Expected 0000000000040000 Got 5Xabe3Xba8aaf4ba
+ERROR: @3206900.000 ns (111) Expected 0000000000020000 Got 0Xf0c9X489c3a50b
+ERROR: @3213500.000 ns (112) Expected 0000000000010000 Got cX2585Xa5f3c3aa8
+ERROR: @3218900.000 ns (113) Expected 0000000000008000 Got aX37daX9450e09d1
+ERROR: @3226100.000 ns (114) Expected 0000000000004000 Got eX4fd7Xf932f3d54
+ERROR: @3233100.000 ns (115) Expected 0000000000002000 Got eX1e54X35c7d48a8
+ERROR: @3240500.000 ns (116) Expected 0000000000001000 Got cXbc27X53b3e7924
+ERROR: @3248300.000 ns (117) Expected 0000000000000800 Got cX5bfaXcc1dffaa5
+ERROR: @3254500.000 ns (118) Expected 0000000000000400 Got dX1fcfX010d38514
+ERROR: @3262900.000 ns (119) Expected 0000000000000200 Got 0Xa107Xa9a72cd22
+ERROR: @3270500.000 ns (120) Expected 0000000000000100 Got 6X6e07Xa62c5beab
+ERROR: @3276500.000 ns (121) Expected 0000000000000080 Got 5X4f0eX5a8e4befb
+ERROR: @3285500.000 ns (122) Expected 0000000000000040 Got 5X5238X76924592d
+ERROR: @3290700.000 ns (123) Expected 0000000000000020 Got cX80f1Xe4dccec69
+ERROR: @3298900.000 ns (124) Expected 0000000000000010 Got 2X7f2bXc0e5a3dc7
+ERROR: @3305100.000 ns (125) Expected 0000000000000008 Got 0Xb523X18e8606fe
+ERROR: @3313900.000 ns (126) Expected 0000000000000004 Got 2Xc444X0284052fe
+ERROR: @3322100.000 ns (127) Expected 0000000000000002 Got 0X3ee5X5fda0b857
+ERROR: @3329300.000 ns (128) Expected 0000000000000001 Got aX8490Xc87b583e2
+ERROR: @3335900.000 ns (129) Expected 0000000000000000 Got 4X70e9X423649e91
+ERROR: @3341300.000 ns (130) Expected 0000000000000000 Got 8X9920X1f7a13d55
+ERROR: @3348300.000 ns (131) Expected 0000000000000000 Got 7X6d8fXa152aaa3d
+ERROR: @3353700.000 ns (132) Expected 0000000000000000 Got 2Xd3a5X457d9d4d5
+ERROR: @3361500.000 ns (133) Expected 0000000000000000 Got 8Xe8afXa4c162b9a
+ERROR: @3367500.000 ns (134) Expected 0000000000000000 Got 0X9477X94665aac5
+ERROR: @3375300.000 ns (135) Expected 0000000000000000 Got cXf679X4b0f99f28
+ERROR: @3383300.000 ns (136) Expected 0000000000000000 Got 7X2a8bXb8a622a2e
+ERROR: @3389500.000 ns (137) Expected 0000000000000000 Got eX1d66X9abb1c565
+ERROR: @3394900.000 ns (138) Expected 0000000000000000 Got 5X012bX26763c0fe
+ERROR: @3402300.000 ns (139) Expected 0000000000000000 Got 6X7a3cXdaf5fa1b8
+ERROR: @3408700.000 ns (140) Expected 0000000000000000 Got eX266fXac4c76a71
+ERROR: @3416500.000 ns (141) Expected 0000000000000000 Got eX992dX1d7cdff46
+ERROR: @3424900.000 ns (142) Expected 0000000000000000 Got 5X8a4dX77f65f899
+ERROR: @3430700.000 ns (143) Expected 0000000000000000 Got 9Xd675X6c78081e2
+ERROR: @3437500.000 ns (144) Expected 0000000000000000 Got 0Xf263X68d40a573
+ERROR: @3445500.000 ns (145) Expected 0000000000000000 Got 4Xa40aXb139e3e07
+ERROR: @3452700.000 ns (146) Expected 0000000000000000 Got 8X7928X8928a4875
+ERROR: @3461900.000 ns (147) Expected 0000000000000000 Got 0X9adfX4a3dac75c
+ERROR: @3468500.000 ns (148) Expected 0000000000000000 Got 5X3d31X87051e6e3
+ERROR: @3476900.000 ns (149) Expected 0000000000000000 Got 0X8c01X94eb2eaa6
+ERROR: @3484100.000 ns (150) Expected 0000000000000000 Got 6X6afdX9a347b0a9
+ERROR: @3490500.000 ns (151) Expected 0000000000000000 Got 0X3815X62d739376
+ERROR: @3496900.000 ns (152) Expected 0000000000000000 Got 9X3300Xa328e0dff
+ERROR: @3505300.000 ns (153) Expected 0000000000000000 Got 1X834aX9ad9de102
+ERROR: @3512500.000 ns (154) Expected 0000000000000000 Got cX6a9cXfa3a5efc7
+ERROR: @3519300.000 ns (155) Expected 0000000000000000 Got 6Xef75X158ec6543
+ERROR: @3527100.000 ns (156) Expected 0000000000000000 Got fX47d4X60f54f2e1
+ERROR: @3535100.000 ns (157) Expected 0000000000000000 Got 8X8ea5Xb8689b262
+ERROR: @3543300.000 ns (158) Expected 0000000000000000 Got dXe369Xf45293c5f
+ERROR: @3551500.000 ns (159) Expected 0000000000000000 Got 7X05afX782b72d44
+ERROR: @3558900.000 ns (160) Expected 0000000000000000 Got 2X8e1bX3cf15338f
+ERROR: @3564100.000 ns (161) Expected 0000000000000000 Got 4X2869Xa764e92ae
+ERROR: @3570500.000 ns (162) Expected 0000000000000000 Got 6X6b7dXe02dcd99b
+ERROR: @3575700.000 ns (163) Expected 0000000000000000 Got 2X4abfX116406a45
+ERROR: @3582700.000 ns (164) Expected 0000000000000000 Got 4Xaad0X548604f78
+ERROR: @3589900.000 ns (165) Expected 0000000000000000 Got 0Xcce5Xbfabf4934
+ERROR: @3598100.000 ns (166) Expected 0000000000000000 Got 5X3d4eX07b61f45d
+ERROR: @3605100.000 ns (167) Expected 0000000000000000 Got 1X1956Xf7c7e9131
+ERROR: @3610500.000 ns (168) Expected 0000000000000000 Got aX62e9X9f03b2385
+ERROR: @3619700.000 ns (169) Expected 0000000000000000 Got 5X87ebXfa063461c
+ERROR: @3627900.000 ns (170) Expected 0000000000000000 Got 4Xab1fX147491b4e
+ERROR: @3634100.000 ns (171) Expected 0000000000000000 Got aX934bX954efb280
+ERROR: @3641500.000 ns (172) Expected 0000000000000000 Got aXe6cbXecc7cc76a
+ERROR: @3648700.000 ns (173) Expected 0000000000000000 Got 0X23afX06f615681
+ERROR: @3657100.000 ns (174) Expected 0000000000000000 Got 5X99edX781528d11
+ERROR: @3663700.000 ns (175) Expected 0000000000000000 Got 2X6ddbXe47b33b93
+ERROR: @3672100.000 ns (176) Expected 0000000000000000 Got 3Xed79X22e8d65f9
+ERROR: @3678900.000 ns (177) Expected 0000000000000000 Got dX769cX53eb8456e
+ERROR: @3686100.000 ns (178) Expected 0000000000000000 Got 2Xd522Xb36d2dc03
+ERROR: @3692700.000 ns (179) Expected 0000000000000000 Got 2X75ebXe0b9a6e62
+ERROR: @3699900.000 ns (180) Expected 0000000000000000 Got 5X4732Xc890daae4
+ERROR: @3705500.000 ns (181) Expected 0000000000000000 Got 2Xa79aXd9a8af4de
+ERROR: @3711500.000 ns (182) Expected 0000000000000000 Got 2Xb2aaXcfe9cb2cf
+ERROR: @3718300.000 ns (183) Expected 0000000000000000 Got 7X3635Xeae11f0c2
+ERROR: @3726500.000 ns (184) Expected 0000000000000000 Got 8Xf3eeX2bc7de906
+ERROR: @3736300.000 ns (185) Expected 0000000000000000 Got 6Xd4abX62313a9e7
+ERROR: @3742300.000 ns (186) Expected 0000000000000000 Got 8X33e0Xca8b68644
+ERROR: @3747700.000 ns (187) Expected 0000000000000000 Got 2X53ffXf736a6e66
+ERROR: @3754900.000 ns (188) Expected 0000000000000000 Got 6X7ba6X954b5977a
+ERROR: @3761500.000 ns (189) Expected 0000000000000000 Got bXf250Xac84bbec9
+ERROR: @3767700.000 ns (190) Expected 0000000000000000 Got dX3e02Xe181061cd
+ERROR: @3774300.000 ns (191) Expected 0000000000000000 Got 4X5ccfX7ef345176
+ERROR: @3781700.000 ns (192) Expected 0000000000000000 Got aX88a1X5ab1c2038
+ERROR: @3789100.000 ns (193) Expected 0000000000000000 Got 1X23c9Xc29217b38
+ERROR: @3796100.000 ns (194) Expected 0000000000000000 Got 4Xb9e9X2f6a01540
+ERROR: @3805100.000 ns (195) Expected 0000000000000000 Got eX2f42Xccb9193a2
+ERROR: @3810900.000 ns (196) Expected 0000000000000000 Got 2Xbd5fXb7138ead5
+ERROR: @3816700.000 ns (197) Expected 0000000000000000 Got dX3eb7Xf16c20f6c
+ERROR: @3823500.000 ns (198) Expected 0000000000000000 Got bXf18aXf67c86691
+ERROR: @3832100.000 ns (199) Expected 0000000000000000 Got eX9bdfX242310bd6
+ERROR: @3838500.000 ns (200) Expected 0000000000000000 Got 1Xe3e7X06072027b
+ERROR: @3847500.000 ns (201) Expected 0000000000000000 Got 8X73b4X06f4c8f28
+ERROR: @3852300.000 ns (202) Expected 0000000000000000 Got 1X074dX78207a635
+ERROR: @3856700.000 ns (203) Expected 0000000000000000 Got 9X2f9cX85eb72f26
+ERROR: @3865500.000 ns (204) Expected 0000000000000000 Got fXacb3Xdaa6ae5cc
+ERROR: @3873500.000 ns (205) Expected 0000000000000000 Got dX3e59X602a51263
+ERROR: @3881500.000 ns (206) Expected 0000000000000000 Got dX12beX785a719de
+ERROR: @3888500.000 ns (207) Expected 0000000000000000 Got 3X5d39X00d60aade
+ERROR: @3894100.000 ns (208) Expected 0000000000000000 Got 0Xa4ceX6d98b41b2
+ERROR: @3900900.000 ns (209) Expected 0000000000000000 Got aX8d10X06c5870db
+ERROR: @3905700.000 ns (210) Expected 0000000000000000 Got dX78d5Xf2d5021f6
+ERROR: @3913500.000 ns (211) Expected 0000000000000000 Got 0X13ceX75244def0
+ERROR: @3921500.000 ns (212) Expected 0000000000000000 Got 9X85e7X74697c258
+ERROR: @3928100.000 ns (213) Expected 0000000000000000 Got dX730fXb7b5e9ffd
+ERROR: @3936100.000 ns (214) Expected 0000000000000000 Got 5Xf7feX26065bdf1
+ERROR: @3943900.000 ns (215) Expected 0000000000000000 Got 5Xcd3dX1ac6c043d
+ERROR: @3950100.000 ns (216) Expected 0000000000000000 Got cXd9dbX13bb95c8e
+ERROR: @3955700.000 ns (217) Expected 01a1d6d039776742 Got 3Xe51fX4c59f27cf
+ERROR: @3962500.000 ns (218) Expected 5cd54ca83def57da Got dX29d4X0900f6332
+ERROR: @3970700.000 ns (219) Expected 0248d43806f67172 Got cXc9d3X1accb42f7
+ERROR: @3979300.000 ns (220) Expected 51454b582ddf440a Got 5Xf561X290f36337
+ERROR: @3985500.000 ns (221) Expected 42fd443059577fa2 Got 5Xa2ffX3ee168cff
+ERROR: @3994300.000 ns (222) Expected 059b5e0851cf143a Got eX13b6X4b4ddce2e
+ERROR: @4000500.000 ns (223) Expected 0756d8e0774761d2 Got cXdf67Xcb8d54ea8
+ERROR: @4010300.000 ns (224) Expected 762514b829bf486a Got 1X1d15Xa7aa6f13d
+ERROR: @4017500.000 ns (225) Expected 3bdd119049372802 Got aX5193X82cb6450e
+ERROR: @4024300.000 ns (226) Expected 26955f6835af609a Got 0Xc1b0X24dc9a874
+ERROR: @4032100.000 ns (227) Expected 164d5e404f275232 Got 0X6e61X315b0f525
+ERROR: @4039100.000 ns (228) Expected 6b056e18759f5cca Got 9X9b7cX51d462b9a
+ERROR: @4047100.000 ns (229) Expected 004bd6ef09176062 Got 0Xa814Xc8bebb72f
+ERROR: @4055300.000 ns (230) Expected 480d39006ee762f2 Got 5X27daXbf16e812b
+ERROR: @4064700.000 ns (231) Expected 437540c8698f3cfa Got fXc936X65ca6a00e
+ERROR: @4072700.000 ns (232) Expected 072d43a077075292 Got 3Xb25eX11c9530f6
+ERROR: @4080900.000 ns (233) Expected 02fe55778117f12a Got 8Xf128Xdc13c2ba8
+ERROR: @4089500.000 ns (234) Expected 1d9d5c5018f728c2 Got 6X173dXdabe41db1
+ERROR: @4099100.000 ns (235) Expected 305532286d6f295a Got 5X7d6eX8e926bd4c
+ERROR: @4106300.000 ns (236) Expected 0000000000000000 Got 0X4d96X0a2f39b44
+ERROR: @4112300.000 ns (237) Expected ffffffffffffffff Got fXb269Xf5d0c64bb
+ERROR: @4117500.000 ns (238) Expected 1000000000000001 Got aX3aadX487a6228e
+ERROR: @4124500.000 ns (239) Expected 1111111111111111 Got 7X0282X16e6ac639
+ERROR: @4130500.000 ns (240) Expected 1111111111111111 Got 8X8658X65049a380
+ERROR: @4136700.000 ns (241) Expected 0123456789abcdef Got 4Xaae6Xc649671d7
+ERROR: @4144100.000 ns (242) Expected 0000000000000000 Got 0X4d96X0a2f39b44
+ERROR: @4151300.000 ns (243) Expected 0123456789abcdef Got 5X9feeX8d6d3b6f1
+ERROR: @4157100.000 ns (244) Expected 01a1d6d039776742 Got bX0c17X99535aff5
+ERROR: @4166300.000 ns (245) Expected 5cd54ca83def57da Got 1Xa7dcXa11ceaf2f
+ERROR: @4174500.000 ns (246) Expected 0248d43806f67172 Got cXc9d3X1accb42f7
+ERROR: @4181100.000 ns (247) Expected 51454b582ddf440a Got 5Xf561X290f36337
+ERROR: @4187300.000 ns (248) Expected 42fd443059577fa2 Got 5Xa2ffX3ee168cff
+ERROR: @4194300.000 ns (249) Expected 059b5e0851cf143a Got eX13b6X4b4ddce2e
+ERROR: @4202100.000 ns (250) Expected 0756d8e0774761d2 Got cXdf67Xcb8d54ea8
+ERROR: @4210700.000 ns (251) Expected 762514b829bf486a Got 1Xa105X4f9af7921
+ERROR: @4216100.000 ns (252) Expected 3bdd119049372802 Got aX5193X82cb6450e
+ERROR: @4223500.000 ns (253) Expected 26955f6835af609a Got 0Xc1b0X24dc9a874
+ERROR: @4229700.000 ns (254) Expected 164d5e404f275232 Got 0X6e61X315b0f525
+ERROR: @4236500.000 ns (255) Expected 6b056e18759f5cca Got 9X9b7cX51d462b9a
+ERROR: @4244500.000 ns (256) Expected 004bd6ef09176062 Got 0Xa814Xc8bebb72f
+ERROR: @4252100.000 ns (257) Expected 480d39006ee762f2 Got 5X27daXbf16e812b
+ERROR: @4259900.000 ns (258) Expected 437540c8698f3cfa Got fXc936X65ca6a00e
+ERROR: @4268700.000 ns (259) Expected 072d43a077075292 Got 3Xb25eX11c9530f6
+ERROR: @4275500.000 ns (260) Expected 02fe55778117f12a Got 8Xf128Xdc13c2ba8
+ERROR: @4283500.000 ns (261) Expected 1d9d5c5018f728c2 Got 6X173dXdabe41db1
+ERROR: @4291100.000 ns (262) Expected 305532286d6f295a Got 5X7d6eX8e926bd4c
+ERROR: @4298100.000 ns (263) Expected 0123456789abcdef Got 1Xab09Xbf4127633
+ERROR: @4305900.000 ns (264) Expected 0123456789abcdef Got 2X7f79Xef644c50d
+ERROR: @4312500.000 ns (265) Expected 0123456789abcdef Got 1Xf0d6Xeecd60cc4
+ERROR: @4319300.000 ns (266) Expected ffffffffffffffff Got fXa7b0Xd290e98b9
+ERROR: @4326100.000 ns (267) Expected 0000000000000000 Got 4X7e7fX4d4536760
+ERROR: @4333500.000 ns (268) Expected 0000000000000000 Got 2X6b95X9d1eb560f
+ERROR: @4338900.000 ns (269) Expected ffffffffffffffff Got dXae6aX62e17a9f0
+ERROR: @4348500.000 ns (270) Expected 0000000000000000 Got 4X70e9X423649e91
+ERROR: @4357900.000 ns (271) Expected 0000000000000000 Got 8X9920X1f7a13d55
+ERROR: @4363900.000 ns (272) Expected 0000000000000000 Got 7X6d8fXa152aaa3d
+ERROR: @4371500.000 ns (273) Expected 0000000000000000 Got 6X04a5Xd759a9cce
+ERROR: @4379500.000 ns (274) Expected 0000000000000000 Got 8Xe8afXa4c162b9a
+ERROR: @4386700.000 ns (275) Expected 0000000000000000 Got 0X9477X94665aac5
+ERROR: @4394300.000 ns (276) Expected 0000000000000000 Got cXf679X4b0f99f28
+ERROR: @4402100.000 ns (277) Expected 0000000000000000 Got 7X2a8bXb8a622a2e
+ERROR: @4411100.000 ns (278) Expected 0000000000000000 Got eX1d66X9abb1c565
+ERROR: @4417100.000 ns (279) Expected 0000000000000000 Got 5X012bX26773c0fe
+ERROR: @4423700.000 ns (280) Expected 0000000000000000 Got 6X7a3cXdaf5fa1b8
+ERROR: @4431500.000 ns (281) Expected 0000000000000000 Got eX266fXac4c76a71
+ERROR: @4439700.000 ns (282) Expected 0000000000000000 Got eX992dX1d7cdff46
+ERROR: @4449300.000 ns (283) Expected 0000000000000000 Got 5X8a4dX77f65f899
+ERROR: @4455900.000 ns (284) Expected 0000000000000000 Got 9Xd675X6c78081e2
+ERROR: @4462500.000 ns (285) Expected 0000000000000000 Got 0Xf263X68d40a573
+ERROR: @4469500.000 ns (286) Expected 0000000000000000 Got 4Xa40aXb139e3e07
+ERROR: @4476500.000 ns (287) Expected 0000000000000000 Got cX5c0cX7430acc77
+ERROR: @4482900.000 ns (288) Expected 0000000000000000 Got 0X9adfX4a3dac75c
+ERROR: @4492700.000 ns (289) Expected 0000000000000000 Got 5X3d31X87051e6e3
+ERROR: @4499300.000 ns (290) Expected 0000000000000000 Got 0X8c01X94eb2eaa6
+ERROR: @4505300.000 ns (291) Expected 0000000000000000 Got 6X6afdX9a347b0a9
+ERROR: @4511700.000 ns (292) Expected 0000000000000000 Got 0X3815X62d739376
+ERROR: @4518700.000 ns (293) Expected 0000000000000000 Got 9X3300Xa328e0dff
+ERROR: @4527500.000 ns (294) Expected 0000000000000000 Got 1X834aX9ad9de102
+ERROR: @4535100.000 ns (295) Expected 0000000000000000 Got cX6a9cXfa3a5efc7
+ERROR: @4541300.000 ns (296) Expected 0000000000000000 Got 6Xef75X158ec6543
+ERROR: @4548900.000 ns (297) Expected 0000000000000000 Got fX47d4X60f54f2e1
+ERROR: @4556500.000 ns (298) Expected 0000000000000000 Got 8X8ea5Xb8689b262
+ERROR: @4564100.000 ns (299) Expected 0000000000000000 Got 5Xea79X3e509785c
+ERROR: @4572900.000 ns (300) Expected 0000000000000000 Got 7X05afX782b72d44
+ERROR: @4581700.000 ns (301) Expected 0000000000000000 Got 2X8e1bX3cf15338f
+ERROR: @4587100.000 ns (302) Expected 0000000000000000 Got 4X2869Xa764e92ae
+ERROR: @4592700.000 ns (303) Expected 0000000000000000 Got 6X6b7dXe02dcd99b
+ERROR: @4600300.000 ns (304) Expected 0000000000000000 Got 2X4abfX116406a45
+ERROR: @4607500.000 ns (305) Expected 0000000000000000 Got 4Xaad0X548604f78
+ERROR: @4614900.000 ns (306) Expected 0000000000000000 Got 0Xcce5Xbfabf4934
+ERROR: @4622100.000 ns (307) Expected 0000000000000000 Got 5X3d4eX07b61f45d
+ERROR: @4630900.000 ns (308) Expected 0000000000000000 Got 1X1956Xf7c7e9131
+ERROR: @4637900.000 ns (309) Expected 0000000000000000 Got aX62e9X9f03b2385
+ERROR: @4647300.000 ns (310) Expected 0000000000000000 Got 5X87ebXfa063461c
+ERROR: @4654100.000 ns (311) Expected 0000000000000000 Got 4Xab1fX147491b4e
+ERROR: @4660700.000 ns (312) Expected 0000000000000000 Got aX934bX954efb280
+ERROR: @4669300.000 ns (313) Expected 0000000000000000 Got aXe6cbXecc7cc76a
+ERROR: @4676500.000 ns (314) Expected 0000000000000000 Got 0X23afX06f615681
+ERROR: @4684700.000 ns (315) Expected 0000000000000000 Got 5X99edX781528d11
+ERROR: @4692500.000 ns (316) Expected 0000000000000000 Got 2X6ddbXe47b33b93
+ERROR: @4700700.000 ns (317) Expected 0000000000000000 Got 3Xed79X22e8d65f9
+ERROR: @4709700.000 ns (318) Expected 0000000000000000 Got 5X42acXfbc1b4568
+ERROR: @4718500.000 ns (319) Expected 0000000000000000 Got 2Xd522Xb36d2dc03
+ERROR: @4727100.000 ns (320) Expected 0000000000000000 Got 2X75ebXe0b9a6e62
+ERROR: @4733700.000 ns (321) Expected 0000000000000000 Got 5X4732Xc890daae4
+ERROR: @4739100.000 ns (322) Expected 0000000000000000 Got 2Xa79aXd9a8af4de
+ERROR: @4747100.000 ns (323) Expected 0000000000000000 Got 2Xb2aaXcfe9cb2cf
+ERROR: @4754500.000 ns (324) Expected 0000000000000000 Got 7X3635Xeae11f0c2
+ERROR: @4760300.000 ns (325) Expected 0000000000000000 Got 8Xf3eeX2bc7de906
+ERROR: @4768300.000 ns (326) Expected 135a54f78e672b9c Got fXcb54Xfec523e30
+ERROR: @4776700.000 ns (327) Expected e174133d7f782c17 Got 4Xa784Xf2d2a8cd7
+ERROR: @4782900.000 ns (328) Expected 02f785853bc796ed Got 0Xae3cXf9bdd4cfc
+ERROR: @4788100.000 ns (329) Expected 8b2760a9ec1b038e Got 2X9a04Xea10d772e
+
+**************************************
+* DES Test done ...                  *
+**************************************
+
+TEST CASE FAILED
+
+--- UVM Report Summary ---
+
+** Report counts by severity
+UVM_INFO :   28
+UVM_WARNING :    0
+UVM_ERROR :   26
+UVM_FATAL :    0
+** Report counts by id
+[MISCMP]    20
+[RNTST]     1
+[TOP]    16
+[bus_driver]     4
+[bus_monitor]     1
+[case0_cfg_vseq]     2
+[my_scoreboard]    10
+$finish called from file "/tools/synopsys/vcs/O-2018.09-SP2-11/etc/uvm/src/base/uvm_root.svh", line 439.
+$finish at simulation time 6333900.000 ns
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 37: top_tb.gen_FSM_REALFINISH2IDLE_CHK[15].m_FSM_REALFINISH2IDLE_CHK.c_REALFINISH2IDLE_CHK, 31669 attempts, 48 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 37: top_tb.gen_FSM_REALFINISH2IDLE_CHK[14].m_FSM_REALFINISH2IDLE_CHK.c_REALFINISH2IDLE_CHK, 31669 attempts, 46 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 37: top_tb.gen_FSM_REALFINISH2IDLE_CHK[13].m_FSM_REALFINISH2IDLE_CHK.c_REALFINISH2IDLE_CHK, 31669 attempts, 43 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 37: top_tb.gen_FSM_REALFINISH2IDLE_CHK[12].m_FSM_REALFINISH2IDLE_CHK.c_REALFINISH2IDLE_CHK, 31669 attempts, 36 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 37: top_tb.gen_FSM_REALFINISH2IDLE_CHK[11].m_FSM_REALFINISH2IDLE_CHK.c_REALFINISH2IDLE_CHK, 31669 attempts, 61 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 37: top_tb.gen_FSM_REALFINISH2IDLE_CHK[10].m_FSM_REALFINISH2IDLE_CHK.c_REALFINISH2IDLE_CHK, 31669 attempts, 45 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 37: top_tb.gen_FSM_REALFINISH2IDLE_CHK[9].m_FSM_REALFINISH2IDLE_CHK.c_REALFINISH2IDLE_CHK, 31669 attempts, 51 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 37: top_tb.gen_FSM_REALFINISH2IDLE_CHK[8].m_FSM_REALFINISH2IDLE_CHK.c_REALFINISH2IDLE_CHK, 31669 attempts, 39 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 37: top_tb.gen_FSM_REALFINISH2IDLE_CHK[7].m_FSM_REALFINISH2IDLE_CHK.c_REALFINISH2IDLE_CHK, 31669 attempts, 33 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 37: top_tb.gen_FSM_REALFINISH2IDLE_CHK[6].m_FSM_REALFINISH2IDLE_CHK.c_REALFINISH2IDLE_CHK, 31669 attempts, 46 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 37: top_tb.gen_FSM_REALFINISH2IDLE_CHK[5].m_FSM_REALFINISH2IDLE_CHK.c_REALFINISH2IDLE_CHK, 31669 attempts, 45 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 37: top_tb.gen_FSM_REALFINISH2IDLE_CHK[4].m_FSM_REALFINISH2IDLE_CHK.c_REALFINISH2IDLE_CHK, 31669 attempts, 64 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 37: top_tb.gen_FSM_REALFINISH2IDLE_CHK[3].m_FSM_REALFINISH2IDLE_CHK.c_REALFINISH2IDLE_CHK, 31669 attempts, 29 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 37: top_tb.gen_FSM_REALFINISH2IDLE_CHK[2].m_FSM_REALFINISH2IDLE_CHK.c_REALFINISH2IDLE_CHK, 31669 attempts, 32 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 37: top_tb.gen_FSM_REALFINISH2IDLE_CHK[1].m_FSM_REALFINISH2IDLE_CHK.c_REALFINISH2IDLE_CHK, 31669 attempts, 42 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 25: top_tb.gen_FSM_START2REALSTART_CHK[15].m_FSM_START2REALSTART_CHK.c_START2REALSTART, 31669 attempts, 56 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 25: top_tb.gen_FSM_START2REALSTART_CHK[14].m_FSM_START2REALSTART_CHK.c_START2REALSTART, 31669 attempts, 27 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 25: top_tb.gen_FSM_START2REALSTART_CHK[13].m_FSM_START2REALSTART_CHK.c_START2REALSTART, 31669 attempts, 49 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 25: top_tb.gen_FSM_START2REALSTART_CHK[12].m_FSM_START2REALSTART_CHK.c_START2REALSTART, 31669 attempts, 47 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 25: top_tb.gen_FSM_START2REALSTART_CHK[11].m_FSM_START2REALSTART_CHK.c_START2REALSTART, 31669 attempts, 48 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 25: top_tb.gen_FSM_START2REALSTART_CHK[10].m_FSM_START2REALSTART_CHK.c_START2REALSTART, 31669 attempts, 41 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 25: top_tb.gen_FSM_START2REALSTART_CHK[9].m_FSM_START2REALSTART_CHK.c_START2REALSTART, 31669 attempts, 48 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 25: top_tb.gen_FSM_START2REALSTART_CHK[8].m_FSM_START2REALSTART_CHK.c_START2REALSTART, 31669 attempts, 39 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 25: top_tb.gen_FSM_START2REALSTART_CHK[7].m_FSM_START2REALSTART_CHK.c_START2REALSTART, 31669 attempts, 39 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 25: top_tb.gen_FSM_START2REALSTART_CHK[6].m_FSM_START2REALSTART_CHK.c_START2REALSTART, 31669 attempts, 45 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 25: top_tb.gen_FSM_START2REALSTART_CHK[5].m_FSM_START2REALSTART_CHK.c_START2REALSTART, 31669 attempts, 42 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 25: top_tb.gen_FSM_START2REALSTART_CHK[4].m_FSM_START2REALSTART_CHK.c_START2REALSTART, 31669 attempts, 44 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 25: top_tb.gen_FSM_START2REALSTART_CHK[3].m_FSM_START2REALSTART_CHK.c_START2REALSTART, 31669 attempts, 44 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 25: top_tb.gen_FSM_START2REALSTART_CHK[2].m_FSM_START2REALSTART_CHK.c_START2REALSTART, 31669 attempts, 55 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 25: top_tb.gen_FSM_START2REALSTART_CHK[1].m_FSM_START2REALSTART_CHK.c_START2REALSTART, 31669 attempts, 36 match
+"/home/robin/Projects/uvm_demo_cc4/tb/../des_latest/des/trunk/rtl/verilog/../../bench/verilog/des_assertion.sv", 14: top_tb.u0.m_FSM_IDLE2START_CHK.c_IDLE2START, 31669 attempts, 660 match
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 6333900000 ps
+CPU Time:      4.950 seconds;       Data structure size:   0.6Mb
+Fri Mar 20 21:10:54 2026
